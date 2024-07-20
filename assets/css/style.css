@@ -238,6 +238,19 @@ input:focus{
 .end-note{
     font-size: 24px;
 }
+
+.foreign-table .select2-selection__rendered{
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 5px !important;
+}
+
+.foreign-table .select2{
+    width: 100% !important;
+}
+.select2-search{
+    display: none;
+}
 @media (max-width: 576px) {
     .page-main {
         flex-direction: column;
