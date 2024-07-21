@@ -15,18 +15,24 @@
                 <img src="./assets/images/login.png" alt="Login Page Image" class="img-fluid">
             </section>
             <section class="page-form pt-2 d-flex flex-column">
-                <div class="px-sm-4 px-3 text-center mb-3">
+                <div class="d-sm-none d-flex justify-content-around align-items-center mt-3 mb-4">
+                    <a href="#" class="lang-link active inter">ENGLISH</a><a href="#"
+                        class="lang-link inter">SPANISH</a>
+                </div>
+                <div class="px-sm-4 px-3 text-center mb-3 pf-text">
                     <div class="text-center mb-2">
-                        <button class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change mx-auto"><img src="./assets/images/change.svg" alt="Change"> <span>Espanol</span></button>
+                        <button
+                            class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change mx-auto"><img
+                                src="./assets/images/change.svg" alt="Change"> <span>Espanol</span></button>
                     </div>
                     <h2 class="fw-bold form-title mb-4"> US PIPE <br> IMMIGRATION PROGRAM </h2>
                     <p class="form-desc"> Find out from a competent, seasoned US Lawyer, If you qualify for this new
                         immigration program </p>
                 </div>
                 <div class="page-form-sec py-5 flex-grow-1">
-                    <form class="px-sm-5 px-0 py-5 mt-5" action="" method="post">
+                    <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" method="post">
                         <div class="px-4">
-                            <h3 class="fw-bold mb-4 text-white text-center mb-5"> Login </h3>
+                            <h3 class="fw-bold text-white text-center mb-5"> Login </h3>
                             <div class="form-group mb-4">
                                 <label for="email">Email/Cell Phone</label>
                                 <div class="input-div">
@@ -35,20 +41,24 @@
                                     <img src="./assets/images/envelope.svg" alt="Email" class="inp-icon-left">
                                 </div>
                             </div>
-                            <div class="form-group mb-5">
+                            <div class="form-group mb-sm-5 mb-4">
                                 <label for="password">Password</label>
                                 <div class="input-div">
                                     <input type="password" id="password" placeholder="Password"
                                         class="form-control poppins">
                                     <img src="./assets/images/lock.svg" alt="Lock" class="inp-icon-left">
                                 </div>
-                                <p class="text-end"><a href="#" class="text-white forgot-link">Forgot Password</a></p>
+                                <p class="text-end"><a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal"
+                                        class="text-white forgot-link">Forgot Password</a></p>
                             </div>
                             <div class="btns px-4 text-center pt-4">
-                                <button class="btn btn-primary w-100 px-5 fw-bold text-white" type="submit">Login</button>
+                                <button class="btn btn-primary w-100 px-5 inter fw-bold text-white"
+                                    type="submit">Login</button>
                                 <div class="text-center mt-4">
-                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Don't have an account?</a>
-                                    <a href="#" class="btn btn-primary w-100 px-5 fw-bold text-white">Sign Up</a>
+                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Don't have an
+                                        account?</a>
+                                    <a href="./register.html" class="btn btn-primary w-100 px-5 fw-bold text-white">Sign
+                                        Up</a>
                                 </div>
                             </div>
                         </div>
@@ -56,12 +66,147 @@
                 </div>
             </section>
         </main>
+        <!-- Modal -->
+        <div class="modal fade forgot-modal" id="forgotModal" tabindex="-1" aria-labelledby="forgotModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body poppins text-center">
+                        <h2 class="py-4 fm-title inter mt-4 text-black">Forgot Password?</h2>
+                        <div class="text-center">
+                            <img src="./assets/images/forgot-password.png" alt="Forgot" class="img-fluid" width="217">
+                        </div>
+                        <div class="mb-4">
+                            <p class="mt-4 inter fm-text"><span class="d-md-block d-inline">We'll send you an email or a
+                                    text to the address</span>
+                                <span class="d-md-block d-inline">that you registered with us</span>
+                            </p>
+                        </div>
+                        <div
+                            class="d-flex align-items-center justify-content-center pt-3 forgot-email-phone flex-column gap-2">
+                            <p class="mb-0">Email</p>
+                            <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
+                                    src="./assets/images/mail-fill.svg" alt="Icon"
+                                    height="21"><span>lauran****@email.com</span></p>
+                            <p class="mb-0">or cell phone number where we can text you</p>
+                            <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
+                                    src="./assets/images/phone.svg" alt="Icon" height="21"><span>+923095248482</span>
+                            </p>
+                        </div>
+                        <div class="py-5 mb-5 px-5">
+                            <button class="btn btn-primary w-100 px-5 inter fw-bold text-white" type="submit"
+                                onclick="openCodeModal()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade forgot-modal" id="verifyCodeModal" tabindex="-1" aria-labelledby="verifyCodeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body poppins text-center">
+                        <form action="" method="post" id="verifyCodeForm">
+                            <div class="d-flex align-items-center justify-content-between mb-5">
+                                <img src="./assets/images/arrow-left.svg" alt="Arrow" height="16"
+                                    onclick="closeVerifyAndOpenForgotModal()">
+                                <h4 class="fm-subtitle mb-0 inter">Forgot Password</h4>
+                                <img src="./assets/images/arrow-left.svg" alt="Arrow" height="16"
+                                    onclick="closeVerifyAndOpenForgotModal()" class="opacity-0">
+                            </div>
+                            <h2 class="py-4 fm-title inter">Verify</h2>
+                            <p class="mb-5 fm-desc">Please enter the code we sent you to email</p>
+                            <div class="code-input mb-5">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox1">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox2">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox3">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox4">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox5">
+                                <input type="text" maxlength="1" class="code-box" id="codeBox6">
+                            </div>
+                            <div class="mb-4">
+                                <p class="fm-desc">Didn't Receive the Code ?</p>
+                                <a href="#" class="fm-link">Resend Code</a>
+                            </div>
+                            <div class="py-5 mb-5 px-5">
+                                <button class="btn btn-primary w-100 px-5 inter fw-bold text-white"
+                                    type="submit">Verify</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade code-response-modal" id="correctCodeModal" tabindex="-1"
+            aria-labelledby="correctCodeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-5 poppins text-center inter">
+                        <div class="pb-5">
+                            <img src="./assets/images/correct-code.svg" alt="Icon" height="184" class="mb-3 img-fluid">
+                            <h4 class="cr-title mb-3">Congratulations !</h4>
+                            <p class="mb-0 cr-text">Password Reset successful <br> You'll be redirected to the login
+                                screen now</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade code-response-modal" id="incorrectCodeModal" tabindex="-1"
+            aria-labelledby="incorrectCodeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-5 poppins text-center inter">
+                        <div class="pb-5">
+                            <img src="./assets/images/incorrect-code.svg" alt="Icon" height="184"
+                                class="mb-3 img-fluid">
+                            <h4 class="cr-title mb-3">Incorrect Code !</h4>
+                            <p class="mb-0 cr-text">Oops! It looks like you've entered the code incorrectly three times.
+                                We've sent you a new code to try again.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
     <body>
         <script src="./assets/js/jquery-3.6.1.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
         <script src="./assets/js/script.js"></script>
+        <script>
+            function openCodeModal() {
+                $('#forgotModal').modal('hide');
+                $('#verifyCodeModal').modal('show');
+            }
+
+            function closeVerifyAndOpenForgotModal() {
+                $('#verifyCodeModal').modal('hide');
+                $('#forgotModal').modal('show');
+            }
+
+            $(document).ready(function () {
+
+                $('#verifyCodeForm').on('submit', function (e) {
+                    e.preventDefault();
+                    let code = '';
+                    $('.code-box').each(function () {
+                        code += $(this).val();
+                    })
+
+                    if (!validateCode(code)) {
+                        $('#verifyCodeModal').modal('hide');
+                        $('#incorrectCodeModal').modal('show');
+                    } else {
+                        $('#verifyCodeModal').modal('hide');
+                        $('#correctCodeModal').modal('show');
+                    }
+                })
+            });
+            function validateCode(code) {
+                return code.length === 6
+            }
+        </script>
     </body>
 
 </html>

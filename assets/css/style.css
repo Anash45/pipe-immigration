@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+body {
+    color: #000;
+}
+
 main {
     margin: 0 auto;
     max-width: 1500px;
@@ -43,8 +47,9 @@ main {
 }
 
 .page-form-sec {
-    background-image: url(../images/login-pattern.svg);
+    background-image: linear-gradient(transparent 50%, #002868 50%), url(../images/login-pattern.svg);
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: top left;
 }
 
@@ -62,7 +67,8 @@ main {
     width: 100%;
 }
 
-.form-control,.select2-selection__rendered {
+.form-control,
+.select2-selection__rendered {
     background-color: rgba(255, 255, 255, 1);
     border: 1px solid rgba(66, 80, 102, 0.4);
     border-radius: 5px;
@@ -72,11 +78,13 @@ main {
     box-shadow: 0 2px 4px rgba(66, 80, 102, 0.1);
     font-size: 14px;
 }
-.select2-container--default .select2-selection--single{
+
+.select2-container--default .select2-selection--single {
     border: 0 !important;
     height: auto;
     line-height: 120% !important;
 }
+
 .input-div {
     position: relative;
 }
@@ -107,10 +115,76 @@ main {
 
 .inp-icon-right {
     position: absolute;
-    right: 15px;
+    right: 10px;
     width: 14px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.iq-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #BF0A30;
+}
+
+.show-password {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    width: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.iq-page {
+    background-image: url(../images/light-bg.png);
+    background-size: cover;
+    background-position: top;
+}
+
+.selection-box {
+    width: 100%;
+    text-decoration: none !important;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: block;
+}
+
+.selection-outer {
+    position: relative;
+
+    width: 500px;
+    max-width: 100%;
+}
+
+.selection-outer.disabled::after {
+    content: "";
+    position: absolute;
+    border-radius: 20px;
+    top: 0;
+    left: 0;
+    cursor: not-allowed;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.select-img {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+
+.iqc-title {
+    font-size: 24px;
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 0;
+    color: #000;
+    font-weight: 600;
 }
 
 .btn {
@@ -177,97 +251,228 @@ main {
     object-fit: cover;
 }
 
-.show-previous-marriage{
+.show-previous-marriage {
     cursor: pointer;
 }
-.sec-4{
+
+.sec-4 {
     display: none;
 }
+
 .text-primary {
     color: rgba(19, 106, 243, 1);
 }
-.form-check-input{
+
+.form-check-input {
     border-radius: 0 !important;
     border-color: rgba(0, 0, 0, 1);
 }
 
-.text-red{
+.text-red {
     color: rgba(191, 10, 48, 1);
 }
-input:focus{
+
+input:focus {
     box-shadow: none !important;
 }
 
-.foreign-table{
+.foreign-table {
     background-color: #fff;
 }
-.foreign-table th, .foreign-table td{
+
+.foreign-table th,
+.foreign-table td {
     border: 1px solid #000 !important;
 }
 
-.foreign-table th{
+.foreign-table th {
     vertical-align: bottom;
     text-align: center;
 }
 
-.foreign-table td{
+.foreign-table td {
     padding: 0;
     vertical-align: middle;
 }
 
-.form-sec-title small{
+.form-sec-title small {
     font-size: 16px;
     display: inline-block;
 }
-.table-input{
+
+.table-input {
     height: 75px;
     border-radius: 0;
     resize: none;
     border: 0 !important;
 }
-.foreign-table tr:first-child th{
+
+.foreign-table tr:first-child th {
     border-top: 0 !important;
 }
 
-.foreign-table tr :first-child{
+.foreign-table tr :first-child {
     border-left: 0 !important;
 }
-.foreign-table tr :last-child{
+
+.foreign-table tr :last-child {
     border-right: 0 !important;
 }
-.end-note{
+
+.end-note {
     font-size: 24px;
 }
 
-.foreign-table .select2-selection__rendered{
+.lang-link {
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.lang-link.active {
+    color: rgba(255, 255, 255, 1);
+}
+
+
+.lang-link.active::after {
+    background-color: rgba(94, 243, 109, 1);
+}
+
+.lang-link::after {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: -3px;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 99px;
+}
+
+.foreign-table .select2-selection__rendered {
     border: 0 !important;
     box-shadow: none !important;
     padding: 0 5px !important;
 }
 
-.foreign-table .select2{
+.foreign-table .select2 {
     width: 100% !important;
 }
-.select2-search{
+
+.select2-search {
     display: none;
 }
-@media (max-width: 576px) {
+
+.fm-subtitle {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.fm-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.fm-desc {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(196, 196, 196, 1);
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.code-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.fm-link {
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.code-box {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 24px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+}
+
+.fm-text {
+    font-size: 15px;
+}
+
+.forgot-email-phone {
+    color: rgba(134, 134, 134, 1);
+    font-weight: 900;
+}
+
+.cr-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+.code-response-modal .modal-dialog {
+    width: 340px;
+}
+
+.code-response-modal .modal-content {
+    border-radius: 69px;
+    border: 0;
+}
+
+@media (max-width: 768px) {
+
     .page-main {
         flex-direction: column;
     }
 
     .page-form {
+        width: 100%;
         max-width: 100%;
     }
 
     .page-img {
         width: 100%;
     }
+}
+
+@media (max-width: 576px) {
+    .iq-title {
+        font-size: 28px;
+    }
+
+    .pf-text {
+        opacity: 0;
+    }
+
+    .page-img {
+        display: none;
+    }
+
+    .page-form {
+        background-image: linear-gradient(#00286889, #00286889), url(../images/login.png);
+        background-size: contain;
+    }
 
     .form-title {
         font-size: 26px;
     }
 
+    .page-form-sec {
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
 
     .form-sec-title {
         font-size: 22px;
