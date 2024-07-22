@@ -219,8 +219,17 @@ main {
     color: rgba(0, 0, 0, 1);
 }
 
+.fee-note {
+    font-size: 12px;
+}
+
+.inp-wih-icon-left {
+    padding-left: 35px;
+}
+
 .iti {
     width: 100%;
+    margin-top: 0.25rem;
 }
 
 .iti__flag-container::after {
@@ -431,6 +440,18 @@ input:focus {
     border: 0;
 }
 
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+}
+.btn-rectangle{
+    border-radius: 5px;
+    padding: 12px 24px;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
 @media (max-width: 768px) {
 
     .page-main {

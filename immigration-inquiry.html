@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Qualification Data - US PIPE Immigration Program</title>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./assets/css/style.css">
+    </head>
+
+    <body class="main-form-page roboto">
+        <main class="py-5">
+            <div class="container">
+                <h2 class="text-center form-title fw-bold inter mb-4"> US PIPE IMMIGRATION INQUIRY </h2>
+                <form action="" method="post">
+                    <div class="sec-2 mb-4">
+                        <fieldset class="px-sm-5 px-4 py-4">
+                            <div class="row justify-content-around">
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="first_name"
+                                                class="form-label gap-1 d-flex align-items-center"><span>Your First
+                                                    Name(s)</span><img src="./assets/images/question-icon.svg"
+                                                    alt="Icon" width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="first_name"
+                                                    placeholder="Enter your first name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="last_name"
+                                                class="form-label gap-1 d-flex align-items-center"><span>Your Last
+                                                    Name(s)</span><img src="./assets/images/question-icon.svg"
+                                                    alt="Icon" width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="last_name"
+                                                    placeholder="Enter your last name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="currentStateAndCountry"
+                                                class="form-label gap-1 d-flex align-items-center"><span>Your Current
+                                                    State, Country of Residence</span><img
+                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1 inp-wih-icon-left"
+                                                    id="currentStateAndCountry" placeholder="New York, United States">
+                                                <img src="./assets/images/location.svg" alt="Lock"
+                                                    class="inp-icon-left">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="phoneNumber"
+                                                class="form-label gap-1 d-flex align-items-center"><span>Phone
+                                                    Number</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1 phone-number"
+                                                    id="phoneNumber" placeholder="Phone number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <div class="input-div">
+                                                <input type="email" class="form-control mt-1" id="email"
+                                                    placeholder="Email@lato.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="whatsappNumber"
+                                                class="form-label gap-1 d-flex align-items-center"><span>WhatsApp
+                                                    Number</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1 phone-number"
+                                                    id="whatsappNumber" placeholder="WhatsApp Number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-7 col-md-8 mx-auto mt-5">
+                                    <p class="text-center text-primary">Do you need help completing the form needed to
+                                        qualify you?</p>
+                                    <div class="d-flex gap-5 align-items-center justify-content-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Yes" id="needHelpYes"
+                                                name="needHelpYes">
+                                            <label class="form-check-label" for="needHelpYes"> Yes </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="No" id="needHelpNo"
+                                                name="needHelpNo">
+                                            <label class="form-check-label" for="needHelpNo"> No </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-7 col-md-8 mx-auto">
+                                            <div class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-4">
+                                                <p class="mb-0 text-center">We can determine if you quality for the new
+                                                    PIPE program for a fee of $25 USD.Please select your payment method
+                                                    below. </p><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 mb-3 pt-3">
+                                                    <div class="input-div">
+                                                        <select id="payment-methods" style="width: 100%;">
+                                                            <option value="" selected>Select Payment Method </option>
+                                                            <option value="mastercard"
+                                                                data-image="./assets/images/Mastercard.svg">MasterCard
+                                                            </option>
+                                                            <option value="paypal"
+                                                                data-image="./assets/images/PayPal.svg">PayPal</option>
+                                                            <option value="visa"
+                                                                data-image="./assets/images/Etherium.svg"> Zelle
+                                                            </option>
+                                                            <option value="visa"
+                                                                data-image="./assets/images/check-via-mail.svg"> Check
+                                                                via mail</option>
+                                                            <option value="visa"
+                                                                data-image="./assets/images/Yandex.svg"> In person
+                                                                payment</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="text-center col-lg-6 mx-auto">
+                        <div class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-5 mb-3">
+                            <p class="mb-0 text-center">"Need further help? Please enter your questions below</p><img
+                                src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <textarea name="other" id="other" class="form-control" rows="8"
+                            placeholder="Please enter your questions below"></textarea>
+                    </div>
+                    <div class="text-center my-4">
+                        <button class="btn btn-rectangle btn-primary"><span>Submit</span><img src="./assets/images/RightIcon.svg" alt="Icon" height="16"></button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+
+    <body>
+        <script src="./assets/js/jquery-3.6.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="./assets/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+        <script src="./assets/js/script.js"></script>
+        <script>
+            $(function () {
+                $(".date").datepicker({
+                    dateFormat: "dd/mm/yy"
+                });
+
+                $(".calendar").click(function () {
+                    $(this).siblings('.date').datepicker("show");
+                });
+            });
+
+            $(document).ready(function () {
+                let inputs = document.querySelectorAll('.phone-number');
+                for (let i = 0; i < inputs.length; i++) {
+                    window.intlTelInput(inputs[i], {
+                        separateDialCode: true
+                    });
+                }
+
+                $('.show-previous-marriage').on('click', function () {
+                    $('.sec-4').show();
+                })
+                $('select').select2();
+                function formatPaymentMethod(method) {
+                    if (!method.id) {
+                        return method.text;
+                    }
+
+                    var baseUrl = $(method.element).data('image');
+                    var $method = $(
+                        '<span><img src="' + baseUrl + '" class="img-flag" style="width: 20px; height: 20px;"/> ' + method.text + '</span>'
+                    );
+                    return $method;
+                };
+
+                $('#payment-methods').select2({
+                    templateResult: formatPaymentMethod,
+                    templateSelection: formatPaymentMethod
+                });
+            });
+        </script>
+    </body>
+
+</html>

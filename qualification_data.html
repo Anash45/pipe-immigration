@@ -23,26 +23,33 @@
                             <div class="row justify-content-around">
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
-                                        <div class="col-sm-6 mb-3">
+                                        <div class="col-md-6 mb-3">
                                             <label for="firstName" class="form-label">Your First Name(s)</label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="firstName"
                                                     placeholder="John">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 mb-3">
-                                            <label for="lastName" class="form-label">Your Last Name(s)</label>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="middleName" class="form-label">Your Middle Name(s)</label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="lastName"
-                                                    placeholder="Doe">
+                                                <input type="text" class="form-control mt-1" id="middleName"
+                                                    placeholder="Vin">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
-                                        <div class="col-sm-6 mb-3">
-                                            <label for="birthday" class="form-label">Your Birthday</label>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label">Your Last Name(s)</label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="lastName"
+                                                    placeholder="Doe">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="birthday" class="form-label text-nowrap">Your Birthday</label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 date" id="birthday"
                                                     placeholder="DD/MM/YY">
@@ -50,11 +57,38 @@
                                                     class="inp-icon-right calendar cursor-point">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 mb-3">
-                                            <label for="birthPlace" class="form-label">Birth State and Country</label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="birthPlace" class="form-label text-nowrap">Birth State and
+                                                Country</label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="birthPlace"
                                                     placeholder="New York, United States">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="citizenshipCountry" class="form-label text-nowrap">Country of
+                                                Citizenship</label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="citizenshipCountry"
+                                                    placeholder="United States">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gender" class="form-label">Gender</label>
+                                            <div class="input-div">
+                                                <select class="form-control mt-1" id="gender">
+                                                    <option value="">Select gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -66,6 +100,20 @@
                         <h3 class="form-sec-title text-center inter">Current US Address</h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="row justify-content-around">
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="careOfName"
+                                                class="form-label gap-1 d-flex align-items-center"><span>In Care of
+                                                    Name</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="careOfName"
+                                                    placeholder="Enter name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
@@ -206,6 +254,36 @@
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 phone-number"
                                                     id="emergencyPhone" placeholder="Phone number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="residency"
+                                                class="form-label opacity-0 gap-1 d-flex align-items-center"><span>Residency</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="d-flex gap-3 align-items-center justify-content-center">
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="residenceApt"> Apt. </label>
+                                                    <input class="form-check-input" type="checkbox" value="Apt"
+                                                        id="residenceApt" name="residenceApt">
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="residenceSte"> Ste. </label>
+                                                    <input class="form-check-input" type="checkbox" value="Ste"
+                                                        id="residenceSte" name="residenceSte">
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="residenceFlr"> Flr. </label>
+                                                    <input class="form-check-input" type="checkbox" value="Flr"
+                                                        id="residenceFlr" name="residenceFlr">
+                                                </div>
+                                                <div class="input-div flex-grow-1">
+                                                    <input type="text" class="form-control mt-1" id="residency"
+                                                        placeholder="">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1256,8 +1334,10 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="capacityToSupport"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Describe your capacity to support yourself?</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span>Describe your
+                                                    capacity to support yourself?</span><img
+                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5" id="capacityToSupport"
                                                     placeholder="Describe your skills"></textarea>
@@ -1269,10 +1349,13 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                         </fieldset>
                     </div>
                     <div class="text-center col-lg-6 mx-auto">
-                        <p class="end-note">"If you have any questions, not answered by out (?), please add them below or email us at <br><a href="mailto:support@ImmigrationAI.ai">"support@ImmigrationAI.ai"</a></p>
+                        <p class="end-note">"If you have any questions, not answered by out (?), please add them below
+                            or email us at <br><a href="mailto:support@ImmigrationAI.ai">"support@ImmigrationAI.ai"</a>
+                        </p>
                     </div>
                     <div class="col-xl-9 col-lg-10 mx-auto mt-5">
-                        <textarea name="other" id="other" class="form-control" rows="8" placeholder="Briefly Describe"></textarea>
+                        <textarea name="other" id="other" class="form-control" rows="8"
+                            placeholder="Briefly Describe"></textarea>
                     </div>
                 </form>
             </div>
