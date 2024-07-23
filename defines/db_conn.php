@@ -2,9 +2,15 @@
 // db_conn.php
 
 $host = 'localhost';
-$db   = 'pipe-immigration';
-$user = 'root';
-$pass = 'root';
+$db   = 'u956940883_pipe';
+$user = 'u956940883_pipe';
+$pass = 'Bi?+5s#4';
+
+
+// $host = 'localhost';
+// $db   = 'pipe-immigration';
+// $user = 'root';
+// $pass = 'root';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
