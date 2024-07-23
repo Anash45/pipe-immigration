@@ -88,6 +88,12 @@ main {
 .input-div {
     position: relative;
 }
+.msg-error{
+    color: red !important;
+    font-size: 12px;
+    position: absolute;
+    bottom: -16px;
+}
 
 .page-form-sec .form-control {
     padding: 12px 12px 12px 40px;
@@ -451,6 +457,28 @@ input:focus {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+}
+.input-error{
+    border-color: red !important;
+}
+.help-icon{
+    cursor: pointer;
+}
+
+.en{
+    display: none;
+}
+
+.es{
+    display: none;
+}
+
+.lang-english .en{
+    display: inline;
+}
+
+.lang-spanish .es{
+    display: inline;
 }
 @media (max-width: 768px) {
 

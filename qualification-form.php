@@ -1,3 +1,7 @@
+<?php
+include './defines/db_conn.php';
+include './defines/functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,28 +16,34 @@
         <link rel="stylesheet" href="./assets/css/style.css">
     </head>
 
-    <body class="main-form-page roboto">
+    <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
         <main class="py-5">
             <div class="container">
-                <h2 class="text-center form-title fw-bold inter mb-4"> PIPE QUALIFICATION DATA </h2>
-                <form action="" method="post">
+                <div class="d-flex justify-content-center gap-5 align-items-center mb-5">
+                    <a href="?lang=english" class="lang-link <?php echo $active = (getLanguage() == 'english') ? 'active' : ''; ?> inter text-dark">ENGLISH</a><a href="?lang=spanish"
+                        class="lang-link inter <?php echo $active = (getLanguage() == 'spanish') ? 'active' : ''; ?> text-dark">SPANISH</a>
+                </div>
+                <h2 class="text-center form-title fw-bold inter mb-4"> <?php echo getTranslation('Qualification',0,'label'); ?> </h2>
+                <form action="./forms/qualification-form-process.php" method="post" id="qualification-form">
                     <div class="sec-1 mb-4">
-                        <h3 class="form-sec-title text-center inter">Personal Information</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',59,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="row justify-content-around">
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="firstName" class="form-label">Your First Name(s)</label>
+                                            <label for="firstName" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',1,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',1,'help'); ?>" class="help-icon" alt="Icon"
+                                            width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="firstName"
+                                                <input type="text" class="form-control mt-1" id="firstName"  name="firstName"
                                                     placeholder="John">
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="middleName" class="form-label">Your Middle Name(s)</label>
+                                            <label for="middleName" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',70,'label'); ?> </span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',70,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="middleName"
+                                                <input type="text" class="form-control mt-1" id="middleName"  name="middleName"
                                                     placeholder="Vin">
                                             </div>
                                         </div>
@@ -42,16 +52,18 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="lastName" class="form-label">Your Last Name(s)</label>
+                                            <label for="lastName" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',2,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',2,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="lastName"
+                                                <input type="text" required class="form-control mt-1" id="lastName"  name="lastName"
                                                     placeholder="Doe">
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="birthday" class="form-label text-nowrap">Your Birthday</label>
+                                            <label for="birthday" class="form-label gap-1 d-flex align-items-center text-nowrap"><span><?php echo getTranslation('Qualification',3,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',3,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="birthday"
+                                                <input type="text" required class="form-control mt-1 date" id="birthday"  name="birthday"
                                                     placeholder="DD/MM/YY">
                                                 <img src="./assets/images/calendar.svg" alt="Icon"
                                                     class="inp-icon-right calendar cursor-point">
@@ -62,18 +74,18 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="birthPlace" class="form-label text-nowrap">Birth State and
-                                                Country</label>
+                                            <label for="birthPlace" class="form-label gap-1 d-flex align-items-center text-nowrap"><span><?php echo getTranslation('Qualification',4,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',4,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="birthPlace"
+                                                <input type="text" required class="form-control mt-1" id="birthPlace"  name="birthPlace"
                                                     placeholder="New York, United States">
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="citizenshipCountry" class="form-label text-nowrap">Country of
-                                                Citizenship</label>
+                                            <label for="citizenshipCountry" class="form-label gap-1 d-flex align-items-center text-nowrap"><span><?php echo getTranslation('Qualification',71,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',71,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="citizenshipCountry"
+                                                <input type="text" required class="form-control mt-1" id="citizenshipCountry"  name="citizenshipCountry"
                                                     placeholder="United States">
                                             </div>
                                         </div>
@@ -82,9 +94,10 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="gender" class="form-label">Gender</label>
-                                            <div class="input-div">
-                                                <select class="form-control mt-1" id="gender">
+                                            <label for="gender" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',72,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',72,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
+                                            <div class="input-div mt-1">
+                                                <select class="form-control mt-1" required id="gender"  name="gender">
                                                     <option value="">Select gender</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
@@ -97,19 +110,18 @@
                         </fieldset>
                     </div>
                     <div class="sec-2 mb-4">
-                        <h3 class="form-sec-title text-center inter">Current US Address</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',60,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="row justify-content-around">
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="careOfName"
-                                                class="form-label gap-1 d-flex align-items-center"><span>In Care of
-                                                    Name</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',73,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',73,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="careOfName"
-                                                    placeholder="Enter name">
+                                                <input type="text" class="form-control mt-1" id="careOfName" name="careOfName"
+                                                    placeholder="Jon Smith">
                                             </div>
                                         </div>
                                     </div>
@@ -118,12 +130,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="street1"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Street Address
-                                                    1</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',5,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',5,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="street1"
-                                                    placeholder="Enter your Current Address Line 1">
+                                                <input type="text" class="form-control mt-1" id="street1" name="street1"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -132,12 +143,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="street2"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Street Address
-                                                    2</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',6,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',6,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="street2"
-                                                    placeholder="Enter your Current US Address 2">
+                                                <input type="text" class="form-control mt-1" id="street2" name="street2"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -146,11 +156,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="zipCode"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Zip
-                                                    Code</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',7,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',7,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="zipCode"
+                                                <input type="text" class="form-control mt-1" id="zipCode" name="zipCode"
                                                     placeholder="11004">
                                             </div>
                                         </div>
@@ -159,16 +168,18 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-sm-6 mb-3 pt-3">
-                                            <label for="city" class="form-label">City</label>
+                                            <label for="city" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',8,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',8,'help'); ?>" class="help-icon" alt="Icon"
+                                            width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="city"
+                                                <input type="text" class="form-control mt-1" id="city" name="city"
                                                     placeholder="Queens">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 mb-3 pt-3">
-                                            <label for="state" class="form-label">State</label>
+                                            <label for="state" class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',9,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',9,'help'); ?>" class="help-icon" alt="Icon"
+                                            width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="state"
+                                                <input type="text" class="form-control mt-1" id="state" name="state"
                                                     placeholder="New York">
                                             </div>
                                         </div>
@@ -178,11 +189,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="cellPhone"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Cell
-                                                    Phone</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',10,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',10,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 phone-number" id="cellPhone"
+                                                <input type="text" class="form-control mt-1 phone-number" id="cellPhone" name="cellPhone"
                                                     placeholder="Phone number">
                                             </div>
                                         </div>
@@ -192,11 +202,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="homePhone"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Home
-                                                    Phone</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',12,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',12,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 phone-number" id="homePhone"
+                                                <input type="text" class="form-control mt-1 phone-number" id="homePhone" name="homePhone"
                                                     placeholder="Phone number">
                                             </div>
                                         </div>
@@ -206,11 +215,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="workPhone"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Work
-                                                    Phone</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',13,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',13,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 phone-number" id="workPhone"
+                                                <input type="text" class="form-control mt-1 phone-number" id="workPhone" name="workPhone"
                                                     placeholder="Phone number">
                                             </div>
                                         </div>
@@ -220,11 +228,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="currentEmail"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Email</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',14,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',14,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="email" class="form-control mt-1" id="currentEmail"
+                                                <input type="email" class="form-control mt-1" id="currentEmail" name="currentEmail"
                                                     placeholder="Email@lato.com">
                                             </div>
                                         </div>
@@ -234,12 +242,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="emergencyContact"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Emergency
-                                                    Contact</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',15,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',15,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 phone-number"
-                                                    id="emergencyContact" placeholder="Phone number">
+                                                <input type="text" class="form-control mt-1"
+                                                    id="emergencyContact" name="emergencyContact" placeholder="John Doe">
                                             </div>
                                         </div>
                                     </div>
@@ -248,12 +255,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="emergencyPhone"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Emergency
-                                                    Phone</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',16,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',16,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 phone-number"
-                                                    id="emergencyPhone" placeholder="Phone number">
+                                                    id="emergencyPhone" name="emergencyPhone" placeholder="Phone number">
                                             </div>
                                         </div>
                                     </div>
@@ -262,26 +268,31 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="residency"
-                                                class="form-label opacity-0 gap-1 d-flex align-items-center"><span>Residency</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label opacity-0 gap-1 d-flex align-items-center"><span>Residency</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="d-flex gap-3 align-items-center justify-content-center">
-                                                <div class="form-check">
+                                                <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceApt"> Apt. </label>
                                                     <input class="form-check-input" type="checkbox" value="Apt"
-                                                        id="residenceApt" name="residenceApt">
+                                                        id="residenceApt" name="residency[]">
                                                 </div>
-                                                <div class="form-check">
+                                                <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceSte"> Ste. </label>
                                                     <input class="form-check-input" type="checkbox" value="Ste"
-                                                        id="residenceSte" name="residenceSte">
+                                                        id="residenceSte" name="residency[]">
                                                 </div>
-                                                <div class="form-check">
+                                                <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceFlr"> Flr. </label>
                                                     <input class="form-check-input" type="checkbox" value="Flr"
-                                                        id="residenceFlr" name="residenceFlr">
+                                                        id="residenceFlr" name="residency[]">
+                                                </div>
+                                                <div class="form-check mb-0">
+                                                    <label class="form-check-label" for="residenceOther"> Other. </label>
+                                                    <input class="form-check-input" type="checkbox" value="Other"
+                                                        id="residenceOther" name="residency[]">
                                                 </div>
                                                 <div class="input-div flex-grow-1">
-                                                    <input type="text" class="form-control mt-1" id="residency"
+                                                    <input type="text" class="form-control mt-1" id="residency" name="residency[]"
                                                         placeholder="">
                                                 </div>
                                             </div>
@@ -292,7 +303,7 @@
                         </fieldset>
                     </div>
                     <div class="sec-3 mb-4">
-                        <h3 class="form-sec-title text-center inter">Current US Address</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',61,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
@@ -311,11 +322,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="spouseName"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Spouse's Full
-                                                    Legal Name</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',17,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',17,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="spouseName"
+                                                <input type="text" class="form-control mt-1" id="spouseName" name="spouseName"
                                                     placeholder="lorum ipsum">
                                             </div>
                                         </div>
@@ -325,11 +335,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="dateOfMarriage"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Date of
-                                                    Marriage</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',20,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',20,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="dateOfMarriage"
+                                                <input type="text" class="form-control mt-1 date" id="dateOfMarriage" name="dateOfMarriage"
                                                     placeholder="DD / MM / YY">
                                             </div>
                                         </div>
@@ -338,14 +347,13 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
-                                            <label for="placeOfMarriageCertificate"
-                                                class="form-label gap-1 d-flex align-items-center"><span>State and
-                                                    Country of Marriage Certificate </span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                            <label for="stateCountryOfMarriage"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',19,'label'); ?> </span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',19,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1"
-                                                    id="placeOfMarriageCertificate"
+                                                    id="stateCountryOfMarriage" name="stateCountryOfMarriage"
                                                     placeholder="New York, United States">
                                             </div>
                                         </div>
@@ -355,11 +363,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="spouseBirthday"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Spouse's
-                                                    Birthday</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',18,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',18,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="spouseBirthday"
+                                                <input type="text" class="form-control mt-1 date" id="spouseBirthday" name="spouseBirthday"
                                                     placeholder="DD / MM / YY">
                                             </div>
                                         </div>
@@ -369,13 +376,12 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="proofOfSpouseCitizenship"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Proof of
-                                                    Spouse's US Citizenship </span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',21,'label'); ?> </span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',21,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1"
-                                                    id="proofOfSpouseCitizenship" placeholder="New York, United States">
+                                                    id="proofOfSpouseCitizenship" name="proofOfSpouseCitizenship" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -385,7 +391,7 @@
                                         <div class="col-12 mb-3 pt-3 text-end">
                                             <p
                                                 class="d-flex gap-1 justify-content-end align-items-center show-previous-marriage text-primary">
-                                                <img src="./assets/images/plus.svg" alt="Icon" width="13"><span>Previous
+                                                <img src="./assets/images/plus.svg" class="help-icon" alt="Icon" width="13"><span>Previous
                                                     Marriage</span>
                                             </p>
                                         </div>
@@ -395,18 +401,17 @@
                         </fieldset>
                     </div>
                     <div class="sec-4 mb-4">
-                        <h3 class="form-sec-title text-center inter">Previous Marriage</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',62,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="row justify-content-around">
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="exSpouseName"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Ex-spouse Full
-                                                    Legal Name</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',74,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',74,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="exSpouseName"
+                                                <input type="text" class="form-control mt-1" id="exSpouseName" name="exSpouseName"
                                                     placeholder="lorum ipsum">
                                             </div>
                                         </div>
@@ -416,11 +421,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="exDateOfMarriage"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Date of
-                                                    Marriage</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',20,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',20,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="exDateOfMarriage"
+                                                <input type="text" class="form-control mt-1 date" id="exDateOfMarriage" name="exDateOfMarriage"
                                                     placeholder="DD / MM / YY">
                                             </div>
                                         </div>
@@ -429,14 +433,13 @@
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
-                                            <label for="exPlaceOfMarriageCertificate"
-                                                class="form-label gap-1 d-flex align-items-center"><span>State and
-                                                    Country of Marriage Certificate </span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                            <label for="exPlaceOfMarriage"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',19,'label'); ?> </span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',19,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1"
-                                                    id="exPlaceOfMarriageCertificate"
+                                                    id="exPlaceOfMarriage" name="exPlaceOfMarriage"
                                                     placeholder="New York, United States">
                                             </div>
                                         </div>
@@ -446,13 +449,25 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="exPlaceOfDivorce"
-                                                class="form-label gap-1 d-flex align-items-center"><span>State and
-                                                    Country of Divorce </span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',75,'label'); ?> </span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',75,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="exPlaceOfDivorce"
+                                                <input type="text" class="form-control mt-1" id="exPlaceOfDivorce" name="exPlaceOfDivorce"
                                                     placeholder="New York, United States">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="exDateOfMarriage"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',76,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',76,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1 date" id="exDateOfDivorce" name="exDateOfDivorce"
+                                                    placeholder="DD / MM / YY">
                                             </div>
                                         </div>
                                     </div>
@@ -463,19 +478,18 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="Yes"
                                                     id="obtainDecreeOfDivorce" name="obtainDecreeOfDivorce">
-                                                <label class="form-check-label" for="obtainDecreeOfDivorce"> Can you
-                                                    obtain this decree of divorce</label>
+                                                <label class="form-check-label gap-1 d-flex align-items-center" for="obtainDecreeOfDivorce"> <span> <?php echo getTranslation('Qualification',77,'label'); ?> </span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',77,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-5 col-lg-6">
                                 </div>
                             </div>
                         </fieldset>
                     </div>
                     <div class="sec-5 mb-4">
-                        <h3 class="form-sec-title text-center inter">US Entries</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',63,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
@@ -490,11 +504,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="dateOfEntry"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Date</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',22,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',22,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="dateOfEntry"
+                                                <input type="text" class="form-control mt-1 date" id="dateOfEntry" name="dateOfEntry[]"
                                                     placeholder="DD / MM / YY">
                                             </div>
                                         </div>
@@ -504,11 +518,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="stateOfEntry"
-                                                class="form-label gap-1 d-flex align-items-center"><span>State via which
-                                                    you entered US</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',23,'label'); ?>
+                                                    you entered US</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',23,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1" id="stateOfEntry"
+                                                <input type="text" class="form-control mt-1" id="stateOfEntry" name="stateOfEntry[]"
                                                     placeholder="New York">
                                             </div>
                                         </div>
@@ -518,11 +532,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="methodOfEntry"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Describe how
-                                                    you enter the US</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',24,'label'); ?></span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',24,'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <textarea class="form-control mt-1" rows="5" id="methodOfEntry"
+                                                <textarea class="form-control mt-1" rows="5" id="methodOfEntry" name="methodOfEntry[]"
                                                     placeholder="Briefly Describe your Entry..."></textarea>
                                             </div>
                                         </div>
@@ -532,13 +545,10 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="anyIllegalDocumentOnEntry"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Did you use any
-                                                    illegal documentation to enter the US?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
-                                                    width="16"></label>
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',25,'label'); ?></span></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5"
-                                                    id="anyIllegalDocumentOnEntry"
+                                                    id="anyIllegalDocumentOnEntry" name="anyIllegalDocumentOnEntry[]"
                                                     placeholder="E.g., someone's else's birth certificate, a forged passport. Describe in detail."></textarea>
                                             </div>
                                         </div>
@@ -548,12 +558,11 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="detainedByUSPatrol"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Were you
-                                                    detained by US Border Patrol?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',26,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',26,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
-                                                <textarea class="form-control mt-1" rows="5" id="detainedByUSPatrol"
+                                                <textarea class="form-control mt-1" rows="5" id="detainedByUSPatrol" name="detainedByUSPatrol[]"
                                                     placeholder="Were you finger printed? Were you incarcerated? 
 Describe in detail"></textarea>
                                             </div>
@@ -565,7 +574,7 @@ Describe in detail"></textarea>
                                         <div class="col-12 mb-3 pt-3 text-end">
                                             <p
                                                 class="d-flex gap-1 justify-content-end align-items-center more-entries text-primary">
-                                                <img src="./assets/images/plus.svg" alt="Icon" width="13"><span>US
+                                                <img src="./assets/images/plus.svg" class="help-icon" alt="Icon" width="13"><span>US
                                                     Entries</span>
                                             </p>
                                         </div>
@@ -575,7 +584,7 @@ Describe in detail"></textarea>
                         </fieldset>
                     </div>
                     <div class="sec-6 mb-4">
-                        <h3 class="form-sec-title text-center inter">Residency Documents</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',64,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
@@ -593,37 +602,36 @@ Describe in detail"></textarea>
                                 <div class="col-xl-9 col-lg-10">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 check-input">
                                                 <div>
-                                                    <input class="form-check-input" type="checkbox" value="Yes"
-                                                        id="taxReturn" name="taxReturn">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                        id="taxReturn" name="documentType[]" value="Tax Return">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <label for="taxReturnYears"
-                                                        class="form-label gap-1 d-flex align-items-center"><span>Tax
-                                                            Return? If so, enter the years that you filed a Federal Tax
-                                                            Return </span></label>
+                                                        class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',27,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',27,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                     <div class="input-div">
-                                                        <input type="text" class="form-control mt-1" id="taxReturnYears"
+                                                        <input type="text" name="documentDesc[]" class="form-control mt-1" id="taxReturnYears"
                                                             placeholder="Enter all of the years that you filed a Federal Tax returns [e.g., 2010 through 2023]">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mb-3 pt-3">
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 check-input">
                                                 <div>
-                                                    <input class="form-check-input" type="checkbox" value="Yes"
-                                                        id="birthCertChildern" name="birthCertChildern">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                        id="birthCertChildern" name="documentType[]" value="Childern Birth Certificate">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <label for="birthCertNameDate"
-                                                        class="form-label gap-1 d-flex align-items-center"><span>Birth
-                                                            certificate of US born children? Enter their name(s),
-                                                            birthday(s), and US state(s) where they were
-                                                            born?</span></label>
+                                                        class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',28,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',28,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                     <div class="input-div">
-                                                        <input type="text" class="form-control mt-1"
+                                                        <input type="text" name="documentDesc[]" class="form-control mt-1"
                                                             id="birthCertNameDate"
                                                             placeholder="[e.g., Rosita Juarez Tipton, 9/18/2019, Wisconsin]">
                                                     </div>
@@ -631,36 +639,36 @@ Describe in detail"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12 mb-3 pt-3">
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 check-input">
                                                 <div>
-                                                    <input class="form-check-input" type="checkbox" value="Yes" id="w2"
-                                                        name="w2">
+                                                    <input class="form-check-input" type="checkbox"  value="W-2" id="w2"
+                                                        name="documentType[]">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <label for="w2NameDate"
-                                                        class="form-label gap-1 d-flex align-items-center"><span>W-2? If
-                                                            so for enter the, enter all of the employer's name, state,
-                                                            year of your W-2</span></label>
+                                                        class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',29,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',29,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                     <div class="input-div">
-                                                        <input type="text" class="form-control mt-1" id="w2NameDate"
+                                                        <input type="text" name="documentDesc[]" class="form-control mt-1" id="w2NameDate"
                                                             placeholder="[e.g., Honeywell, AZ, 2020 to 2023 ; Safeway, PA, 2010 to 2019]">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mb-3 pt-3">
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 check-input">
                                                 <div>
-                                                    <input class="form-check-input" type="checkbox" value="Yes"
-                                                        id="drivingLicense" name="drivingLicense">
+                                                    <input class="form-check-input" type="checkbox" value="Driving License"
+                                                        id="drivingLicense" name="documentType[]">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <label for="drivingLicenseStateExpiry"
-                                                        class="form-label gap-1 d-flex align-items-center"><span>Driver's
-                                                            license? Enter all of the states, license's ID, and their
-                                                            expiration date</span></label>
+                                                        class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',30,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',30,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                     <div class="input-div">
-                                                        <input type="text" class="form-control mt-1"
+                                                        <input type="text" name="documentDesc[]" class="form-control mt-1"
                                                             id="drivingLicenseStateExpiry"
                                                             placeholder="[e.g., Arizona, 2598617, 2026; Wisconsin, A0463892, 2019">
                                                     </div>
@@ -668,18 +676,18 @@ Describe in detail"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12 mb-3 pt-3">
-                                            <div class="d-flex gap-3">
+                                            <div class="d-flex gap-3 check-input">
                                                 <div>
-                                                    <input class="form-check-input" type="checkbox" value="Yes"
-                                                        id="stateIDs" name="stateIDs">
+                                                    <input class="form-check-input" type="checkbox" value="State ID"
+                                                        id="stateIDs" name="documentType[]">
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <label for="stateIDsNameNumber"
-                                                        class="form-label gap-1 d-flex align-items-center"><span>Any
-                                                            other State Issue IDs? If please describe them
-                                                            below</span></label>
+                                                        class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',31,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',31,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                     <div class="input-div">
-                                                        <input type="text" class="form-control mt-1"
+                                                        <input type="text" name="documentDesc[]" class="form-control mt-1"
                                                             id="stateIDsNameNumber"
                                                             placeholder="Maine, State ID: 12345678; Ohio, State ID: 326598741">
                                                     </div>
@@ -692,21 +700,18 @@ Describe in detail"></textarea>
                             <div class="row justify-content-start">
                                 <div class="col-12">
                                     <div class="col-xl-9 col-lg-10 mb-3 pt-3">
-                                        <div class="d-flex gap-3">
+                                        <div class="d-flex gap-3 check-input">
                                             <div>
-                                                <input class="form-check-input" type="checkbox" value="Yes"
-                                                    id="validateDoc" name="validateDoc">
+                                                <input class="form-check-input" type="checkbox" value="Other Documents"
+                                                    id="validateDoc" name="documentType[]">
                                             </div>
                                             <div class="flex-grow-1">
                                                 <label for="validateDocDesc"
-                                                    class="form-label gap-1 d-flex align-items-center"><span>Do you have
-                                                        any other documents that could be used to validate your
-                                                        residency in the US? List any document such a Rental agreement,
-                                                        utility bills, or other documents and all of the details
-                                                        associated with these documents, or describe anything that could
-                                                        be used to proof your residency in the US? </span></label>
+                                                    class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',32,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',32,'help'); ?>" class="help-icon" alt="Icon"
+                                                    width="16"></label>
                                                 <div class="input-div">
-                                                    <textarea class="form-control mt-1" rows="5" id="validateDocDesc"
+                                                    <textarea class="form-control mt-1" rows="5" name="documentDesc[]" id="validateDocDesc"
                                                         placeholder="[Lease or Rental Agreement, Names of the tenant and landlord, Address of the rental property, Duration of the lease (start and end dates), Date the lease was signed.
 Utility Bills Type, e.g., electricity, Name of the account holder, Service address, Billing period (dates)
 "></textarea>
@@ -719,7 +724,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                         </fieldset>
                     </div>
                     <div class="sec-7 mb-4">
-                        <h3 class="form-sec-title text-center inter">Encounters with Law Enforcement Agencies</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',65,'label'); ?></h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
@@ -740,8 +745,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="dateOfEncounter"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Date of
-                                                    Encounter</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                    Encounter</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 date" id="dateOfEncounter"
                                                     placeholder="DD / MM / YY">
@@ -755,7 +760,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="stateOfEntry"
                                                 class="form-label gap-1 d-flex align-items-center"><span>State and
                                                     Country of Legal Encounter</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="stateOfEntry"
@@ -769,7 +774,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="legalIssue"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Nature of Legal
-                                                    Issue</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    Issue</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="legalIssue"
@@ -783,7 +788,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="issueDescription"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Description</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5" id="issueDescription"
@@ -797,7 +802,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3 text-start">
                                             <p
                                                 class="d-flex gap-1 justify-content-start align-items-center more-encounters text-primary">
-                                                <img src="./assets/images/plus.svg" alt="Icon" width="13"><span>Other
+                                                <img src="./assets/images/plus.svg" class="help-icon" alt="Icon" width="13"><span>Other
                                                     Legal Encounters</span>
                                             </p>
                                         </div>
@@ -808,7 +813,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                         </fieldset>
                     </div>
                     <div class="sec-8 mb-4">
-                        <h3 class="form-sec-title text-center inter">Foreign Born Children Seeking PIPE Benefits</h3>
+                        <h3 class="form-sec-title text-center inter"><?php echo getTranslation('Qualification',66,'label'); ?></h3>
                         <fieldset class="px-sm-3 px-3 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
@@ -824,49 +829,49 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Full Legal Name</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Birthday</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>State and Country of Birth</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Mother's Name</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Father's Name</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Gender</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>School Attended, state and school years</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                         <th>
                                             <div class="d-flex flex-column align-items-center">
                                                 <span>Do you access to their US school records?</span>
-                                                <img src="./assets/images/question-icon.svg" alt="Icon" width="16">
+                                                <img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon" width="16">
                                             </div>
                                         </th>
                                     </tr>
@@ -982,7 +987,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                     <div class="sec-9 mb-4">
                         <h3
                             class="form-sec-title text-center inter d-flex align-items-center justify-content-center gap-2">
-                            <span>Occupation/Employment</span> <small>(Optional)</small>
+                            <span><?php echo getTranslation('Qualification',67,'label'); ?></span> <small>(Optional)</small>
                         </h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
@@ -999,7 +1004,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="empName"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Employer</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="empName"
@@ -1013,8 +1018,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="empAddress"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Employer's
-                                                    Address</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                    Address</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="empAddress"
                                                     placeholder="Employer Complete Address">
@@ -1027,7 +1032,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="startDate"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Start
-                                                    Date</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    Date</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 date" id="startDate"
@@ -1041,7 +1046,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="jobTitle"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Job
-                                                    Title</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    Title</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="jobTitle"
@@ -1055,7 +1060,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="lastDate"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Last
-                                                    Date</span><img src="./assets/images/question-icon.svg" alt="Icon"
+                                                    Date</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 date" id="lastDate"
@@ -1069,8 +1074,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="jobDescription"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Job
-                                                    Description</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                    Description</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5" id="jobDescription"
                                                     placeholder="Tell us about your Job..."></textarea>
@@ -1084,7 +1089,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3 text-end">
                                             <p
                                                 class="d-flex gap-1 justify-content-end align-items-center more-encounters text-primary">
-                                                <img src="./assets/images/plus.svg" alt="Icon"
+                                                <img src="./assets/images/plus.svg" class="help-icon" alt="Icon"
                                                     width="13"><span>Employment</span>
                                             </p>
                                         </div>
@@ -1097,7 +1102,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                     <div class="sec-10 mb-4">
                         <h3
                             class="form-sec-title text-center inter d-flex align-items-center justify-content-center gap-2">
-                            <span>Education/Craft</span> <small>(Optional)</small>
+                            <span><?php echo getTranslation('Qualification',68,'label'); ?></span> <small>(Optional)</small>
                         </h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
@@ -1118,7 +1123,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="CertificationDegree"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Certification/Degree</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="CertificationDegree"
@@ -1132,8 +1137,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="eduUniversity"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Institution
-                                                    Issued Degree</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                    Issued Degree</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="eduUniversity"
                                                     placeholder="university of New york">
@@ -1146,7 +1151,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="degreeDate"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Date</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 date" id="degreeDate"
@@ -1160,8 +1165,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="jobTitle"
                                                 class="form-label gap-1 d-flex align-items-center"><span>State and
-                                                    Country</span><img src="./assets/images/question-icon.svg"
-                                                    alt="Icon" width="16"></label>
+                                                    Country</span><img src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="jobTitle"
                                                     placeholder="New York, United States">
@@ -1175,7 +1180,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                     <div class="sec-11 mb-4">
                         <h3
                             class="form-sec-title text-center inter d-flex align-items-center justify-content-center gap-2">
-                            <span>Others</span>
+                            <span><?php echo getTranslation('Qualification',69,'label'); ?></span>
                         </h3>
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="row justify-content-around">
@@ -1187,7 +1192,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     currently being treated for any of communicable diseases(e.g.,
                                                     tuberculosis)? </span><input class="form-check-input"
                                                     type="checkbox" value="Yes" id="anyDisease" name="anyDisease"><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <select class="form-control mt-1" id="chooseDisease">
@@ -1216,7 +1221,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     any of the US required vaccine? </span><input
                                                     class="form-check-input" type="checkbox" value="Yes"
                                                     id="missingVaccine" name="missingVaccine"><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="missingVaccineText"
@@ -1233,7 +1238,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     been diagnosed with a mental disorder?</span><input
                                                     class="form-check-input" type="checkbox" value="Yes"
                                                     id="mentalDisorder" name="mentalDisorder"><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <select class="form-control mt-1" id="mentalDisorderChoose">
@@ -1260,7 +1265,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                 class="form-label gap-1 d-flex align-items-center"><span>Have you ever
                                                     been accused of drug addiction or abuse drug trafficking,
                                                     prostitution and commercialized vice?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="accusedDrugText"
@@ -1275,7 +1280,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="accusedChildAbduction"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Have you ever
                                                     been accused of child abduction?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="accusedChildAbduction"
@@ -1290,7 +1295,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="deportedFromUS"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Have you ever
                                                     been deported from the U.S? </span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="deportedFromUS"
@@ -1305,7 +1310,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="citizenshipAfter96"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Have you ever
                                                     claimed US citizenship after Sept 1996?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="citizenshipAfter96"
@@ -1320,7 +1325,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="electionsVoted"
                                                 class="form-label gap-1 d-flex align-items-center"><span>List the US
                                                     elections you voted in?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="electionsVoted"
@@ -1336,7 +1341,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                             <label for="capacityToSupport"
                                                 class="form-label gap-1 d-flex align-items-center"><span>Describe your
                                                     capacity to support yourself?</span><img
-                                                    src="./assets/images/question-icon.svg" alt="Icon"
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5" id="capacityToSupport"
@@ -1357,6 +1362,11 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                         <textarea name="other" id="other" class="form-control" rows="8"
                             placeholder="Briefly Describe"></textarea>
                     </div>
+                    
+                    <div class="text-center my-4">
+                        <div id="response"></div>
+                        <button class="btn btn-rectangle btn-primary"><span>Submit</span><img src="./assets/images/RightIcon.svg" alt="Icon" height="16"></button>
+                    </div>
                 </form>
             </div>
         </main>
@@ -1368,12 +1378,21 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="./assets/js/script.js"></script>
         <script>
-            $(function () {
-                $(".date").datepicker({
-                    dateFormat: "dd/mm/yy"
+            function updateFormControls() {
+                $('.check-input').each(function() {
+                    // Check if any checkbox in the current .check-input div is checked
+                    var isChecked = $(this).find('.form-check-input').is(':checked');
+                    
+                    // Enable or disable the .form-control based on checkbox status
+                    $(this).find('.form-control').prop('disabled', !isChecked);
+                    $(this).find('.form-control').prop('required', isChecked);
                 });
+            }
+            $(function () {
+                $(".date").datepicker();
 
                 $(".calendar").click(function () {
                     $(this).siblings('.date').datepicker("show");
@@ -1392,6 +1411,11 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                     $('.sec-4').show();
                 })
                 $('select').select2();
+                // Run the function on page load
+                updateFormControls();
+            });
+            $(document).on('change', '.form-check-input', function() {
+                updateFormControls();
             });
         </script>
     </body>
