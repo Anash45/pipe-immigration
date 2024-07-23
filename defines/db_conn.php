@@ -4,7 +4,7 @@
 $host = 'localhost';
 $db   = 'u956940883_pipe';
 $user = 'u956940883_pipe';
-$pass = 'Bi?+5s#4';
+$pass = 'V37O$fF7';
 
 
 // $host = 'localhost';
