@@ -162,6 +162,7 @@ $(document).ready(function () {
                     data: $(form).serialize(),
                     success: function (response) {
                         // Handle the response from the server
+                        console.log(response);
                         response = JSON.parse(response);
                         console.log(response);
 
