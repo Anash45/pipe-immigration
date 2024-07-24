@@ -2,7 +2,8 @@
 
 session_start();
 
-function getLanguage() {
+function getLanguage()
+{
     if (isset($_SESSION['language'])) {
         return $_SESSION['language'];
     } else {
@@ -11,11 +12,13 @@ function getLanguage() {
     }
 }
 
-function setLanguage($language) {
+function setLanguage($language)
+{
     $_SESSION['language'] = $language;
 }
 
-function getTranslation($screenName, $sequence, $type) {
+function getTranslation($screenName, $sequence, $type)
+{
     global $pdo;
 
     $language = getLanguage(); // Get the current set language
@@ -51,7 +54,8 @@ function getTranslation($screenName, $sequence, $type) {
     }
 }
 
-function insertUser($clientID, $firstName, $middleName, $lastName, $birthday, $birthPlace, $citizenshipCountry, $gender) {
+function insertUser($clientID, $firstName, $middleName, $lastName, $birthday, $birthPlace, $citizenshipCountry, $gender)
+{
     global $pdo;
 
     $sql = "INSERT INTO user (ClientID, firstName, middleName, lastName, birthday, birthPlace, citizenshipCountry, gender, createdAt, updatedAt)
@@ -74,10 +78,22 @@ function insertUser($clientID, $firstName, $middleName, $lastName, $birthday, $b
     }
 }
 
-function insertUSAddress($userID, $careOfName, $street1, $street2, $zipCode, $city, $state, $cellPhone, $homePhone, $workPhone, $currentEmail, $emergencyContact, $emergencyPhone, $residency) {
+function insertUSAddress($userID, $careOfName, $street1, $street2, $zipCode, $city, $state, $cellPhone, $homePhone, $workPhone, $currentEmail, $emergencyContact, $emergencyPhone, $residencyType, $residency)
+{
     global $pdo; // Use the PDO connection from db_conn.php
 
-    $sql = "INSERT INTO us_address (UserID, careOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, residency, createdAt, updatedAt)
+    // Determine the column based on residencyType
+    $residencyColumn = '';
+    if ($residencyType === 'Floor') {
+        $residencyColumn = 'Floor';
+    } elseif ($residencyType === 'Apartment') {
+        $residencyColumn = 'Apartment';
+    } elseif ($residencyType === 'Suite') {
+        $residencyColumn = 'Suite';
+    }
+
+    // Prepare the SQL statement dynamically based on the residency column
+    $sql = "INSERT INTO `address` (UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, $residencyColumn, createdAt, updatedAt)
             VALUES (:userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW())";
 
     try {
@@ -103,12 +119,14 @@ function insertUSAddress($userID, $careOfName, $street1, $street2, $zipCode, $ci
     }
 }
 
-function insertCurrentMarriage($userID, $spouseName, $dateOfMarriage, $stateCountryOfMarriage, $spouseBirthday, $proofOfSpouseCitizenship) {
+
+function insertCurrentMarriage($userID, $spouseName, $dateOfMarriage, $stateCountryOfMarriage, $spouseBirthday, $proofOfSpouseCitizenship)
+{
     global $pdo;
 
     try {
         $stmt = $pdo->prepare("
-            INSERT INTO current_marriage (UserID, spouseName, dateOfMarriage, stateCountryOfMarriage, spouseBirthday, proofOfSpouseCitizenship)
+            INSERT INTO marriage (UserID, spouseName, dateOfMarriage, stateCountryOfMarriage, spouseBirthday, proofOfSpouseCitizenship)
             VALUES (:userID, :spouseName, :dateOfMarriage, :stateCountryOfMarriage, :spouseBirthday, :proofOfSpouseCitizenship)
         ");
 
@@ -130,18 +148,19 @@ function insertCurrentMarriage($userID, $spouseName, $dateOfMarriage, $stateCoun
     }
 }
 
-function insertPreviousMarriage($userID, $exSpouseName, $exDateOfMarriage, $exPlaceOfMarriage, $exPlaceOfDivorce, $exDateOfDivorce, $obtainDecreeOfDivorce) {
+function insertPreviousMarriage($userID, $exSpouseName, $exDateOfMarriage, $exPlaceOfMarriage, $exPlaceOfDivorce, $exDateOfDivorce, $obtainDecreeOfDivorce)
+{
     global $pdo; // Assume $pdo is the PDO instance from db_conn.php
 
     try {
         // Prepare the SQL statement
-        $sql = "INSERT INTO previous_marriage (
+        $sql = "INSERT INTO marriage (
                     UserID, 
-                    exSpouseName, 
-                    exDateOfMarriage, 
-                    exPlaceOfMarriage, 
-                    exPlaceOfDivorce, 
-                    exDateOfDivorce, 
+                    spouseName, 
+                    dateOfMarriage, 
+                    stateCountryOfMarriage, 
+                    placeOfDivorce, 
+                    dateOfDivorce, 
                     obtainDecreeOfDivorce, 
                     updatedAt
                 ) VALUES (
@@ -179,11 +198,12 @@ function insertPreviousMarriage($userID, $exSpouseName, $exDateOfMarriage, $exPl
 }
 
 // Function to insert a single US entry
-function insertUSEntries($userID, $dateOfEntry, $stateOfEntry, $methodOfEntry, $anyIllegalDocumentOnEntry, $detainedByUSPatrol) {
+function insertUSEntries($userID, $dateOfEntry, $stateOfEntry, $methodOfEntry, $anyIllegalDocumentOnEntry, $detainedByUSPatrol)
+{
     global $pdo;
     try {
         $stmt = $pdo->prepare("
-            INSERT INTO us_entries (UserID, dateOfEntry, stateOfEntry, methodOfEntry, anyIllegalDocumentOnEntry, detainedByUSPatrol, updatedAt)
+            INSERT INTO us_entry (UserID, dateOfEntry, stateOfEntry, methodOfEntry, anyIllegalDocumentOnEntry, detainedByUSPatrol, updatedAt)
             VALUES (:userID, :dateOfEntry, :stateOfEntry, :methodOfEntry, :anyIllegalDocumentOnEntry, :detainedByUSPatrol, NOW())
         ");
 
@@ -203,8 +223,55 @@ function insertUSEntries($userID, $dateOfEntry, $stateOfEntry, $methodOfEntry, $
         throw new Exception("Error inserting entry: " . $e->getMessage()); // Return false on failure
     }
 }
+function insertEncounters($userID, $dateOfEncounter, $stateCountryOfLegalEncounter, $natureOfLegalIssue, $description)
+{
+    global $pdo; // Use the PDO connection from db_conn.php
 
-function insertResidencyDocuments($userID, $documentType, $documentDesc) {
+    $sql = "INSERT INTO `encounter` (UserID, DateOfEncounter, StateCountryOfLegalEncounter, NatureOfLegalIssue, `Description`, updatedAt)
+            VALUES (:userID, :dateOfEncounter, :stateCountryOfLegalEncounter, :natureOfLegalIssue, :description, NOW())";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':dateOfEncounter', $dateOfEncounter);
+        $stmt->bindParam(':stateCountryOfLegalEncounter', $stateCountryOfLegalEncounter);
+        $stmt->bindParam(':natureOfLegalIssue', $natureOfLegalIssue);
+        $stmt->bindParam(':description', $description);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        throw new Exception("Error inserting encounter data: " . $e->getMessage());
+    }
+}
+
+// Function to insert offspring into the database
+function insertOffspring($userID, $fullLegalName, $birthday, $stateCountryOfBirth, $mothersName, $fathersName, $gender, $schoolDetails, $accessToSchoolRecords)
+{
+    global $pdo; // Use the PDO connection from db_conn.php
+
+    $sql = "INSERT INTO `offspring` (UserID, fullLegalName, birthday, stateCountryOfBirth, mothersName, fathersName, gender, schoolDetails, accessToSchoolRecords, createdAt, updatedAt)
+            VALUES (:userID, :fullLegalName, :birthday, :stateCountryOfBirth, :mothersName, :fathersName, :gender, :schoolDetails, :accessToSchoolRecords, NOW(), NOW())";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':fullLegalName', $fullLegalName);
+        $stmt->bindParam(':birthday', $birthday);
+        $stmt->bindParam(':stateCountryOfBirth', $stateCountryOfBirth);
+        $stmt->bindParam(':mothersName', $mothersName);
+        $stmt->bindParam(':fathersName', $fathersName);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':schoolDetails', $schoolDetails);
+        $stmt->bindParam(':accessToSchoolRecords', $accessToSchoolRecords);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        throw new Exception("Error inserting offspring: " . $e->getMessage());
+    }
+}
+
+function insertResidencyDocuments($userID, $documentType, $documentDesc)
+{
     global $pdo; // Assuming you have a PDO instance in the global scope
 
     // Begin transaction
@@ -236,8 +303,95 @@ function insertResidencyDocuments($userID, $documentType, $documentDesc) {
     }
 }
 
-if(isset($_GET['lang'])){
-    if($_GET['lang'] == 'english' || $_GET['lang'] == 'spanish'){
+// Function to insert employer data into the database
+function insertEmployer($userID, $employerName, $employerAddress, $startDate, $jobTitle, $jobLastDate, $jobDescription)
+{
+    global $pdo;
+
+    $sql = "INSERT INTO `employer` (UserID, employerName, employerAddress, startDate, jobTitle, jobLastDate, jobDescription, createdAt, updatedAt)
+            VALUES (:userID, :employerName, :employerAddress, :startDate, :jobTitle, :jobLastDate, :jobDescription, NOW(), NOW())";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':employerName', $employerName);
+        $stmt->bindParam(':employerAddress', $employerAddress);
+        $stmt->bindParam(':startDate', $startDate);
+        $stmt->bindParam(':jobTitle', $jobTitle);
+        $stmt->bindParam(':jobLastDate', $jobLastDate);
+        $stmt->bindParam(':jobDescription', $jobDescription);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        throw new Exception("Error inserting employer data: " . $e->getMessage());
+    }
+}
+
+function insertCertification($userID, $certificationDegree, $degreeUniversity, $degreeDate, $degreeStateAndCountry)
+{
+    global $pdo; // Use the PDO connection from db_conn.php
+
+    $sql = "INSERT INTO `certification` (UserID, certificationDegree, degreeUniversity, degreeDate, degreeStateAndCountry, updatedAt)
+            VALUES (:userID, :certificationDegree, :degreeUniversity, :degreeDate, :degreeStateAndCountry, NOW())";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':certificationDegree', $certificationDegree);
+        $stmt->bindParam(':degreeUniversity', $degreeUniversity);
+        $stmt->bindParam(':degreeDate', $degreeDate);
+        $stmt->bindParam(':degreeStateAndCountry', $degreeStateAndCountry);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        throw new Exception("Error inserting certification: " . $e->getMessage());
+    }
+}
+
+// Function to insert additional recommendation details into the database
+function insertAdditionalRecommendation(
+    $userID,
+    $anyCommunicableDisease,
+    $anyMissingVaccines,
+    $anyMentalDisorder,
+    $accusedDrugAddiction,
+    $accusedChildAbduction,
+    $deportedFromUS,
+    $citizenshipAfter96,
+    $electionsVoted,
+    $capacityToSupport
+) {
+    global $pdo; // Use the PDO connection from db_conn.php
+
+    $sql = "INSERT INTO `additional_considerations` (
+                `UserID`, `anyCommunicableDisease`, `anyMissingVaccines`, `anyMentalDisorder`, `accusedDrugAddiction`, `accusedChildAbduction`,
+                `deportedFromUS`, `citizenshipAfter96`, `electionsVoted`, `capacityToSupport`, `updatedAt`
+            ) VALUES (
+                :userID, :anyCommunicableDisease, :anyMissingVaccines, :anyMentalDisorder, :accusedDrugAddiction, :accusedChildAbduction,
+                :deportedFromUS, :citizenshipAfter96, :electionsVoted, :capacityToSupport, NOW()
+            )";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':anyCommunicableDisease', $anyCommunicableDisease);
+        $stmt->bindParam(':anyMissingVaccines', $anyMissingVaccines);
+        $stmt->bindParam(':anyMentalDisorder', $anyMentalDisorder);
+        $stmt->bindParam(':accusedDrugAddiction', $accusedDrugAddiction);
+        $stmt->bindParam(':accusedChildAbduction', $accusedChildAbduction);
+        $stmt->bindParam(':deportedFromUS', $deportedFromUS);
+        $stmt->bindParam(':citizenshipAfter96', $citizenshipAfter96);
+        $stmt->bindParam(':electionsVoted', $electionsVoted);
+        $stmt->bindParam(':capacityToSupport', $capacityToSupport);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        throw new Exception("Error inserting additional recommendation details: " . $e->getMessage());
+    }
+}
+
+if (isset($_GET['lang'])) {
+    if ($_GET['lang'] == 'english' || $_GET['lang'] == 'spanish') {
         setLanguage($_GET['lang']);
     }
 }

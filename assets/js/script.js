@@ -26,13 +26,13 @@ $(document).ready(function () {
         });
     }
 
-    if($('.help-icon').length > 0){
+    if ($('.help-icon').length > 0) {
         $('.help-icon').each(function () {
             new bootstrap.Tooltip($(this));
         });
     }
 
-    if($('#qualification-form').length > 0){
+    if ($('#qualification-form').length > 0) {
         $("#qualification-form").validate({
             errorClass: "msg-error",
             errorElement: "span",
@@ -76,6 +76,13 @@ $(document).ready(function () {
                 stateCountryOfMarriage: "required",
                 spouseBirthday: "required",
                 proofOfSpouseCitizenship: "required",
+                // New rules for residencyType (radio) and residency (text)
+                residencyType: {
+                    required: true
+                },
+                residency: {
+                    required: true
+                }
             },
             messages: {
                 firstName: {
@@ -140,6 +147,12 @@ $(document).ready(function () {
                 },
                 proofOfSpouseCitizenship: {
                     required: '<span class="en">Please provide proof of spouse\'s citizenship</span><span class="es">Por favor, proporcione prueba de la ciudadanía de su cónyuge</span>'
+                },
+                residencyType: {
+                    required: '<span class="en">Please select your residency type</span><span class="es">Por favor, seleccione su tipo de residencia</span>'
+                },
+                residency: {
+                    required: '<span class="en">Please enter your residency details</span><span class="es">Por favor, ingrese los detalles de su residencia</span>'
                 }
             },
             highlight: function (element) {
@@ -166,13 +179,13 @@ $(document).ready(function () {
                         response = JSON.parse(response);
                         console.log(response);
 
-                        if(response.type == 'success'){
+                        if (response.type == 'success') {
                             $('#response').html(`<div class='alert alert-success'><span class='en'>User data inserted successfully!</span><span class='es'>¡Datos del usuario insertados con éxito!</span></div>`);
-                        }else{
+                        } else {
                             $('#response').html(`<div class='alert alert-danger'><span class='en'>Error inserting user data!</span><span class='es'>¡Error al insertar los datos del usuario!</span></div>`);
                         }
 
-                        $(form).trigger('reset');
+                        // $(form).trigger('reset');
                         console.log('Form submitted successfully');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -181,6 +194,6 @@ $(document).ready(function () {
                     }
                 });
             }
-        });        
+        });
     }
 })

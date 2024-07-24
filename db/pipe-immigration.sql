@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2024 at 07:38 PM
+-- Generation Time: Jul 24, 2024 at 03:47 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.0
 
@@ -24,22 +24,53 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `additional_considerations`
+--
+
+CREATE TABLE `additional_considerations` (
+  `id` int NOT NULL,
+  `UserID` int NOT NULL,
+  `anyCommunicableDisease` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `missingVaccine` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `anyMissingVaccines` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mentalDisorder` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `anyMentalDisorder` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `accusedDrugAddiction` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `accusedChildAbduction` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `deportedFromUS` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `citizenshipAfter96` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `electionsVoted` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `capacityToSupport` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `address`
 --
 
 CREATE TABLE `address` (
   `AddressID` int NOT NULL,
-  `AddressLine1` varchar(100) NOT NULL,
-  `AddressLine2` varchar(100) NOT NULL,
-  `City` varchar(100) NOT NULL,
-  `State` varchar(100) NOT NULL,
-  `Country` varchar(100) NOT NULL,
-  `ZipCode` varchar(20) NOT NULL,
-  `FromDate` date NOT NULL,
-  `ToDate` date NOT NULL,
-  `SpecialInstructions` varchar(3000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `UserID` int DEFAULT NULL,
+  `inCareOfName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `street1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `street2` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Apartment` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Suite` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Floor` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `zipCode` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `state` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `cellPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `homePhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `workPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `currentEmail` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `emergencyContact` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `emergencyPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -59,60 +90,18 @@ CREATE TABLE `appointment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `current_marriage`
+-- Table structure for table `certification`
 --
 
-CREATE TABLE `current_marriage` (
-  `MarriageID` int NOT NULL,
+CREATE TABLE `certification` (
+  `id` int NOT NULL,
   `UserID` int NOT NULL,
-  `spouseName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `dateOfMarriage` date NOT NULL,
-  `stateCountryOfMarriage` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `spouseBirthday` date NOT NULL,
-  `proofOfSpouseCitizenship` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `certificationDegree` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `degreeUniversity` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `degreeDate` date NOT NULL,
+  `degreeStateAndCountry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `current_marriage`
---
-
-INSERT INTO `current_marriage` (`MarriageID`, `UserID`, `spouseName`, `dateOfMarriage`, `stateCountryOfMarriage`, `spouseBirthday`, `proofOfSpouseCitizenship`, `updatedAt`) VALUES
-(1, 5, 'Jane', '2024-04-07', 'Ny, US', '2024-01-07', '12341321', '2024-07-23 14:38:15'),
-(2, 6, 'Jane', '2024-04-07', 'Ny, US', '2024-10-07', '12341321', '2024-07-23 14:41:07'),
-(3, 7, 'Jane', '2024-04-07', 'Ny, US', '2024-12-07', '12341321', '2024-07-23 14:41:13'),
-(4, 8, 'Jane', '2024-04-07', 'Ny, US', '2024-12-07', '12341321', '2024-07-23 14:41:26'),
-(5, 9, 'sad', '2024-07-04', 'asd', '2024-07-10', 'asdsad', '2024-07-23 14:43:20'),
-(6, 10, 'DgtXzEERYq', '2024-07-17', 'GOAwrDPZwa', '2024-07-17', 'HCi8tjOvOj', '2024-07-23 14:58:43'),
-(7, 11, 'DgtXzEERYq', '2024-07-17', 'GOAwrDPZwa', '2024-07-17', 'HCi8tjOvOj', '2024-07-23 14:59:58'),
-(8, 12, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:40:08'),
-(9, 13, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:40:29'),
-(10, 14, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:41:06'),
-(11, 15, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:41:35'),
-(12, 16, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:51:54'),
-(13, 17, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:52:17'),
-(14, 18, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:53:13'),
-(15, 19, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:54:14'),
-(16, 20, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:54:37'),
-(17, 21, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:55:05'),
-(18, 22, 'jZWHUCf7qZ', '2024-07-09', 'HU9jDeWbnw', '2024-07-11', 'Q2OAWkU8QH', '2024-07-23 15:56:09'),
-(19, 23, 'qyLLJs4ZId', '2024-07-10', 'j3ASPawvGm', '2024-07-11', 'NLrVnKMWhC', '2024-07-23 16:19:28'),
-(20, 24, 'qyLLJs4ZId', '2024-07-10', 'j3ASPawvGm', '2024-07-11', 'NLrVnKMWhC', '2024-07-23 16:20:05'),
-(21, 25, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:21:14'),
-(22, 26, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:21:59'),
-(23, 27, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:22:28'),
-(24, 28, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:24:05'),
-(25, 29, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:25:59'),
-(26, 30, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:26:34'),
-(27, 31, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:27:29'),
-(28, 32, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:28:53'),
-(29, 33, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:30:29'),
-(30, 34, 'qbRGSoQJot', '2024-07-10', '0W8oKfSCmt', '2024-07-25', 'ewzH2evfll', '2024-07-23 16:31:27'),
-(31, 35, '5lM756E05B', '2024-07-13', 'coiEbYAqzE', '2024-07-12', 'q1RD7Lbvts', '2024-07-23 16:43:14'),
-(32, 36, '5lM756E05B', '2024-07-13', 'coiEbYAqzE', '2024-07-12', 'q1RD7Lbvts', '2024-07-23 16:43:39'),
-(33, 37, '5lM756E05B', '2024-07-13', 'coiEbYAqzE', '2024-07-12', 'q1RD7Lbvts', '2024-07-23 16:44:39'),
-(34, 38, '0fI5ePgGgN', '2024-07-03', 'lfpLPgMcN8', '2024-07-11', '5SOoTgAyme', '2024-07-23 16:45:51'),
-(35, 39, 'L4Ikj1upRD', '2024-07-18', 'ZTLdTMRwNv', '2024-07-25', 'rjaQsMaRwl', '2024-07-23 16:46:34');
 
 -- --------------------------------------------------------
 
@@ -137,12 +126,33 @@ CREATE TABLE `document` (
 --
 
 CREATE TABLE `employer` (
-  `EmployerID` int NOT NULL,
-  `EmployerName` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `Notes` varchar(3000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id` int NOT NULL,
+  `UserID` int NOT NULL,
+  `employerName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `employerAddress` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `startDate` date NOT NULL,
+  `jobTitle` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `jobLastDate` date DEFAULT NULL,
+  `jobDescription` text COLLATE utf8mb4_general_ci,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `encounter`
+--
+
+CREATE TABLE `encounter` (
+  `EncounterID` int NOT NULL,
+  `UserID` int NOT NULL,
+  `DateOfEncounter` date NOT NULL,
+  `StateCountryOfLegalEncounter` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `NatureOfLegalIssue` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `Description` text COLLATE utf8mb4_general_ci,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -167,14 +177,18 @@ CREATE TABLE `identifierdocument` (
 --
 
 CREATE TABLE `marriage` (
+  `MarriageID` int NOT NULL,
   `UserID` int NOT NULL,
-  `SpouseID` int NOT NULL,
-  `MarriageDate` int NOT NULL,
-  `State and Country` varchar(100) NOT NULL,
-  `URLofMarriageCertificate` varchar(500) NOT NULL,
-  `DivorceDate` date NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `spouseName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `dateOfMarriage` date DEFAULT NULL,
+  `stateCountryOfMarriage` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `spouseBirthday` date DEFAULT NULL,
+  `proofOfSpouseCitizenship` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `placeOfDivorce` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dateOfDivorce` date DEFAULT NULL,
+  `obtainDecreeOfDivorce` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -197,11 +211,19 @@ CREATE TABLE `office` (
 --
 
 CREATE TABLE `offspring` (
-  `UserID` int NOT NULL COMMENT 'ID of the father or mother',
-  `ChildID` int NOT NULL,
-  `Notes` varchar(3000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `OffspringID` int NOT NULL,
+  `UserID` int NOT NULL,
+  `fullLegalName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `stateCountryOfBirth` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `mothersName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `fathersName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` enum('Male','Female','Other') COLLATE utf8mb4_general_ci NOT NULL,
+  `schoolDetails` text COLLATE utf8mb4_general_ci NOT NULL,
+  `accessToSchoolRecords` enum('Yes','No') COLLATE utf8mb4_general_ci NOT NULL,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -223,60 +245,6 @@ CREATE TABLE `payment` (
   `CardExpiryDate` date NOT NULL,
   `Updated` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `previous_marriage`
---
-
-CREATE TABLE `previous_marriage` (
-  `id` int NOT NULL,
-  `UserID` int NOT NULL,
-  `exSpouseName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `exDateOfMarriage` date NOT NULL,
-  `exPlaceOfMarriage` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `exPlaceOfDivorce` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `exDateOfDivorce` date NOT NULL,
-  `obtainDecreeOfDivorce` enum('Yes','No') COLLATE utf8mb4_general_ci NOT NULL,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `previous_marriage`
---
-
-INSERT INTO `previous_marriage` (`id`, `UserID`, `exSpouseName`, `exDateOfMarriage`, `exPlaceOfMarriage`, `exPlaceOfDivorce`, `exDateOfDivorce`, `obtainDecreeOfDivorce`, `updatedAt`) VALUES
-(1, 10, 'uVEek5cDD2', '2024-07-10', 'Pakistan', '3rrdnUv8YN', '2024-07-24', 'Yes', '2024-07-23 14:58:43'),
-(2, 11, 'uVEek5cDD2', '2024-07-10', 'Pakistan', '3rrdnUv8YN', '2024-07-24', 'Yes', '2024-07-23 14:59:58'),
-(3, 12, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:40:08'),
-(4, 13, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:40:29'),
-(5, 14, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:41:06'),
-(6, 15, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:41:35'),
-(7, 16, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:51:54'),
-(8, 17, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:52:17'),
-(9, 18, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:53:13'),
-(10, 19, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:54:14'),
-(11, 20, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:54:37'),
-(12, 21, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:55:05'),
-(13, 22, 'aQISmidajf', '4218-07-23', 'Pakistan', 'thQSVuZtbJ', '1970-01-01', 'No', '2024-07-23 15:56:09'),
-(14, 23, 'xIe1PEQSNk', '1970-01-01', 'Pakistan', 'if8Fq5Fzm4', '1970-01-01', 'No', '2024-07-23 16:19:28'),
-(15, 24, 'xIe1PEQSNk', '1970-01-01', 'Pakistan', 'if8Fq5Fzm4', '1970-01-01', 'No', '2024-07-23 16:20:05'),
-(16, 25, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:21:14'),
-(17, 26, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:21:59'),
-(18, 27, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:22:28'),
-(19, 28, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:24:05'),
-(20, 29, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:25:59'),
-(21, 30, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:26:34'),
-(22, 31, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:27:29'),
-(23, 32, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:28:53'),
-(24, 33, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:30:29'),
-(25, 34, 'chRWcB8YP2', '1970-01-01', 'Pakistan', 'ZxMoLszlyu', '1970-01-01', 'No', '2024-07-23 16:31:27'),
-(26, 35, 'eWiym4b3mT', '1970-01-01', 'Pakistan', 'MP7qtTQMA8', '1970-01-01', 'No', '2024-07-23 16:43:14'),
-(27, 36, 'eWiym4b3mT', '1970-01-01', 'Pakistan', 'MP7qtTQMA8', '1970-01-01', 'No', '2024-07-23 16:43:39'),
-(28, 37, 'eWiym4b3mT', '1970-01-01', 'Pakistan', 'MP7qtTQMA8', '1970-01-01', 'No', '2024-07-23 16:44:39'),
-(29, 38, 'i2gbj7fRpT', '1970-01-01', 'Pakistan', '41KZ85NDwc', '1970-01-01', 'No', '2024-07-23 16:45:51'),
-(30, 39, 'iC4HTpFDBa', '1970-01-01', 'Pakistan', '2O1iCjhjDa', '1970-01-01', 'No', '2024-07-23 16:46:34');
 
 -- --------------------------------------------------------
 
@@ -311,37 +279,6 @@ CREATE TABLE `residency_documents` (
   `DocumentDescription` text COLLATE utf8mb4_general_ci,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `residency_documents`
---
-
-INSERT INTO `residency_documents` (`DocumentID`, `UserID`, `DocumentType`, `DocumentDescription`, `updatedAt`) VALUES
-(50, 31, 'Tax Return', 'Tax return 2023', '2024-07-23 16:27:29'),
-(51, 31, 'Driving License', '2020', '2024-07-23 16:27:29'),
-(52, 31, 'State ID', 'Arizona', '2024-07-23 16:27:29'),
-(53, 31, 'Other Documents', 'Alabama', '2024-07-23 16:27:29'),
-(54, 32, 'Tax Return', 'Tax return 2023', '2024-07-23 16:28:53'),
-(55, 32, 'Driving License', '2020', '2024-07-23 16:28:53'),
-(56, 32, 'State ID', 'Arizona', '2024-07-23 16:28:53'),
-(57, 32, 'Other Documents', 'Alabama', '2024-07-23 16:28:53'),
-(58, 33, 'Tax Return', 'Tax return 2023', '2024-07-23 16:30:29'),
-(59, 33, 'Driving License', '2020', '2024-07-23 16:30:29'),
-(60, 33, 'State ID', 'Arizona', '2024-07-23 16:30:29'),
-(61, 33, 'Other Documents', 'Alabama', '2024-07-23 16:30:29'),
-(62, 34, 'Tax Return', 'Tax return 2023', '2024-07-23 16:31:27'),
-(63, 34, 'W-2', '2020', '2024-07-23 16:31:27'),
-(64, 34, 'Driving License', 'Arizona', '2024-07-23 16:31:27'),
-(65, 34, 'State ID', 'Alabama', '2024-07-23 16:31:27'),
-(66, 34, 'Other Documents', 'Leases, Mobile number', '2024-07-23 16:31:27'),
-(67, 35, 'Other Documents', 'Leases, Mobile number', '2024-07-23 16:43:14'),
-(68, 36, 'Tax Return', 'Tax return 2023', '2024-07-23 16:43:39'),
-(69, 36, 'Childern Birth Certificate', 'Abcd 2000', '2024-07-23 16:43:39'),
-(70, 36, 'Other Documents', 'Leases, Mobile number', '2024-07-23 16:43:39'),
-(71, 37, 'Tax Return', 'Tax return 2023', '2024-07-23 16:44:39'),
-(72, 37, 'Childern Birth Certificate', 'Abcd 2000', '2024-07-23 16:44:39'),
-(73, 37, 'Other Documents', 'Leases, Mobile number', '2024-07-23 16:44:39'),
-(74, 38, 'Driving License', 'Tax return 2023', '2024-07-23 16:45:51');
 
 -- --------------------------------------------------------
 
@@ -460,7 +397,12 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 (102, 'Qualification', '74', 'exSpouseFullLegalName', 'Ex-spouse Full Legal Name', 'Enter the full legal name of your ex-spouse', 'Nombre completo del ex-cónyuge', 'Ingrese el nombre completo legal de su ex-cónyuge', '2024-07-23 19:45:38'),
 (103, 'Qualification', '75', 'stateCountryOfDivorce', 'State and Country of Divorce', 'Enter the state and country where the divorce was finalized', 'Estado y país del divorcio', 'Ingrese el estado y país donde se finalizó el divorcio', '2024-07-23 19:45:38'),
 (104, 'Qualification', '76', 'dateOfDivorce', 'Date of Divorce', 'Enter the date when the divorce was finalized', 'Fecha del divorcio', 'Ingrese la fecha en que se finalizó el divorcio', '2024-07-23 19:45:38'),
-(105, 'Qualification', '77', 'decreeOfDivorce', 'Can you obtain this decree of divorce?', 'Indicate whether you can obtain the decree of divorce', '¿Puede obtener este decreto de divorcio?', 'Indique si puede obtener el decreto de divorcio', '2024-07-23 19:45:38');
+(105, 'Qualification', '77', 'decreeOfDivorce', 'Can you obtain this decree of divorce?', 'Indicate whether you can obtain the decree of divorce', '¿Puede obtener este decreto de divorcio?', 'Indique si puede obtener el decreto de divorcio', '2024-07-23 19:45:38'),
+(106, 'Qualification', '78', 'dateOfEncounter', 'Date of Encounter', 'The date when the legal encounter occurred.', 'Fecha del Encuentro', 'La fecha en la que ocurrió el encuentro legal.', '2024-07-24 16:42:23'),
+(107, 'Qualification', '79', 'stateCountryOfLegalEncounter', 'State and Country of Legal Encounter', 'The state and country where the legal encounter took place.', 'Estado y País del Encuentro Legal', 'El estado y el país donde tuvo lugar el encuentro legal.', '2024-07-24 16:42:23'),
+(108, 'Qualification', '80', 'natureOfLegalIssue', 'Nature of Legal Issue', 'A brief description of the nature of the legal issue.', 'Naturaleza del Problema Legal', 'Una breve descripción de la naturaleza del problema legal.', '2024-07-24 16:42:23'),
+(109, 'Qualification', '81', 'description', 'Description', 'A more detailed description of the legal issue.', 'Descripción', 'Una descripción más detallada del problema legal.', '2024-07-24 16:42:23'),
+(110, 'Qualification', '82', 'capacityToSupport', 'Describe your capacity to support yourself?', 'Provide a detailed explanation of your financial stability and ability to support yourself.', 'Describa su capacidad para mantenerse a sí mismo?', 'Proporcione una explicación detallada de su estabilidad financiera y capacidad para mantenerse a sí mismo.', '2024-07-24 18:47:40');
 
 -- --------------------------------------------------------
 
@@ -512,51 +454,6 @@ CREATE TABLE `user` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`UserID`, `ClientID`, `firstName`, `middleName`, `lastName`, `birthday`, `birthPlace`, `citizenshipCountry`, `gender`, `createdAt`, `updatedAt`) VALUES
-(1, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-10-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 12:35:04', '2024-07-23 12:35:04'),
-(2, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-11-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:10:12', '2024-07-23 14:10:12'),
-(3, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-11-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:11:40', '2024-07-23 14:11:40'),
-(4, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-11-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:12:01', '2024-07-23 14:12:01'),
-(5, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-10-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:38:15', '2024-07-23 14:38:15'),
-(6, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-10-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:41:07', '2024-07-23 14:41:07'),
-(7, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-10-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:41:13', '2024-07-23 14:41:13'),
-(8, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-10-07', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:41:26', '2024-07-23 14:41:26'),
-(9, 3, 'Ans', 'asd', 'asd', '2024-07-15', 'Pakistan', 'Pakistan', 'male', '2024-07-23 14:43:20', '2024-07-23 14:43:20'),
-(10, 3, 'Syed', 's9haYvSKhe', 'Bukhari', '2024-07-09', '3tiOEjEVgy', '4SiCQxcK6m', 'male', '2024-07-23 14:58:43', '2024-07-23 14:58:43'),
-(11, 3, 'Syed', 's9haYvSKhe', 'Bukhari', '2024-07-09', '3tiOEjEVgy', '4SiCQxcK6m', 'male', '2024-07-23 14:59:58', '2024-07-23 14:59:58'),
-(12, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:40:08', '2024-07-23 15:40:08'),
-(13, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:40:29', '2024-07-23 15:40:29'),
-(14, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:41:06', '2024-07-23 15:41:06'),
-(15, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:41:35', '2024-07-23 15:41:35'),
-(16, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:51:54', '2024-07-23 15:51:54'),
-(17, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:52:17', '2024-07-23 15:52:17'),
-(18, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:53:13', '2024-07-23 15:53:13'),
-(19, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:54:14', '2024-07-23 15:54:14'),
-(20, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:54:36', '2024-07-23 15:54:36'),
-(21, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:55:05', '2024-07-23 15:55:05'),
-(22, 3, '1234', 'IIcgMej2JL', 'Bukhari', '2024-04-09', 'uajMyCs26q', 'fWhXYfsHPm', 'male', '2024-07-23 15:56:09', '2024-07-23 15:56:09'),
-(23, 3, '1234', 'ZvV0VVNr10', 'Bukhari', '2024-04-09', 'td1DHtMrtx', 'Itd3EUf6Gk', 'male', '2024-07-23 16:19:28', '2024-07-23 16:19:28'),
-(24, 3, '1234', 'ZvV0VVNr10', 'Bukhari', '2024-04-09', 'td1DHtMrtx', 'Itd3EUf6Gk', 'male', '2024-07-23 16:20:05', '2024-07-23 16:20:05'),
-(25, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:21:14', '2024-07-23 16:21:14'),
-(26, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:21:59', '2024-07-23 16:21:59'),
-(27, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:22:28', '2024-07-23 16:22:28'),
-(28, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:24:05', '2024-07-23 16:24:05'),
-(29, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:25:59', '2024-07-23 16:25:59'),
-(30, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:26:34', '2024-07-23 16:26:34'),
-(31, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:27:29', '2024-07-23 16:27:29'),
-(32, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:28:53', '2024-07-23 16:28:53'),
-(33, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:30:29', '2024-07-23 16:30:29'),
-(34, 3, '1234', 'l4G6mFNrPM', 'Bukhari', '2024-04-09', 'lmQugedYwM', '5dLLl8pbs9', 'male', '2024-07-23 16:31:27', '2024-07-23 16:31:27'),
-(35, 3, '1234', 'EVMvmKc2oj', 'Bukhari', '2024-04-09', 'l4xVRTp3mc', 'zK9CIUjQip', 'male', '2024-07-23 16:43:14', '2024-07-23 16:43:14'),
-(36, 3, '1234', 'EVMvmKc2oj', 'Bukhari', '2024-04-09', 'l4xVRTp3mc', 'zK9CIUjQip', 'male', '2024-07-23 16:43:39', '2024-07-23 16:43:39'),
-(37, 3, '1234', 'EVMvmKc2oj', 'Bukhari', '2024-04-09', 'l4xVRTp3mc', 'zK9CIUjQip', 'male', '2024-07-23 16:44:39', '2024-07-23 16:44:39'),
-(38, 3, '1234', 'TorfWYXbp8', 'Bukhari', '2024-04-09', 'SysdX5JI5q', 'hHZCgaUpva', 'male', '2024-07-23 16:45:51', '2024-07-23 16:45:51'),
-(39, 3, '1234', 'QSOxr4y8oJ', 'Bukhari', '2024-04-09', 'pb2hOQfA2y', '1Voi2f3RNv', 'male', '2024-07-23 16:46:34', '2024-07-23 16:46:34');
-
 -- --------------------------------------------------------
 
 --
@@ -573,79 +470,10 @@ CREATE TABLE `userrelation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `us_address`
+-- Table structure for table `us_entry`
 --
 
-CREATE TABLE `us_address` (
-  `AddressID` int NOT NULL,
-  `UserID` int DEFAULT NULL,
-  `careOfName` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `street1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `street2` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `zipCode` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `state` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `cellPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `homePhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `workPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `currentEmail` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergencyContact` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergencyPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `residency` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `us_address`
---
-
-INSERT INTO `us_address` (`AddressID`, `UserID`, `careOfName`, `street1`, `street2`, `zipCode`, `city`, `state`, `cellPhone`, `homePhone`, `workPhone`, `currentEmail`, `emergencyContact`, `emergencyPhone`, `residency`, `createdAt`, `updatedAt`) VALUES
-(1, 3, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'New York', 'New York', '33994040353', '', '', 'anas14529@gmail.com', 'Muzammal', '12341234', 'Flr,', '2024-07-23 14:11:40', '2024-07-23 14:11:40'),
-(2, 4, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'New York', 'New York', '33994040353', '', '', 'anas14529@gmail.com', 'Muzammal', '12341234', 'Flr,Abcd', '2024-07-23 14:12:01', '2024-07-23 14:12:01'),
-(3, 5, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'Faisalabad', 'Punjab', '33994040353', '', '', 'anas14529@gmail.com', 'Abcd', '33994040353', 'Other,', '2024-07-23 14:38:15', '2024-07-23 14:38:15'),
-(4, 6, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'Faisalabad', 'Punjab', '33994040353', '', '', 'anas14529@gmail.com', 'Abcd', '33994040353', 'Other,', '2024-07-23 14:41:07', '2024-07-23 14:41:07'),
-(5, 7, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'Faisalabad', 'Punjab', '33994040353', '', '', 'anas14529@gmail.com', 'Abcd', '33994040353', 'Other,', '2024-07-23 14:41:13', '2024-07-23 14:41:13'),
-(6, 8, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'Faisalabad', 'Punjab', '33994040353', '', '', 'anas14529@gmail.com', 'Abcd', '33994040353', 'Other,', '2024-07-23 14:41:26', '2024-07-23 14:41:26'),
-(7, 9, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', '38000', 'Faisalabad', 'Punjab', '33994040353', '', '', 'anas14529@gmail.com', 'sad', '33994040353', 'Other,', '2024-07-23 14:43:20', '2024-07-23 14:43:20'),
-(8, 10, 'PMU8k44SDO', '2WmhFiheYh', 'bRP5kZPF7b', 'CJVDLzkQiI', 'R9RNGmctug', 'HjcWDatHi7', 'aTWDk28Grh', 'K3N2R0IfLs', 'S9zqyFbCcs', 'a6scz@ucoo.com', 'C9ANbifb05', 'ssuA7vd6wa', 'Other,K3FNGadIII', '2024-07-23 14:58:43', '2024-07-23 14:58:43'),
-(9, 11, 'PMU8k44SDO', '2WmhFiheYh', 'bRP5kZPF7b', 'CJVDLzkQiI', 'R9RNGmctug', 'HjcWDatHi7', '1233123321', 'K3N2R0IfLs', 'S9zqyFbCcs', 'a6scz@ucoo.com', 'C9ANbifb05', 'ssuA7vd6wa', 'Other,K3FNGadIII', '2024-07-23 14:59:58', '2024-07-23 14:59:58'),
-(10, 12, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:40:08', '2024-07-23 15:40:08'),
-(11, 13, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:40:29', '2024-07-23 15:40:29'),
-(12, 14, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:41:06', '2024-07-23 15:41:06'),
-(13, 15, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:41:35', '2024-07-23 15:41:35'),
-(14, 16, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:51:54', '2024-07-23 15:51:54'),
-(15, 17, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:52:17', '2024-07-23 15:52:17'),
-(16, 18, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:53:13', '2024-07-23 15:53:13'),
-(17, 19, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:54:14', '2024-07-23 15:54:14'),
-(18, 20, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:54:37', '2024-07-23 15:54:37'),
-(19, 21, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:55:05', '2024-07-23 15:55:05'),
-(20, 22, 'G4qdHzLNtk', 'KwhdNWP6gj', '0CAOmPD18C', 'pq5FItJCRo', 'K0hoRgTwrk', 'WjRj0FND4g', '1233123321', 'q5eJ785Y3O', 'UoUzJBpIHJ', 'g9jg0@iltw.com', 'oeuw0rn2XC', '53ml5vuwB6', 'Other,31aVS1qaji', '2024-07-23 15:56:09', '2024-07-23 15:56:09'),
-(21, 23, 'KD3MkEMzH4', 'ZWy06cGJYw', 'p8q7bDxXeq', 'CZCSNPi0ph', '5eZrOhjeh4', 'WPPzY7P8nC', '1233123321', '01aC9Vf22b', 'mp9Yr0nLdm', 'op87d@jejs.com', 'BtjsUOherE', 'fcOjTzIDuh', 'Other,9iW52uN1na', '2024-07-23 16:19:28', '2024-07-23 16:19:28'),
-(22, 24, 'KD3MkEMzH4', 'ZWy06cGJYw', 'p8q7bDxXeq', 'CZCSNPi0ph', '5eZrOhjeh4', 'WPPzY7P8nC', '1233123321', '01aC9Vf22b', 'mp9Yr0nLdm', 'op87d@jejs.com', 'BtjsUOherE', 'fcOjTzIDuh', 'Other,9iW52uN1na', '2024-07-23 16:20:05', '2024-07-23 16:20:05'),
-(23, 25, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:21:14', '2024-07-23 16:21:14'),
-(24, 26, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:21:59', '2024-07-23 16:21:59'),
-(25, 27, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:22:28', '2024-07-23 16:22:28'),
-(26, 28, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:24:05', '2024-07-23 16:24:05'),
-(27, 29, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:25:59', '2024-07-23 16:25:59'),
-(28, 30, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:26:34', '2024-07-23 16:26:34'),
-(29, 31, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:27:29', '2024-07-23 16:27:29'),
-(30, 32, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:28:53', '2024-07-23 16:28:53'),
-(31, 33, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:30:29', '2024-07-23 16:30:29'),
-(32, 34, 'IyMNFYGGTa', 'Um1fgPN4s0', 'h4GOSUFT3H', 'IewWnzcrVN', 'MYH7w9c81n', 'uf8URBnEhC', '1233123321', 'j2k6geEstq', 'qqbJfY0WqK', 'ftonp@l5dk.com', 'DWDskaWfZ8', 'StkkY6sAXp', 'Flr,23EUuSgDcz', '2024-07-23 16:31:27', '2024-07-23 16:31:27'),
-(33, 35, 'd4FDLwB6En', 'YRWrDksLYH', 'YJEs7Mt7PG', 'sBq6o1etBm', 'cJ39k7uscv', '1BnHFujGD6', '1233123321', '1DKUKR5SAI', 'kvAmtqoZzU', 'ha06p@nr2l.com', 'gUsDgP8kC1', '4ZlP7SgB4n', 'Flr,FyiQSSWREK', '2024-07-23 16:43:14', '2024-07-23 16:43:14'),
-(34, 36, 'd4FDLwB6En', 'YRWrDksLYH', 'YJEs7Mt7PG', 'sBq6o1etBm', 'cJ39k7uscv', '1BnHFujGD6', '1233123321', '1DKUKR5SAI', 'kvAmtqoZzU', 'ha06p@nr2l.com', 'gUsDgP8kC1', '4ZlP7SgB4n', 'Flr,FyiQSSWREK', '2024-07-23 16:43:39', '2024-07-23 16:43:39'),
-(35, 37, 'd4FDLwB6En', 'YRWrDksLYH', 'YJEs7Mt7PG', 'sBq6o1etBm', 'cJ39k7uscv', '1BnHFujGD6', '1233123321', '1DKUKR5SAI', 'kvAmtqoZzU', 'ha06p@nr2l.com', 'gUsDgP8kC1', '4ZlP7SgB4n', 'Flr,FyiQSSWREK', '2024-07-23 16:44:39', '2024-07-23 16:44:39'),
-(36, 38, 'XlDxIwwwcL', '37STgnH1yQ', 'P46KbYfiCN', 'x3nadVgFWZ', 'Yb86TToR5z', 'UA6qL3FW1h', '1233123321', '9CPKnf44c0', 'm0UcUz7UGQ', 'bbaql@og7f.com', 'nDHO13kWqN', 'cmiz8JsgDR', 'Flr,odwbFraX60', '2024-07-23 16:45:51', '2024-07-23 16:45:51'),
-(37, 39, 'gn5BmZkh9t', 'OADmQLn1CQ', 'y4Sk8HTtZt', 'AhKZJ9mA8w', 'p5t2dtOB60', 'wWa7xcICup', '1233123321', 'cdN5lWHn1f', 'iOhy4u1v2Q', 'iji5v@lupr.com', 'MkeFrZ8tG9', '731tLq0Q5F', 'Flr,jTqyNvMwxb', '2024-07-23 16:46:34', '2024-07-23 16:46:34');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `us_entries`
---
-
-CREATE TABLE `us_entries` (
+CREATE TABLE `us_entry` (
   `UserID` int NOT NULL,
   `dateOfEntry` date NOT NULL,
   `stateOfEntry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
@@ -656,46 +484,56 @@ CREATE TABLE `us_entries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `us_entries`
---
-
-INSERT INTO `us_entries` (`UserID`, `dateOfEntry`, `stateOfEntry`, `methodOfEntry`, `anyIllegalDocumentOnEntry`, `detainedByUSPatrol`, `updatedAt`) VALUES
-(22, '2024-07-04', 'x18SHDCUKQ', 'a1KX3EvB2c', 'jZlfJlxBKY', 'FN9jIYRgbV', '2024-07-23 15:56:09'),
-(26, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:21:59'),
-(27, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:22:28'),
-(28, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:24:05'),
-(29, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:25:59'),
-(30, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:26:34'),
-(31, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:27:29'),
-(32, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:28:53'),
-(33, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:30:29'),
-(34, '2024-07-11', 'OJbY0lPkq3', 'r6P2ToeLZP', 'EvzybtkYET', 'H9d4ytA9ap', '2024-07-23 16:31:27'),
-(35, '2024-07-23', 'u3spS8q0Du', 'uOfUL8R4Ya', 'MuKp0rM4es', 'n0ixbQKeFc', '2024-07-23 16:43:14'),
-(36, '2024-07-23', 'u3spS8q0Du', 'uOfUL8R4Ya', 'MuKp0rM4es', 'n0ixbQKeFc', '2024-07-23 16:43:39'),
-(37, '2024-07-23', 'u3spS8q0Du', 'uOfUL8R4Ya', 'MuKp0rM4es', 'n0ixbQKeFc', '2024-07-23 16:44:39');
-
---
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `additional_considerations`
+--
+ALTER TABLE `additional_considerations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indexes for table `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`AddressID`);
+  ADD PRIMARY KEY (`AddressID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `current_marriage`
+-- Indexes for table `certification`
 --
-ALTER TABLE `current_marriage`
+ALTER TABLE `certification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `employer`
+--
+ALTER TABLE `employer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `encounter`
+--
+ALTER TABLE `encounter`
+  ADD PRIMARY KEY (`EncounterID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `marriage`
+--
+ALTER TABLE `marriage`
   ADD PRIMARY KEY (`MarriageID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `previous_marriage`
+-- Indexes for table `offspring`
 --
-ALTER TABLE `previous_marriage`
-  ADD PRIMARY KEY (`id`),
+ALTER TABLE `offspring`
+  ADD PRIMARY KEY (`OffspringID`),
   ADD KEY `UserID` (`UserID`);
 
 --
@@ -719,16 +557,9 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`);
 
 --
--- Indexes for table `us_address`
+-- Indexes for table `us_entry`
 --
-ALTER TABLE `us_address`
-  ADD PRIMARY KEY (`AddressID`),
-  ADD KEY `UserID` (`UserID`);
-
---
--- Indexes for table `us_entries`
---
-ALTER TABLE `us_entries`
+ALTER TABLE `us_entry`
   ADD PRIMARY KEY (`UserID`);
 
 --
@@ -736,62 +567,110 @@ ALTER TABLE `us_entries`
 --
 
 --
+-- AUTO_INCREMENT for table `additional_considerations`
+--
+ALTER TABLE `additional_considerations`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
--- AUTO_INCREMENT for table `current_marriage`
+-- AUTO_INCREMENT for table `certification`
 --
-ALTER TABLE `current_marriage`
-  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+ALTER TABLE `certification`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `previous_marriage`
+-- AUTO_INCREMENT for table `employer`
 --
-ALTER TABLE `previous_marriage`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+ALTER TABLE `employer`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `encounter`
+--
+ALTER TABLE `encounter`
+  MODIFY `EncounterID` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `marriage`
+--
+ALTER TABLE `marriage`
+  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `offspring`
+--
+ALTER TABLE `offspring`
+  MODIFY `OffspringID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
-  MODIFY `DocumentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `DocumentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- AUTO_INCREMENT for table `us_address`
---
-ALTER TABLE `us_address`
-  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `current_marriage`
+-- Constraints for table `additional_considerations`
 --
-ALTER TABLE `current_marriage`
-  ADD CONSTRAINT `current_marriage_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+ALTER TABLE `additional_considerations`
+  ADD CONSTRAINT `additional_considerations_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `previous_marriage`
+-- Constraints for table `address`
 --
-ALTER TABLE `previous_marriage`
-  ADD CONSTRAINT `previous_marriage_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `certification`
+--
+ALTER TABLE `certification`
+  ADD CONSTRAINT `certification_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `employer`
+--
+ALTER TABLE `employer`
+  ADD CONSTRAINT `employer_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `encounter`
+--
+ALTER TABLE `encounter`
+  ADD CONSTRAINT `encounter_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `marriage`
+--
+ALTER TABLE `marriage`
+  ADD CONSTRAINT `marriage_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `offspring`
+--
+ALTER TABLE `offspring`
+  ADD CONSTRAINT `offspring_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `residency_documents`
@@ -800,16 +679,10 @@ ALTER TABLE `residency_documents`
   ADD CONSTRAINT `residency_documents_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `us_address`
+-- Constraints for table `us_entry`
 --
-ALTER TABLE `us_address`
-  ADD CONSTRAINT `us_address_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
-
---
--- Constraints for table `us_entries`
---
-ALTER TABLE `us_entries`
-  ADD CONSTRAINT `us_entries_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+ALTER TABLE `us_entry`
+  ADD CONSTRAINT `us_entry_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
