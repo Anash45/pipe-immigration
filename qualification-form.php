@@ -1315,8 +1315,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="capacityToSupport"
-                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',69,'label'); ?></span><img
-                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',69,'help'); ?>" class="help-icon" alt="Icon"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification',82,'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip" title="<?php echo getTranslation('Qualification',82,'help'); ?>" class="help-icon" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <textarea class="form-control mt-1" rows="5" id="capacityToSupport" name="capacityToSupport"
