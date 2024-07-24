@@ -46,7 +46,6 @@ $(document).ready(function () {
                 birthPlace: "required",
                 citizenshipCountry: "required",
                 gender: "required",
-                careOfName: "required",
                 street1: "required",
                 street2: {
                     required: false
@@ -76,13 +75,6 @@ $(document).ready(function () {
                 stateCountryOfMarriage: "required",
                 spouseBirthday: "required",
                 proofOfSpouseCitizenship: "required",
-                // New rules for residencyType (radio) and residency (text)
-                residencyType: {
-                    required: true
-                },
-                residency: {
-                    required: true
-                }
             },
             messages: {
                 firstName: {
@@ -102,9 +94,6 @@ $(document).ready(function () {
                 },
                 gender: {
                     required: '<span class="en">Please select your gender</span><span class="es">Por favor, seleccione su género</span>'
-                },
-                careOfName: {
-                    required: '<span class="en">Please enter the care of name</span><span class="es">Por favor, ingrese el nombre a cargo</span>'
                 },
                 street1: {
                     required: '<span class="en">Please enter the street address</span><span class="es">Por favor, ingrese la dirección</span>'
@@ -148,12 +137,6 @@ $(document).ready(function () {
                 proofOfSpouseCitizenship: {
                     required: '<span class="en">Please provide proof of spouse\'s citizenship</span><span class="es">Por favor, proporcione prueba de la ciudadanía de su cónyuge</span>'
                 },
-                residencyType: {
-                    required: '<span class="en">Please select your residency type</span><span class="es">Por favor, seleccione su tipo de residencia</span>'
-                },
-                residency: {
-                    required: '<span class="en">Please enter your residency details</span><span class="es">Por favor, ingrese los detalles de su residencia</span>'
-                }
             },
             highlight: function (element) {
                 $(element).addClass('input-error');
