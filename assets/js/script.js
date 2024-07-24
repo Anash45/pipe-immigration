@@ -185,7 +185,7 @@ $(document).ready(function () {
                             $('#response').html(`<div class='alert alert-danger'><span class='en'>Error inserting user data!</span><span class='es'>¡Error al insertar los datos del usuario!</span></div>`);
                         }
 
-                        // $(form).trigger('reset');
+                        $(form).trigger('reset');
                         console.log('Form submitted successfully');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
