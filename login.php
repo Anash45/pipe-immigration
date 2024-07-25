@@ -84,7 +84,7 @@ include './defines/functions.php';
                                 <div class="text-center mt-4">
                                     <a href="#" class="create-account-link text-white d-inline-block mb-3">Don't have an
                                         account?</a>
-                                    <a href="./register.html"
+                                    <a href="./register.php"
                                         class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 5, 'label'); ?></a>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@ include './defines/functions.php';
             }
 
             function closeVerifyAndOpenForgotModal() {
-                
+
                 $('#verifyCodeModal').modal('hide');
                 $('#forgotModal').modal('show');
             }
