@@ -69,12 +69,17 @@
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="phoneNumber"
-                                                class="form-label gap-1 d-flex align-items-center"><span>Phone
+                                                class="form-label gap-1 d-flex align-items-center"><span>Cell Phone
                                                     Number</span><img src="./assets/images/question-icon.svg" alt="Icon"
                                                     width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 phone-number"
                                                     id="phoneNumber" placeholder="Phone number">
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="whatsapp">
+                                                <label class="form-check-label" for="whatsapp"> Do you have WhatsApp in
+                                                    your cell? </label>
                                             </div>
                                         </div>
                                     </div>
@@ -90,38 +95,126 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-5 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-12 mb-3 pt-3">
-                                            <label for="whatsappNumber"
-                                                class="form-label gap-1 d-flex align-items-center"><span>WhatsApp
-                                                    Number</span><img src="./assets/images/question-icon.svg" alt="Icon"
-                                                    width="16"></label>
-                                            <div class="input-div">
-                                                <input type="text" class="form-control mt-1 phone-number"
-                                                    id="whatsappNumber" placeholder="WhatsApp Number">
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-7 col-md-8 mx-auto mt-5 inquiry-bottom">
+                                    <div class="mb-4">
+                                        <label for="usaPresence" class="form-label me-4">Were you present in the USA on
+                                            June 17, 2024?</label>
+                                        <div id="usaPresence" class="d-block">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="usaPresence"
+                                                    id="usaPresenceYes" value="yes">
+                                                <label class="form-check-label" for="usaPresenceYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="usaPresence"
+                                                    id="usaPresenceNo" value="no">
+                                                <label class="form-check-label" for="usaPresenceNo">No</label>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-7 col-md-8 mx-auto mt-5">
-                                    <p class="text-center text-primary">Do you need help completing the form needed to
-                                        qualify you?</p>
-                                    <div class="d-flex gap-5 align-items-center justify-content-center">
+                                    <!-- Question 2 -->
+                                    <div class="mb-4">
+                                        <label for="marriedToUSCitizen" class="form-label me-4">Are you lawfully married
+                                            to a United States citizen and did that marriage occur on or before June 17,
+                                            2024?</label>
+                                        <div id="marriedToUSCitizen" class="d-block">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="marriedToUSCitizen"
+                                                    id="marriedToUSCitizenYes" value="yes">
+                                                <label class="form-check-label" for="marriedToUSCitizenYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="marriedToUSCitizen"
+                                                    id="marriedToUSCitizenNo" value="no">
+                                                <label class="form-check-label" for="marriedToUSCitizenNo">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Question 3 -->
+                                    <div class="mb-4">
+                                        <label for="continuousPresence" class="form-label me-4">Do you have
+                                            documentation that demonstrates your continuous physical presence in the US
+                                            for the last 10 years? Examples of such documents are: IRS 1040, birth
+                                            certificate of US born children, W-2, driver's license, etc.</label>
+                                        <div id="continuousPresence" class="d-block">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="continuousPresence"
+                                                    id="continuousPresenceYes" value="yes">
+                                                <label class="form-check-label" for="continuousPresenceYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="continuousPresence"
+                                                    id="continuousPresenceNo" value="no">
+                                                <label class="form-check-label" for="continuousPresenceNo">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-start">Do you need help completing the form needed to qualify you for
+                                        the PIPE program?</p>
+                                    <div class="d-flex gap-5 align-items-start justify-content-start">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Yes" id="needHelpYes"
+                                            <input class="form-check-input" type="radio" value="Yes" id="needHelpYes"
                                                 name="needHelpYes">
                                             <label class="form-check-label" for="needHelpYes"> Yes </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="No" id="needHelpNo"
+                                            <input class="form-check-input" type="radio" value="No" id="needHelpNo"
                                                 name="needHelpNo">
                                             <label class="form-check-label" for="needHelpNo"> No </label>
                                         </div>
                                     </div>
+                                    <div class="my-4">
+                                        <label for="qualificationOptions" class="form-label fw-bold mb-2">The next step
+                                            is to get you qualified for the PIPE program. Please select the one most
+                                            suitable option from the 4 choices below:</label>
+                                        <div id="qualificationOptions">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualificationOption"
+                                                    id="option1" value="option1">
+                                                <label class="form-check-label" for="option1"> You can complete our PIPE
+                                                    Qualification online form and within 36 hours we'll let you know if
+                                                    there are any obstacles to get you qualified for the PIPE program.
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualificationOption"
+                                                    id="option2" value="option2">
+                                                <label class="form-check-label" for="option2"> If need any help to fill
+                                                    out our PIPE Qualification online form, we can book one of our staff
+                                                    members to help you. </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualificationOption"
+                                                    id="option3" value="option3">
+                                                <label class="form-check-label" for="option3"> Schedule up a video
+                                                    conference online with one of our staff members </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualificationOption"
+                                                    id="option4" value="option4">
+                                                <label class="form-check-label" for="option4"> Book a legal consultation
+                                                    at “The Law Office of Nic Suriel” in Phoenix, AZ </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input" type="checkbox" id="acceptTerms">
+                                                <label class="form-check-label" for="acceptTerms"> I accept. <span
+                                                        class="text-muted">By checking 'Accept', you agree that we're
+                                                        only providing limited legal advice and to our <a
+                                                            target="_blank"
+                                                            href="./assets/Confidentially and Limited Legal Advise.docx"
+                                                            class="text-primary">privacy statement</a>.</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                         <div class="col-xl-7 col-md-8 mx-auto">
-                                            <div class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-4">
+                                            <div
+                                                class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-4">
                                                 <p class="mb-0 text-center">We can determine if you quality for the new
                                                     PIPE program for a fee of $25 USD.Please select your payment method
                                                     below. </p><img src="./assets/images/question-icon.svg" alt="Icon"
@@ -136,7 +229,7 @@
                                                                 data-image="./assets/images/Mastercard.svg">MasterCard
                                                             </option>
                                                             <option value="paypal"
-                                                                data-image="./assets/images/PayPal.svg">PayPal</option>
+                                                                data-image="./assets/images/PayPal.svg"> PayPal</option>
                                                             <option value="visa"
                                                                 data-image="./assets/images/Etherium.svg"> Zelle
                                                             </option>
@@ -167,7 +260,8 @@
                             placeholder="Please enter your questions below"></textarea>
                     </div>
                     <div class="text-center my-4">
-                        <button class="btn btn-rectangle btn-primary"><span>Submit</span><img src="./assets/images/RightIcon.svg" alt="Icon" height="16"></button>
+                        <button class="btn btn-rectangle btn-primary"><span>Submit</span><img
+                                src="./assets/images/RightIcon.svg" alt="Icon" height="16"></button>
                     </div>
                 </form>
             </div>
@@ -182,6 +276,15 @@
         <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
         <script src="./assets/js/script.js?v=4"></script>
         <script>
+
+            function termsAcceptedEnable() {
+                if ($('#acceptTerms:checked').length > 0) {
+                    $('#payment-methods').prop('disabled', false);
+                } else {
+                    $('#payment-methods').prop('disabled', true);
+                }
+            }
+
             $(function () {
                 $(".date").datepicker({
                     dateFormat: "dd/mm/yy"
@@ -190,6 +293,9 @@
                 $(".calendar").click(function () {
                     $(this).siblings('.date').datepicker("show");
                 });
+
+                $('#acceptTerms').on('change', termsAcceptedEnable);
+                termsAcceptedEnable();
             });
 
             $(document).ready(function () {

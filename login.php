@@ -1,3 +1,7 @@
+<?php
+include './defines/db_conn.php';
+include './defines/functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,56 +13,79 @@
         <link rel="stylesheet" href="./assets/css/style.css?v=4">
     </head>
 
-    <body class="login-page red-hat-display">
+    <body class="login-page red-hat-display lang-<?php echo getLanguage(); ?>">
         <main class="page-main">
             <section class="page-img">
                 <img src="./assets/images/login.png" alt="Login Page Image" class="img-fluid">
             </section>
             <section class="page-form pt-2 d-flex flex-column">
                 <div class="d-sm-none d-flex justify-content-around align-items-center mt-3 mb-4">
-                    <a href="#" class="lang-link active inter">ENGLISH</a><a href="#"
-                        class="lang-link inter">SPANISH</a>
+                    <a href="?lang=english"
+                        class="lang-link active <?php echo $active = (getLanguage() == 'english') ? 'active' : ''; ?> inter">ENGLISH</a><a
+                        href="?lang=spanish"
+                        class="lang-link <?php echo $active = (getLanguage() == 'spanish') ? 'active' : ''; ?> inter">SPANISH</a>
                 </div>
                 <div class="px-sm-4 px-3 text-center mb-3 pf-text">
-                    <div class="text-center mb-2">
-                        <button
-                            class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change mx-auto"><img
-                                src="./assets/images/change.svg" alt="Change"> <span>Espanol</span></button>
+                    <div class="text-center mb-2 d-flex">
+                        <?php
+                        if (getLanguage() == 'english') {
+                            ?>
+                            <a href="?lang=spanish"
+                                class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change btn mx-auto"><img
+                                    src="./assets/images/change.svg" alt="Change"> <span>Espanol</span></a>
+                            <?php
+                        } else {
+                            ?>
+                            <a href="?lang=english"
+                                class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change btn mx-auto"><img
+                                    src="./assets/images/change.svg" alt="Change"> <span>English</span></a>
+                            <?php
+                        }
+                        ?>
                     </div>
                     <h2 class="fw-bold form-title mb-4"> US PIPE <br> IMMIGRATION PROGRAM </h2>
                     <p class="form-desc"> Find out from a competent, seasoned US Lawyer, If you qualify for this new
                         immigration program </p>
                 </div>
                 <div class="page-form-sec py-5 flex-grow-1">
-                    <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" method="post">
+                    <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" method="post" id="loginForm">
                         <div class="px-4">
-                            <h3 class="fw-bold text-white text-center mb-5"> Login </h3>
+                            <h3 class="fw-bold text-white text-center mb-5">
+                                <?php echo getTranslation('Log In', 0, 'help'); ?> </h3>
                             <div class="form-group mb-4">
-                                <label for="email">Email/Cell Phone</label>
+                                <label for="email"><?php echo getTranslation('Log In', 1, 'label'); ?></label>
                                 <div class="input-div">
-                                    <input type="text" id="email" placeholder="Enter your Email/Phone number"
+                                    <input type="text" id="email" placeholder="Email/Phone number"
                                         class="form-control poppins">
                                     <img src="./assets/images/envelope.svg" alt="Email" class="inp-icon-left">
+                                    <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
+                                        class="inp-icon-right help-icon" data-bs-toggle="tooltip"
+                                        title="<?php echo getTranslation('Log In', 1, 'help'); ?>">
                                 </div>
                             </div>
                             <div class="form-group mb-sm-5 mb-4">
-                                <label for="password">Password</label>
+                                <label for="password"><?php echo getTranslation('Log In', 2, 'label'); ?></label>
                                 <div class="input-div">
                                     <input type="password" id="password" placeholder="Password"
                                         class="form-control poppins">
                                     <img src="./assets/images/lock.svg" alt="Lock" class="inp-icon-left">
+                                    <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
+                                        class="inp-icon-right help-icon" data-bs-toggle="tooltip"
+                                        title="<?php echo getTranslation('Log In', 2, 'help'); ?>">
                                 </div>
                                 <p class="text-end"><a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal"
-                                        class="text-white forgot-link">Forgot Password</a></p>
+                                        class="text-white forgot-link"><?php echo getTranslation('Log In', 3, 'label'); ?></a>
+                                </p>
                             </div>
                             <div class="btns px-4 text-center pt-4">
+                                <div id="loginResponse" class="alert"></div>
                                 <button class="btn btn-primary w-100 px-5 inter fw-bold text-white"
-                                    type="submit">Login</button>
+                                    type="submit"><?php echo getTranslation('Log In', 4, 'label'); ?></button>
                                 <div class="text-center mt-4">
                                     <a href="#" class="create-account-link text-white d-inline-block mb-3">Don't have an
                                         account?</a>
-                                    <a href="./register.html" class="btn btn-primary w-100 px-5 fw-bold text-white">Sign
-                                        Up</a>
+                                    <a href="./register.html"
+                                        class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 5, 'label'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +208,7 @@
             }
 
             function closeVerifyAndOpenForgotModal() {
+                
                 $('#verifyCodeModal').modal('hide');
                 $('#forgotModal').modal('show');
             }
@@ -206,6 +234,51 @@
             function validateCode(code) {
                 return code.length === 6
             }
+            $(document).ready(function () {
+                $("#loginForm").on("submit", function (event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // Get form data
+                    var emailOrPhone = $("#email").val();
+                    var password = $("#password").val();
+
+                    // Prepare data for AJAX request
+                    var formData = {
+                        email_or_phone: emailOrPhone,
+                        password: password
+                    };
+
+                    $.ajax({
+                        url: "login-process.php",
+                        type: "POST",
+                        data: formData,
+                        success: function (response) {
+                            console.log(response);
+                            response = JSON.parse(response);
+                            // Handle the response from the server
+                            if (response.status === 'success') {
+                                // Save ClientID and name in session (Note: This should be handled by the server)
+                                // Redirect or handle the login success (e.g., redirect to a dashboard page)
+                                window.location.href = 'index.html'; // Update this URL as needed
+                            } else if (response.status === 'error') {
+                                // Show error message
+                                $("#loginResponse").html(
+                                    '<span class="en">' + response.message + '</span>' +
+                                    '<span class="es">' + response.message + '</span>'
+                                ).addClass('alert-danger').removeClass('alert-success');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle any errors that occurred during the AJAX request
+                            $("#loginResponse").html(
+                                '<span class="en">An error occurred. Please try again.</span>' +
+                                '<span class="es">Ocurrió un error. Por favor, intente de nuevo.</span>'
+                            ).addClass('alert-danger').removeClass('alert-success');
+                        }
+                    });
+                });
+            });
+
         </script>
     </body>
 

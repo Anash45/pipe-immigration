@@ -480,6 +480,12 @@ input:focus {
 .lang-spanish .es{
     display: inline;
 }
+
+
+.inquiry-bottom .form-check-label,
+.inquiry-bottom .form-label{
+    font-size: 16px;
+}
 @media (max-width: 768px) {
 
     .page-main {

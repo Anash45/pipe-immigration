@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2024 at 03:47 PM
+-- Generation Time: Jul 26, 2024 at 12:58 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.0
 
@@ -72,6 +72,15 @@ CREATE TABLE `address` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`AddressID`, `UserID`, `inCareOfName`, `street1`, `street2`, `Apartment`, `Suite`, `Floor`, `zipCode`, `city`, `state`, `cellPhone`, `homePhone`, `workPhone`, `currentEmail`, `emergencyContact`, `emergencyPhone`, `createdAt`, `updatedAt`) VALUES
+(61, 63, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', NULL, NULL, NULL, 'CJVDLzkQiI', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'C9ANbifb05', '33994040353', '2024-07-25 01:02:42', '2024-07-25 01:02:42'),
+(62, 64, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', NULL, NULL, NULL, 'CJVDLzkQiI', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'C9ANbifb05', '33994040353', '2024-07-25 01:03:17', '2024-07-25 01:03:17'),
+(63, 65, 'PMU8k44SDO', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', 'Abcd', NULL, NULL, 'x3nadVgFWZ', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'BtjsUOherE', '33994040353', '2024-07-25 01:03:53', '2024-07-25 01:03:53');
+
 -- --------------------------------------------------------
 
 --
@@ -100,6 +109,23 @@ CREATE TABLE `certification` (
   `degreeUniversity` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `degreeDate` date NOT NULL,
   `degreeStateAndCountry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `ClientID` int NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email_or_phone` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `verified` tinyint(1) DEFAULT '0',
+  `locked_until` datetime DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -189,6 +215,15 @@ CREATE TABLE `marriage` (
   `obtainDecreeOfDivorce` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `marriage`
+--
+
+INSERT INTO `marriage` (`MarriageID`, `UserID`, `spouseName`, `dateOfMarriage`, `stateCountryOfMarriage`, `spouseBirthday`, `proofOfSpouseCitizenship`, `placeOfDivorce`, `dateOfDivorce`, `obtainDecreeOfDivorce`, `updatedAt`) VALUES
+(46, 63, 'Current Spouse', '2024-07-05', 'GOAwrDPZwa', '2024-07-17', 'US Passport', NULL, NULL, NULL, '2024-07-25 01:02:42'),
+(47, 64, 'Current Spouse', '2024-07-05', 'GOAwrDPZwa', '2024-07-17', 'US Passport', NULL, NULL, NULL, '2024-07-25 01:03:17'),
+(48, 65, 'Current Spouse', '2024-07-12', '0W8oKfSCmt', '2024-07-15', 'US birth certificate', NULL, NULL, NULL, '2024-07-25 01:03:53');
 
 -- --------------------------------------------------------
 
@@ -304,7 +339,7 @@ CREATE TABLE `screen` (
 
 INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `EnglishLabel`, `EnglishHelp`, `SpanishLabel`, `SpanishHelp`, `Updated`) VALUES
 (1, 'Create Account', '0', 'Title', 'Create Account', '', 'Crear Una Cuenta', '', '2024-07-15 11:07:52'),
-(2, 'Create Account', '1', 'Your ID', 'Use your email or cell phone #:', 'Use your email address or your cell phone number where we can send you answers to your questions or updates about the status of your case.', 'Utilice su correo electrónico o número de teléfono celular:', 'Utilice su dirección de correo electrónico o su número de teléfono celular donde podemos enviarle respuestas a sus preguntas o actualizaciones sobre el estado de su caso.', '2024-07-15 11:07:52'),
+(2, 'Create Account', '1', 'Your ID', 'Use your email or cell phone number #:', 'Use your email address or your cell phone number where we can send you answers to your questions or updates about the status of your case.', 'Utilice su correo electrónico o número de teléfono celular:', 'Utilice su dirección de correo electrónico o su número de teléfono celular donde podemos enviarle respuestas a sus preguntas o actualizaciones sobre el estado de su caso.', '2024-07-15 11:07:52'),
 (3, 'Create Account', '2', 'Password', 'Password:', 'Must be at least 6 characters', 'Contraseña:', 'Debe tener como mínimo 6 caracteres', '2024-07-15 11:07:52'),
 (4, 'Log In', '0', 'Title', 'Log In', '', 'Entrar a Tu Cuenta', '', '2024-07-15 11:07:52'),
 (5, 'Log In', '1', 'Your ID', 'Email or Cell Phone #:', 'Use the email address or the cell phone number that you used when you created your account.', 'Correo electrónico o número de teléfono celular:', 'Utilice la dirección de correo electrónico o el número de teléfono celular que utilizó cuando creó su cuenta.', '2024-07-15 11:07:52'),
@@ -402,7 +437,11 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 (107, 'Qualification', '79', 'stateCountryOfLegalEncounter', 'State and Country of Legal Encounter', 'The state and country where the legal encounter took place.', 'Estado y País del Encuentro Legal', 'El estado y el país donde tuvo lugar el encuentro legal.', '2024-07-24 16:42:23'),
 (108, 'Qualification', '80', 'natureOfLegalIssue', 'Nature of Legal Issue', 'A brief description of the nature of the legal issue.', 'Naturaleza del Problema Legal', 'Una breve descripción de la naturaleza del problema legal.', '2024-07-24 16:42:23'),
 (109, 'Qualification', '81', 'description', 'Description', 'A more detailed description of the legal issue.', 'Descripción', 'Una descripción más detallada del problema legal.', '2024-07-24 16:42:23'),
-(110, 'Qualification', '82', 'capacityToSupport', 'Describe your capacity to support yourself?', 'Provide a detailed explanation of your financial stability and ability to support yourself.', 'Describa su capacidad para mantenerse a sí mismo?', 'Proporcione una explicación detallada de su estabilidad financiera y capacidad para mantenerse a sí mismo.', '2024-07-24 18:47:40');
+(110, 'Qualification', '82', 'capacityToSupport', 'Describe your capacity to support yourself?', 'Provide a detailed explanation of your financial stability and ability to support yourself.', 'Describa su capacidad para mantenerse a sí mismo?', 'Proporcione una explicación detallada de su estabilidad financiera y capacidad para mantenerse a sí mismo.', '2024-07-24 18:47:40'),
+(111, 'Log In', '4', 'login', 'Login', 'Enter your login credentials', 'Iniciar sesión', 'Ingrese sus credenciales de inicio de sesión', '2024-07-25 23:21:07'),
+(112, 'Log In', '5', 'signUp', 'Sign Up', 'Create a new account', 'Registrarse', 'Crear una nueva cuenta', '2024-07-25 23:21:07'),
+(113, 'Log In', '6', 'fullName', 'Full Name', 'Enter your full name', 'Nombre completo', 'Ingrese su nombre completo', '2024-07-25 23:21:07'),
+(114, 'Log In', '7', 'confirmPassword', 'Confirm Password', 'Re-enter your password', 'Confirmar contraseña', 'Reingrese su contraseña', '2024-07-25 23:21:07');
 
 -- --------------------------------------------------------
 
@@ -454,6 +493,15 @@ CREATE TABLE `user` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`UserID`, `ClientID`, `firstName`, `middleName`, `lastName`, `birthday`, `birthPlace`, `citizenshipCountry`, `gender`, `createdAt`, `updatedAt`) VALUES
+(63, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-04', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:02:42', '2024-07-25 01:02:42'),
+(64, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-04', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:03:17', '2024-07-25 01:03:17'),
+(65, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-24', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:03:53', '2024-07-25 01:03:53');
+
 -- --------------------------------------------------------
 
 --
@@ -483,6 +531,33 @@ CREATE TABLE `us_entry` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verification_attempts`
+--
+
+CREATE TABLE `verification_attempts` (
+  `AttemptID` int NOT NULL,
+  `ClientID` int NOT NULL,
+  `is_successful` tinyint(1) NOT NULL,
+  `attempt_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verification_codes`
+--
+
+CREATE TABLE `verification_codes` (
+  `CodeID` int NOT NULL,
+  `ClientID` int NOT NULL,
+  `verification_code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `expires_at` timestamp NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -507,6 +582,13 @@ ALTER TABLE `address`
 ALTER TABLE `certification`
   ADD PRIMARY KEY (`id`),
   ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`ClientID`),
+  ADD UNIQUE KEY `email_or_phone` (`email_or_phone`);
 
 --
 -- Indexes for table `employer`
@@ -563,6 +645,20 @@ ALTER TABLE `us_entry`
   ADD PRIMARY KEY (`UserID`);
 
 --
+-- Indexes for table `verification_attempts`
+--
+ALTER TABLE `verification_attempts`
+  ADD PRIMARY KEY (`AttemptID`),
+  ADD KEY `ClientID` (`ClientID`);
+
+--
+-- Indexes for table `verification_codes`
+--
+ALTER TABLE `verification_codes`
+  ADD PRIMARY KEY (`CodeID`),
+  ADD KEY `ClientID` (`ClientID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -576,13 +672,19 @@ ALTER TABLE `additional_considerations`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `certification`
 --
 ALTER TABLE `certification`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -600,7 +702,7 @@ ALTER TABLE `encounter`
 -- AUTO_INCREMENT for table `marriage`
 --
 ALTER TABLE `marriage`
-  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `offspring`
@@ -618,13 +720,25 @@ ALTER TABLE `residency_documents`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `verification_attempts`
+--
+ALTER TABLE `verification_attempts`
+  MODIFY `AttemptID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `verification_codes`
+--
+ALTER TABLE `verification_codes`
+  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -683,6 +797,18 @@ ALTER TABLE `residency_documents`
 --
 ALTER TABLE `us_entry`
   ADD CONSTRAINT `us_entry_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `verification_attempts`
+--
+ALTER TABLE `verification_attempts`
+  ADD CONSTRAINT `verification_attempts_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `verification_codes`
+--
+ALTER TABLE `verification_codes`
+  ADD CONSTRAINT `verification_codes_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
