@@ -11,7 +11,7 @@ $pass = 'V37O$fF7';
 // $db   = 'pipe-immigration';
 // $user = 'root';
 // $pass = 'root';
-// $charset = 'utf8mb4';
+$charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
