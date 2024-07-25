@@ -282,8 +282,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     throw new Exception('Failed to insert certification data.');
                 }
-            } else {
-                throw new Exception('All certification fields must be filled.');
             }
             // Check if essential fields are not empty
             if (

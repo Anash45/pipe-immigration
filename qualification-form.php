@@ -13,7 +13,7 @@ include './defines/functions.php';
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css" />
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=3">
+        <link rel="stylesheet" href="./assets/css/style.css?v=4">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -1679,7 +1679,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
             integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./assets/js/script.js?v=3"></script>
+        <script src="./assets/js/script.js?v=4"></script>
         <script>
             function updateFormControls() {
                 $('.check-input').each(function () {

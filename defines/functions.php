@@ -78,23 +78,41 @@ function insertUser($clientID, $firstName, $middleName, $lastName, $birthday, $b
     }
 }
 
-function insertUSAddress($userID, $careOfName, $street1, $street2, $zipCode, $city, $state, $cellPhone, $homePhone, $workPhone, $currentEmail, $emergencyContact, $emergencyPhone, $residencyType, $residency)
-{
+function insertUSAddress(
+    $userID,
+    $careOfName,
+    $street1,
+    $street2,
+    $zipCode,
+    $city,
+    $state,
+    $cellPhone,
+    $homePhone,
+    $workPhone,
+    $currentEmail,
+    $emergencyContact,
+    $emergencyPhone,
+    $residencyType = null,
+    $residency = null
+) {
     global $pdo; // Use the PDO connection from db_conn.php
 
-    // Determine the column based on residencyType
-    $residencyColumn = '';
+    // Prepare the SQL statement dynamically based on the residency type
+    $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, createdAt, updatedAt";
+    $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, NOW(), NOW()";
+
     if ($residencyType === 'Floor') {
-        $residencyColumn = 'Floor';
+        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Floor, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     } elseif ($residencyType === 'Apartment') {
-        $residencyColumn = 'Apartment';
+        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Apartment, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     } elseif ($residencyType === 'Suite') {
-        $residencyColumn = 'Suite';
+        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Suite, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     }
 
-    // Prepare the SQL statement dynamically based on the residency column
-    $sql = "INSERT INTO `address` (UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, $residencyColumn, createdAt, updatedAt)
-            VALUES (:userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW())";
+    $sql = "INSERT INTO `address` ($columns) VALUES ($values)";
 
     try {
         $stmt = $pdo->prepare($sql);
@@ -111,7 +129,11 @@ function insertUSAddress($userID, $careOfName, $street1, $street2, $zipCode, $ci
         $stmt->bindParam(':currentEmail', $currentEmail);
         $stmt->bindParam(':emergencyContact', $emergencyContact);
         $stmt->bindParam(':emergencyPhone', $emergencyPhone);
-        $stmt->bindParam(':residency', $residency);
+
+        // Bind the residency parameter only if the residency type is provided
+        if ($residencyType === 'Floor' || $residencyType === 'Apartment' || $residencyType === 'Suite') {
+            $stmt->bindParam(':residency', $residency);
+        }
 
         return $stmt->execute();
     } catch (PDOException $e) {

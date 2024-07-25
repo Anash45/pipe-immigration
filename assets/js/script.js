@@ -164,11 +164,11 @@ $(document).ready(function () {
 
                         if (response.type == 'success') {
                             $('#response').html(`<div class='alert alert-success'><span class='en'>User data inserted successfully!</span><span class='es'>¡Datos del usuario insertados con éxito!</span></div>`);
+                            $(form).trigger('reset');
                         } else {
                             $('#response').html(`<div class='alert alert-danger'><span class='en'>Error inserting user data!</span><span class='es'>¡Error al insertar los datos del usuario!</span></div>`);
                         }
 
-                        $(form).trigger('reset');
                         console.log('Form submitted successfully');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
