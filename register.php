@@ -239,7 +239,7 @@ include './defines/functions.php';
                             $("#verifyResponse").text(response.message);
 
                             if (response.status === 'success') {
-                                $("#verifyResponse").html('<span class="en">' + response.message + '</span><span class="es">' + response.message + '</span>').addClass('text-success');
+                                $("#verifyResponse").html('<span class="en">' + response.message + ' <br><a href="login.php">Login</a></span></span><span class="es">' + response.message + ' <br><a href="login.php">Login</a></span></span>').addClass('text-success');
                             } else if (response.status === 'locked') {
                                 $("#verifyResponse").html('<span class="en">The validation code has been incorrectly entered 5 times. Your account will be locked for 24 hours. If you need help, email us at support@immigrationAI.Lawyer.</span><span class="es">El código de validación se ha ingresado incorrectamente 5 veces. Su cuenta se bloqueará durante 24 horas. Si necesita ayuda, envíenos un correo electrónico a support@immigrationAI.Lawyer.</span>').addClass('text-danger');
                             } else if (response.status === 'already_verified') {
@@ -353,7 +353,7 @@ include './defines/functions.php';
                                             let email = response.email_or_phone;
                                             openVerificationModal(email);
                                             $('#responseMessage').html('<p style="color: green;">' + response.message + '</p>');
-                                            // $(form)[0].reset(); // Reset form fields
+                                            $(form)[0].reset(); // Reset form fields
                                         } else {
                                             $('#responseMessage').html('<p style="color: red;">' + response.message + '</p>');
                                         }

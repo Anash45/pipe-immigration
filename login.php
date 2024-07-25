@@ -259,7 +259,7 @@ include './defines/functions.php';
                             if (response.status === 'success') {
                                 // Save ClientID and name in session (Note: This should be handled by the server)
                                 // Redirect or handle the login success (e.g., redirect to a dashboard page)
-                                window.location.href = 'index.html'; // Update this URL as needed
+                                window.location.href = 'immigration-inquiry.html'; // Update this URL as needed
                             } else if (response.status === 'error') {
                                 // Show error message
                                 $("#loginResponse").html(
