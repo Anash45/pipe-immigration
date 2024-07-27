@@ -1145,7 +1145,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                 class="form-control table-input"></textarea>
                                         </td>
                                         <td>
-                                            <input type="text" name="childBirthday[]"
+                                            <input type="date" name="childBirthday[]"
                                                 class="form-control table-input date" readonly>
                                         </td>
                                         <td>
@@ -1186,7 +1186,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                 class="form-control table-input"></textarea>
                                         </td>
                                         <td>
-                                            <input type="text" name="childBirthday[]"
+                                            <input type="date" name="childBirthday[]"
                                                 class="form-control table-input date" readonly>
                                         </td>
                                         <td>
@@ -1227,7 +1227,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                 class="form-control table-input"></textarea>
                                         </td>
                                         <td>
-                                            <input type="text" name="childBirthday[]"
+                                            <input type="date" name="childBirthday[]"
                                                 class="form-control table-input date" readonly>
                                         </td>
                                         <td>

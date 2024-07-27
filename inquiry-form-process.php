@@ -64,7 +64,7 @@ try {
     $sql = "INSERT INTO payment (
                 ClientID, TrxDate, PaymentGateway, PaymentCleared, TrxID, TrxStatus, Amount, Currency, Updated
             ) VALUES (
-                :clientId, :paymentDate, :paymentMethods, 0, :transactionId, 0, :totalFee, 'USD', NOW()
+                :clientId, :paymentDate, :paymentMethods, 1, :transactionId, 0, :totalFee, 'USD', NOW()
             )";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
