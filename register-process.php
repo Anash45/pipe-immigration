@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':expires_at', $expiresAt);
         $stmt->execute();
 
-        $isSent = mail($emailOrPhone, $subject, $message, $headers);
+        // $isSent = mail($emailOrPhone, $subject, $message, $headers);
 
         if (isEmailOrPhone($emailOrPhone) == 'phone') {
             $emailOrPhone = "Phone Number: " . $emailOrPhone;
