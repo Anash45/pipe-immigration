@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2024 at 12:58 AM
+-- Generation Time: Jul 27, 2024 at 02:51 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.0
 
@@ -129,6 +129,14 @@ CREATE TABLE `clients` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`ClientID`, `full_name`, `email_or_phone`, `password`, `verified`, `locked_until`, `createdAt`, `updatedAt`) VALUES
+(10, 'Syed Muhammad Anas Bukhari', 'anas14529@gmail.com', '$2y$10$ChA7nuk1q3YNyofTQHaoU.sOzHgUamQs51k6kfSuarRIdFte937JW', 1, NULL, '2024-07-26 23:56:00', '2024-07-26 23:56:45'),
+(11, 'Syed Muhammad Anas Bukhari', 'f4futuretech@gmail.com', '$2y$10$DVUj0Z7jdfwcyuQruPLMqONpvP470FokeytE5toiTX9wkqfmhxxta', 1, NULL, '2024-07-27 00:32:58', '2024-07-27 00:32:58');
+
 -- --------------------------------------------------------
 
 --
@@ -195,6 +203,35 @@ CREATE TABLE `identifierdocument` (
   `Notes` int NOT NULL,
   `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `immigration_inquiry`
+--
+
+CREATE TABLE `immigration_inquiry` (
+  `InquiryID` int NOT NULL,
+  `ClientID` int DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `currentStateAndCountry` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phoneNumber` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `whatsappConnected` tinyint(1) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `usaPresenceBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `marriedToUSCitizenBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `continuousPresenceEvidence` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `suitableQualificationOption` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `immigration_inquiry`
+--
+
+INSERT INTO `immigration_inquiry` (`InquiryID`, `ClientID`, `first_name`, `last_name`, `currentStateAndCountry`, `phoneNumber`, `whatsappConnected`, `email`, `usaPresenceBeforeJun2024`, `marriedToUSCitizenBeforeJun2024`, `continuousPresenceEvidence`, `suitableQualificationOption`) VALUES
+(4, 10, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'anas14529@gmail.com', 'yes', 'no', 'yes', 'needHelpFilling'),
+(5, 11, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'f4futuretech@gmail.com', 'no', 'yes', 'no', 'needHelpFilling');
 
 -- --------------------------------------------------------
 
@@ -267,19 +304,25 @@ CREATE TABLE `offspring` (
 --
 
 CREATE TABLE `payment` (
-  `UserID` int NOT NULL,
-  `TrxDateTime` datetime NOT NULL,
+  `payment_id` int NOT NULL,
+  `ClientID` int NOT NULL,
+  `TrxDate` date NOT NULL,
   `PaymentGateway` varchar(50) NOT NULL COMMENT 'Stripe, Zelle, Bank Transfer, Check, InPerson',
-  `PaymentCleared` datetime NOT NULL,
+  `PaymentCleared` tinyint(1) NOT NULL DEFAULT '0',
   `TrxID` varchar(50) NOT NULL COMMENT 'Trx from Stripe or Paypal, Zelle''s confirmation number, check routing and number, Cash to whom.',
-  `AuthCode` varchar(50) NOT NULL,
   `TrxStatus` varchar(50) NOT NULL,
   `Amount` decimal(10,0) NOT NULL,
   `Currency` varchar(50) NOT NULL,
-  `CardLastFourDigit` tinyint NOT NULL,
-  `CardExpiryDate` date NOT NULL,
-  `Updated` datetime NOT NULL
+  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `ClientID`, `TrxDate`, `PaymentGateway`, `PaymentCleared`, `TrxID`, `TrxStatus`, `Amount`, `Currency`, `Updated`) VALUES
+(1, 10, '2024-07-11', 'credit-card', 1, '21313213', '0', '75', 'USD', '2024-07-27 05:09:29'),
+(2, 11, '2024-07-12', 'paypal', 1, '213123213', '0', '75', 'USD', '2024-07-27 05:37:43');
 
 -- --------------------------------------------------------
 
@@ -463,6 +506,40 @@ CREATE TABLE `screencontent` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `systemdynamicdata`
+--
+
+CREATE TABLE `systemdynamicdata` (
+  `ID` int NOT NULL,
+  `KeyName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `Value` text COLLATE utf8mb4_general_ci NOT NULL,
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `systemdynamicdata`
+--
+
+INSERT INTO `systemdynamicdata` (`ID`, `KeyName`, `Value`, `CreatedAt`, `UpdatedAt`) VALUES
+(1, 'PIPEQualificationFee', '$50', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(2, 'HelpEnteringData', '$25', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(3, 'StripeQual', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(4, 'StripeQualPlusHelp', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(5, 'StripeQualEspañol', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(6, 'StripeQualPlusHelpEspañol', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(7, 'PayPalLinkforQualification', 'https://www.paypal.com/ncp/payment/RBMAYHHMCHCKG', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(8, 'PayPalLinkforQualPlusHelp', 'https://www.paypal.com/ncp/payment/RBMAYHHMCHCKG', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(9, 'emailforSupportEspañol', 'ayuda@inmigrationUSA.mx', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(10, 'emailforSupport', 'support@immigrationAI.lawyer', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(11, 'VideoConferencing', '$50', '2024-07-26 21:50:41', '2024-07-26 21:50:41'),
+(12, 'StripeQualVideoHelp', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 22:11:12', '2024-07-26 22:12:29'),
+(13, 'StripeQualVideoHelpEspañol', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 22:12:20', '2024-07-26 22:12:20'),
+(14, 'PayPalLinkforQualVideoHelp', 'https://www.paypal.com/ncp/payment/RBMAYHHMCHCKG', '2024-07-26 22:14:06', '2024-07-26 22:14:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `urlofdocumentation`
 --
 
@@ -559,6 +636,14 @@ CREATE TABLE `verification_codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `verification_codes`
+--
+
+INSERT INTO `verification_codes` (`CodeID`, `ClientID`, `verification_code`, `expires_at`, `created_at`) VALUES
+(14, 10, '320072', '2024-07-26 21:56:00', '2024-07-26 23:56:00'),
+(15, 11, '125767', '2024-07-26 22:32:58', '2024-07-27 00:32:58');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -605,6 +690,13 @@ ALTER TABLE `encounter`
   ADD KEY `UserID` (`UserID`);
 
 --
+-- Indexes for table `immigration_inquiry`
+--
+ALTER TABLE `immigration_inquiry`
+  ADD PRIMARY KEY (`InquiryID`),
+  ADD KEY `ClientID` (`ClientID`);
+
+--
 -- Indexes for table `marriage`
 --
 ALTER TABLE `marriage`
@@ -619,6 +711,12 @@ ALTER TABLE `offspring`
   ADD KEY `UserID` (`UserID`);
 
 --
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`payment_id`);
+
+--
 -- Indexes for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
@@ -631,6 +729,12 @@ ALTER TABLE `residency_documents`
 ALTER TABLE `screen`
   ADD PRIMARY KEY (`screen_id`),
   ADD UNIQUE KEY `unique_screen_sequence` (`ScreenName`,`Sequence`);
+
+--
+-- Indexes for table `systemdynamicdata`
+--
+ALTER TABLE `systemdynamicdata`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `user`
@@ -684,7 +788,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -699,6 +803,12 @@ ALTER TABLE `encounter`
   MODIFY `EncounterID` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `immigration_inquiry`
+--
+ALTER TABLE `immigration_inquiry`
+  MODIFY `InquiryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `marriage`
 --
 ALTER TABLE `marriage`
@@ -711,6 +821,12 @@ ALTER TABLE `offspring`
   MODIFY `OffspringID` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
@@ -721,6 +837,12 @@ ALTER TABLE `residency_documents`
 --
 ALTER TABLE `screen`
   MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+
+--
+-- AUTO_INCREMENT for table `systemdynamicdata`
+--
+ALTER TABLE `systemdynamicdata`
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -738,7 +860,7 @@ ALTER TABLE `verification_attempts`
 -- AUTO_INCREMENT for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
-  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -773,6 +895,12 @@ ALTER TABLE `employer`
 --
 ALTER TABLE `encounter`
   ADD CONSTRAINT `encounter_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `immigration_inquiry`
+--
+ALTER TABLE `immigration_inquiry`
+  ADD CONSTRAINT `immigration_inquiry_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `marriage`

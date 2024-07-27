@@ -10,6 +10,8 @@ if (isLoggedIn()) {
     if ($checkPaymentStatus !== 'cleared') {
         header('location: index.php');
     }
+}else{
+    header('location: login.php');
 }
 ?>
 <!DOCTYPE html>
