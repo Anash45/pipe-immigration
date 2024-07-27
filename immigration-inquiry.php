@@ -461,18 +461,18 @@ if (isLoggedIn()) {
 
 
             $(function () {
-                $(".date").datepicker({
-                    changeYear: true,
-                    changeMonth: true,
-                    dateFormat: "mm/dd/yy",
-                    yearRange: "-100:+0", // Adjust the year range as needed
-                });
-                $(".date").on("change", function () {
-                    $(this).valid();
-                });
-                $(".calendar").click(function () {
-                    $(this).siblings('.date').datepicker("show");
-                });
+                // $(".date").datepicker({
+                //     changeYear: true,
+                //     changeMonth: true,
+                //     dateFormat: "mm/dd/yy",
+                //     yearRange: "-100:+0", // Adjust the year range as needed
+                // });
+                // $(".date").on("change", function () {
+                //     $(this).valid();
+                // });
+                // $(".calendar").click(function () {
+                //     $(this).siblings('.date').datepicker("show");
+                // });
             });
 
             function checkInquiryForm() {
