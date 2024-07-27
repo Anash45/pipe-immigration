@@ -22,6 +22,7 @@ $whatsappConnected = isset($_POST['whatsappConnected']) ? 1 : 0;
 $email = $_POST['email'];
 $usaPresenceBeforeJun2024 = $_POST['usaPresenceBeforeJun2024'];
 $marriedToUSCitizenBeforeJun2024 = $_POST['marriedToUSCitizenBeforeJun2024'];
+$NoMajorIssues = $_POST['NoMajorIssues'];
 $continuousPresenceEvidence = $_POST['continuousPresenceEvidence'];
 $suitableQualificationOption = $_POST['suitableQualificationOption'];
 $paymentMethods = $_POST['payment-methods'];
@@ -38,10 +39,10 @@ try {
     // Insert into immigration_inquiry table
     $sql = "INSERT INTO immigration_inquiry (
                 ClientID, first_name, last_name, currentStateAndCountry, phoneNumber, whatsappConnected, email, 
-                usaPresenceBeforeJun2024, marriedToUSCitizenBeforeJun2024, continuousPresenceEvidence, suitableQualificationOption
+                usaPresenceBeforeJun2024, NoMajorIssues, marriedToUSCitizenBeforeJun2024, continuousPresenceEvidence, suitableQualificationOption
             ) VALUES (
                 :clientId, :firstName, :lastName, :currentStateAndCountry, :phoneNumber, :whatsappConnected, :email, 
-                :usaPresenceBeforeJun2024, :marriedToUSCitizenBeforeJun2024, :continuousPresenceEvidence, :suitableQualificationOption
+                :usaPresenceBeforeJun2024, :NoMajorIssues, :marriedToUSCitizenBeforeJun2024, :continuousPresenceEvidence, :suitableQualificationOption
             )";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -54,6 +55,7 @@ try {
         ':email' => $email,
         ':usaPresenceBeforeJun2024' => $usaPresenceBeforeJun2024,
         ':marriedToUSCitizenBeforeJun2024' => $marriedToUSCitizenBeforeJun2024,
+        ':NoMajorIssues' => $NoMajorIssues,
         ':continuousPresenceEvidence' => $continuousPresenceEvidence,
         ':suitableQualificationOption' => $suitableQualificationOption
     ]);

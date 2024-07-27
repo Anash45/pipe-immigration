@@ -51,7 +51,8 @@ include './defines/functions.php';
                     <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" method="post" id="loginForm">
                         <div class="px-4">
                             <h3 class="fw-bold text-white text-center mb-5">
-                                <?php echo getTranslation('Log In', 0, 'help'); ?> </h3>
+                                <?php echo getTranslation('Log In', 0, 'help'); ?>
+                            </h3>
                             <div class="form-group mb-4">
                                 <label for="email"><?php echo getTranslation('Log In', 1, 'label'); ?></label>
                                 <div class="input-div">
@@ -73,7 +74,7 @@ include './defines/functions.php';
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
                                         title="<?php echo getTranslation('Log In', 2, 'help'); ?>">
                                 </div>
-                                <p class="text-end"><a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal"
+                                <p class="text-end"><a href="#" onclick="openForgotModal()"
                                         class="text-white forgot-link"><?php echo getTranslation('Log In', 3, 'label'); ?></a>
                                 </p>
                             </div>
@@ -109,20 +110,17 @@ include './defines/functions.php';
                                 <span class="d-md-block d-inline">that you registered with us</span>
                             </p>
                         </div>
-                        <div
+                        <div id="emailPhoneConfirm"
                             class="d-flex align-items-center justify-content-center pt-3 forgot-email-phone flex-column gap-2">
-                            <p class="mb-0">Email</p>
-                            <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
-                                    src="./assets/images/mail-fill.svg" alt="Icon"
-                                    height="21"><span>lauran****@email.com</span></p>
-                            <p class="mb-0">or cell phone number where we can text you</p>
-                            <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
-                                    src="./assets/images/phone.svg" alt="Icon" height="21"><span>+923095248482</span>
+                            <!-- <p class="mb-0">or cell phone number where we can text you</p> -->
+                            <!-- <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
+                                    src="./assets/images/phone.svg" alt="Icon" height="21"><span>+923095248482</span> -->
                             </p>
                         </div>
+                        <div id="verifyResponse"></div>
                         <div class="py-5 mb-5 px-5">
                             <button class="btn btn-primary w-100 px-5 inter fw-bold text-white" type="submit"
-                                onclick="openCodeModal()">Next</button>
+                                onclick="sendCode()">Next</button>
                         </div>
                     </div>
                 </div>
@@ -152,12 +150,13 @@ include './defines/functions.php';
                                 <input type="text" maxlength="1" class="code-box" id="codeBox6">
                             </div>
                             <div class="mb-4">
-                                <p class="fm-desc">Didn't Receive the Code ?</p>
-                                <a href="#" class="fm-link">Resend Code</a>
+                                <label for="new_password">New Password</label>
+                                <input type="password" class="form-control" id="new_password">
                             </div>
+                            <div id="resetResponse"></div>
                             <div class="py-5 mb-5 px-5">
-                                <button class="btn btn-primary w-100 px-5 inter fw-bold text-white"
-                                    type="submit">Verify</button>
+                                <button class="btn btn-primary w-100 px-5 inter fw-bold text-white" type="button"
+                                    onclick="setNewPassword()">Verify</button>
                             </div>
                         </form>
                     </div>
@@ -207,10 +206,107 @@ include './defines/functions.php';
                 $('#verifyCodeModal').modal('show');
             }
 
+            function setNewPassword() {
+                let verificationCode = '';
+                let new_password = $('#new_password').val();
+                let email = $('#email').val();
+
+                if (new_password.length >= 6) {
+
+                    $(".code-box").each(function () {
+                        verificationCode += $(this).val();
+                    });
+                    // Prepare data to send
+                    let data = {
+                        verification_code: verificationCode,
+                        new_password: new_password,
+                        email: email
+                    };
+
+                    // Send data via AJAX
+                    $.ajax({
+                        url: 'verification-forgot-code-process.php',
+                        type: 'POST',
+                        data: data,
+                        success: function (response) {
+                            console.log(response);
+                            response = JSON.parse(response);
+                            // Determine the message to display based on response status
+                            let message;
+                            $('#verifyCodeModal').modal('hide');
+                                $('#new_password').val('');
+                                $('.code-box').val('');
+                                $('#email').val('');
+                                $('#resetResponse').html('');
+                                $('#verifyResponse').html('');
+                            if (response.status === 'success') {
+                                $('#correctCodeModal').modal('show');
+                            } else {
+                                $('#incorrectCodeModal').modal('show');
+                            }
+                            
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle errors if any
+                            $('#resetResponse').html('<span class="en">An error occurred. Please try again later.</span><span class="es">Ocurrió un error. Por favor, inténtelo de nuevo más tarde.</span>').addClass('text-danger');
+                        }
+                    });
+                }else{
+                    $('#resetResponse').html('<span class="en">Password should be atleast 6 characters long!</span><span class="es">¡La contraseña debe tener al menos 6 caracteres!</span>').addClass('text-danger');
+                }
+            }
+            function openForgotModal() {
+                if ($('#email').val() == '') {
+                    $("#loginResponse").html(
+                        '<span class="en">Enter email first!</span>' +
+                        '<span class="es">¡Primero ingrese el correo electrónico!</span>'
+                    ).addClass('alert-danger').removeClass('alert-success');
+                } else {
+                    $('#emailPhoneConfirm').html(`<p class="mb-0">Email</p>
+                            <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
+                                    src="./assets/images/mail-fill.svg" alt="Icon"
+                                    height="21"><span>${$('#email').val()}</span></p>`);
+                    $('#forgotModal').modal('show');
+                }
+            }
+
             function closeVerifyAndOpenForgotModal() {
 
                 $('#verifyCodeModal').modal('hide');
                 $('#forgotModal').modal('show');
+            }
+
+            function sendCode() {
+                let email = $('#email').val();
+                $.ajax({
+                    url: "forgot-password-code.php",
+                    type: "POST",
+                    data: {
+                        email_or_phone: email
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        response = JSON.parse(response);
+                        // Determine the message to display based on response status
+                        let message;
+                        if (response.status === 'success') {
+                            openCodeModal();
+                        } else {
+                            message = response.message;
+                            $("#verifyResponse").addClass('text-danger').removeClass('text-success');
+                        }
+
+                        // Display the message
+                        $("#verifyResponse").html(message);
+                    },
+                    error: function (xhr, status, error) {
+                        // Display generic error message
+                        $("#verifyResponse").html(
+                            '<span class="en">An error occurred. Please try again.</span>' +
+                            '<span class="es">Ocurrió un error. Por favor, intente de nuevo.</span>'
+                        ).addClass('text-danger').removeClass('text-success');
+                    }
+                });
             }
 
             $(document).ready(function () {

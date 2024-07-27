@@ -146,6 +146,22 @@ if (isLoggedIn()) {
                             <div class="row">
                                 <div class="col-xl-7 col-md-8 mx-auto mt-5 inquiry-bottom">
                                     <div class="mb-4">
+                                        <label for="NoMajorIssues"
+                                            class="form-label me-4"><?php echo getTranslation('Inquiry Form', 9, 'label'); ?></label>
+                                        <div id="NoMajorIssues" class="d-block">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    name="NoMajorIssues" id="NoMajorIssuesYes" value="yes">
+                                                <label class="form-check-label" for="NoMajorIssuesYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    name="NoMajorIssues" id="NoMajorIssuesNo" value="no">
+                                                <label class="form-check-label" for="NoMajorIssuesNo">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
                                         <label for="usaPresence"
                                             class="form-label me-4"><?php echo getTranslation('Inquiry Form', 6, 'label'); ?></label>
                                         <div id="usaPresence" class="d-block">
@@ -629,6 +645,9 @@ if (isLoggedIn()) {
                             email: true
                         },
                         usaPresenceBeforeJun2024: {
+                            required: true
+                        },
+                        NoMajorIssues: {
                             required: true
                         },
                         marriedToUSCitizenBeforeJun2024: {
