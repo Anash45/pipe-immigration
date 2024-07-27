@@ -16,7 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
-            $response['message'] = 'User not found!';
+            $response['message'] = '
+    <span class="en">User not found!</span>
+    <span class="es">¡Usuario no encontrado!</span>
+';
             echo json_encode($response);
             exit;
         }
@@ -26,7 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the user is already verified
         if ($user['verified']) {
             $response['status'] = 'already_verified';
-            $response['message'] = 'User already verified!';
+            $response['message'] = '
+    <span class="en">User already verified!</span>
+    <span class="es">¡Usuario ya verificado!</span>
+';
             echo json_encode($response);
             exit;
         }
@@ -57,9 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $isSent = mail($emailOrPhone, $subject, $message, $headers);
         if ($isSent) {
             $response['status'] = 'success';
-            $response['message'] = 'A new verification code has been sent to your email.';
+            $response['message'] = '
+    <span class="en">A new verification code has been sent to your email.</span>
+    <span class="es">Se ha enviado un nuevo código de verificación a su correo electrónico.</span>
+';
         } else {
-            $response['message'] = 'Failed to send verification email.';
+            $response['message'] = '
+    <span class="en">Failed to send verification email.</span>
+    <span class="es">No se pudo enviar el correo electrónico de verificación.</span>
+';
         }
 
         echo json_encode($response);

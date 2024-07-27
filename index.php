@@ -46,7 +46,7 @@ if (isLoggedIn()) {
                 }
                 ?>
                 <div class="d-flex gap-5 justify-content-center flex-wrap">
-                    <div class="selection-outer <?php echo $disabled = ($checkPaymentStatus == 'not-cleared' || $checkPaymentStatus == 'cleared') ? 'disabled' : ''; ?>">
+                    <div class="selection-outer">
                         <a href="immigration-inquiry.php" class="selection-box">
                             <img src="./assets/images/inquiry-select.png" alt="Image"
                                 class="img-fluid w-100 select-img">

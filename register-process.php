@@ -12,14 +12,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if all fields are present
     if (empty($fullName) || empty($emailOrPhone) || empty($password) || empty($confirmPassword)) {
-        $response['message'] = 'All fields are required!';
+        $response['message'] = '
+    <span class="en">All fields are required!</span>
+    <span class="es">¡Todos los campos son obligatorios!</span>
+';
         echo json_encode($response);
         exit;
     }
 
     // Check if passwords match
     if ($password !== $confirmPassword) {
-        $response['message'] = 'Passwords do not match!';
+        $response['message'] = '
+    <span class="en">Passwords do not match!</span>
+    <span class="es">¡Las contraseñas no coinciden!</span>
+';
         echo json_encode($response);
         exit;
     }
@@ -63,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':expires_at', $expiresAt);
         $stmt->execute();
 
-        
+
         if (isEmailOrPhone($emailOrPhone) == 'phone') {
             $emailOrPhone = "Phone Number: " . $emailOrPhone;
         } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
@@ -77,9 +83,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (true) { // Simulate email sending success
             $response['status'] = 'success';
             $response['email_or_phone'] = $emailOrPhone;
-            $response['message'] = 'Registration successful! Please check your email/phone number for the verification code.';
+            $response['message'] = '
+    <span class="en">Registration successful! Please check your email/phone number for the verification code.</span>
+    <span class="es">¡Registro exitoso! Por favor, revisa tu correo electrónico/número de teléfono para el código de verificación.</span>
+';
         } else {
-            $response['message'] = 'Failed to send verification email.';
+            $response['message'] = '
+    <span class="en">Failed to send verification email.</span>
+    <span class="es">No se pudo enviar el correo electrónico de verificación.</span>
+';
         }
 
         echo json_encode($response);

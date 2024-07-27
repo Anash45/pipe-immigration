@@ -112,8 +112,8 @@ include './defines/functions.php';
                                 <button class="btn btn-primary w-100 px-5 fw-bold inter text-white" type="submit">Sign
                                     Up</button>
                                 <div class="text-center mt-4">
-                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Already have an
-                                        account?</a>
+                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Already have
+                                        an account?</a>
                                     <a href="./login.php"
                                         class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 4, 'label'); ?></a>
                                 </div>
@@ -188,12 +188,10 @@ include './defines/functions.php';
                         // Determine the message to display based on response status
                         let message;
                         if (response.status === 'success') {
-                            message = '<span class="en">A new verification code has been sent to your email.</span>' +
-                                '<span class="es">Se ha enviado un nuevo código de verificación a su correo electrónico.</span>';
+                            message = response.message;
                             $("#verifyResponse").addClass('text-success').removeClass('text-danger');
                         } else if (response.status === 'already_verified') {
-                            message = '<span class="en">User already verified! <br><a href="login.php">Login</a></span>' +
-                                '<span class="es">¡Usuario ya verificado! <br><a href="login.php">Login</a></span>';
+                            message = response.message + '<br><a href="login.php">Login</a>';
                             $("#verifyResponse").addClass('text-danger').removeClass('text-success');
                         } else if (response.status === 'error') {
                             $('#emailInput').show();

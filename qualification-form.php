@@ -31,6 +31,10 @@ if (isLoggedIn()) {
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
         <main class="py-5">
             <div class="container">
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <a href="index.php" class="btn btn-rectangle mx-0 btn-primary">Home</a>
+                    <a href="logout.php" class="btn btn-rectangle mx-0 btn-danger">Logout</a>
+                </div>
                 <div class="d-flex justify-content-center gap-5 align-items-center mb-5">
                     <a href="?lang=english"
                         class="lang-link <?php echo $active = (getLanguage() == 'english') ? 'active' : ''; ?> inter text-dark">ENGLISH</a><a

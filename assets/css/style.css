@@ -92,7 +92,7 @@ main {
     color: red !important;
     font-size: 12px;
     position: absolute;
-    bottom: -16px;
+    top: 38px;
 }
 
 .page-form-sec .form-control {
