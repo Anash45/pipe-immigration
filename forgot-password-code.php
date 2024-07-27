@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
 
         // Use mail() function to send the email
-        // $isSent = mail($emailOrPhone, $subject, $message, $headers);
-        if (true) {
+        $isSent = mail($emailOrPhone, $subject, $message, $headers);
+        if ($isSent) {
             $response['status'] = 'success';
             $response['message'] = '
     <span class="en">A new verification code has been sent to your email.</span>

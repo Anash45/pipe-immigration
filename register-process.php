@@ -77,10 +77,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subject = "Your Verification Code - PIPE Immigration";
             $message = "Your verification code is: " . $verificationCode;
             $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
-            // $isSent = mail($emailOrPhone, $subject, $message, $headers);
+            $isSent = mail($emailOrPhone, $subject, $message, $headers);
         }
 
-        if (true) { // Simulate email sending success
+        if ($isSent) { // Simulate email sending success
             $response['status'] = 'success';
             $response['email_or_phone'] = $emailOrPhone;
             $response['message'] = '

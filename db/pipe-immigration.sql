@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2024 at 02:51 AM
+-- Generation Time: Jul 28, 2024 at 12:40 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.0
 
@@ -44,6 +44,13 @@ CREATE TABLE `additional_considerations` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `additional_considerations`
+--
+
+INSERT INTO `additional_considerations` (`id`, `UserID`, `anyCommunicableDisease`, `missingVaccine`, `anyMissingVaccines`, `mentalDisorder`, `anyMentalDisorder`, `accusedDrugAddiction`, `accusedChildAbduction`, `deportedFromUS`, `citizenshipAfter96`, `electionsVoted`, `capacityToSupport`, `updatedAt`) VALUES
+(1, 66, 'syphilis', NULL, '', NULL, 'Major Depressive Disorder with Psychotic Features', '', '', '', '', '', '', '2024-07-27 01:39:37');
+
 -- --------------------------------------------------------
 
 --
@@ -53,7 +60,7 @@ CREATE TABLE `additional_considerations` (
 CREATE TABLE `address` (
   `AddressID` int NOT NULL,
   `UserID` int DEFAULT NULL,
-  `inCareOfName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `inCareOfName` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `street1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `street2` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Apartment` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -79,7 +86,8 @@ CREATE TABLE `address` (
 INSERT INTO `address` (`AddressID`, `UserID`, `inCareOfName`, `street1`, `street2`, `Apartment`, `Suite`, `Floor`, `zipCode`, `city`, `state`, `cellPhone`, `homePhone`, `workPhone`, `currentEmail`, `emergencyContact`, `emergencyPhone`, `createdAt`, `updatedAt`) VALUES
 (61, 63, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', NULL, NULL, NULL, 'CJVDLzkQiI', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'C9ANbifb05', '33994040353', '2024-07-25 01:02:42', '2024-07-25 01:02:42'),
 (62, 64, 'Abcd', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', NULL, NULL, NULL, 'CJVDLzkQiI', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'C9ANbifb05', '33994040353', '2024-07-25 01:03:17', '2024-07-25 01:03:17'),
-(63, 65, 'PMU8k44SDO', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', 'Abcd', NULL, NULL, 'x3nadVgFWZ', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'BtjsUOherE', '33994040353', '2024-07-25 01:03:53', '2024-07-25 01:03:53');
+(63, 65, 'PMU8k44SDO', 'H#3, St#4, Plots Bhaiwala', 'Near Al Muslim School', 'Abcd', NULL, NULL, 'x3nadVgFWZ', 'Faisalabad', 'Alabama', '33994040353', '', '', 'anas14529@gmail.com', 'BtjsUOherE', '33994040353', '2024-07-25 01:03:53', '2024-07-25 01:03:53'),
+(64, 66, '', '123 Main Street', '', NULL, NULL, NULL, '85020', 'Phoenix ', 'Arizona', '60255514789', '', '8084641972', 'dsuriel1218@gmail.com', 'Nic Suriel', '6025553214', '2024-07-27 01:39:37', '2024-07-27 01:39:37');
 
 -- --------------------------------------------------------
 
@@ -134,8 +142,11 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`ClientID`, `full_name`, `email_or_phone`, `password`, `verified`, `locked_until`, `createdAt`, `updatedAt`) VALUES
-(10, 'Syed Muhammad Anas Bukhari', 'anas14529@gmail.com', '$2y$10$ChA7nuk1q3YNyofTQHaoU.sOzHgUamQs51k6kfSuarRIdFte937JW', 1, NULL, '2024-07-26 23:56:00', '2024-07-26 23:56:45'),
-(11, 'Syed Muhammad Anas Bukhari', 'f4futuretech@gmail.com', '$2y$10$DVUj0Z7jdfwcyuQruPLMqONpvP470FokeytE5toiTX9wkqfmhxxta', 1, NULL, '2024-07-27 00:32:58', '2024-07-27 00:32:58');
+(10, 'Syed Muhammad Anas Bukhari', 'anas14529@gmail.com', '$2y$10$kMkNiV4JOwUw4ALryU1AUOpTG.GqTE7gy3tdvi2Rfri8iTu2HFYZq', 1, NULL, '2024-07-26 23:56:00', '2024-07-27 22:28:43'),
+(11, 'Syed Muhammad Anas Bukhari', 'f4futuretech@gmail.com', '$2y$10$DVUj0Z7jdfwcyuQruPLMqONpvP470FokeytE5toiTX9wkqfmhxxta', 1, NULL, '2024-07-27 00:32:58', '2024-07-27 00:32:58'),
+(12, 'Dilia Suriel', 'dilia@appliedinsightinc.com', '$2y$10$brGt.JDR8Oexou9jJOxyheAOK/9Dt5uh8TSEkm1n155heoz8/yj/y', 1, NULL, '2024-07-27 01:45:18', '2024-07-27 01:45:18'),
+(13, 'Diana Rockweel', 'dsuriel1218@gmail.com', '$2y$10$SAkJUcnTPU6GMrLswsFYDe2dbLN3QZh3zNK34HTJuv7D0t7a/9eRq', 1, NULL, '2024-07-27 17:58:40', '2024-07-27 17:58:40'),
+(14, 'Matthew Suria', 'matthew@itstaskable.com', '$2y$10$dUVfsPk7DCe8YbQDcHobqOuIz3LLD6BeeoomdJVNO8gfbTwYuubpW', 1, NULL, '2024-07-27 19:11:56', '2024-07-27 19:11:56');
 
 -- --------------------------------------------------------
 
@@ -188,6 +199,13 @@ CREATE TABLE `encounter` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `encounter`
+--
+
+INSERT INTO `encounter` (`EncounterID`, `UserID`, `DateOfEncounter`, `StateCountryOfLegalEncounter`, `NatureOfLegalIssue`, `Description`, `updatedAt`) VALUES
+(1, 66, '2010-07-13', 'Phoenix, AZ', 'Stop for drunk driving but let go', '', '2024-07-27 01:39:37');
+
 -- --------------------------------------------------------
 
 --
@@ -221,6 +239,7 @@ CREATE TABLE `immigration_inquiry` (
   `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `usaPresenceBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `marriedToUSCitizenBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NoMajorIssues` varchar(10) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '10',
   `continuousPresenceEvidence` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `suitableQualificationOption` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -229,9 +248,12 @@ CREATE TABLE `immigration_inquiry` (
 -- Dumping data for table `immigration_inquiry`
 --
 
-INSERT INTO `immigration_inquiry` (`InquiryID`, `ClientID`, `first_name`, `last_name`, `currentStateAndCountry`, `phoneNumber`, `whatsappConnected`, `email`, `usaPresenceBeforeJun2024`, `marriedToUSCitizenBeforeJun2024`, `continuousPresenceEvidence`, `suitableQualificationOption`) VALUES
-(4, 10, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'anas14529@gmail.com', 'yes', 'no', 'yes', 'needHelpFilling'),
-(5, 11, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'f4futuretech@gmail.com', 'no', 'yes', 'no', 'needHelpFilling');
+INSERT INTO `immigration_inquiry` (`InquiryID`, `ClientID`, `first_name`, `last_name`, `currentStateAndCountry`, `phoneNumber`, `whatsappConnected`, `email`, `usaPresenceBeforeJun2024`, `marriedToUSCitizenBeforeJun2024`, `NoMajorIssues`, `continuousPresenceEvidence`, `suitableQualificationOption`) VALUES
+(4, 10, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'anas14529@gmail.com', 'yes', 'no', '10', 'yes', 'needHelpFilling'),
+(5, 11, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'f4futuretech@gmail.com', 'no', 'yes', '10', 'no', 'needHelpFilling'),
+(6, 12, 'Dilia', 'Suriel', 'NYC, NY', '6027986541', 0, 'dilia@appliedinsightinc.com', 'yes', 'yes', '10', 'yes', 'needHelpFilling'),
+(7, 13, 'Diana', 'Rockwell', 'Phoenix, AZ', '6023997645', 0, 'dsuriel1218@gmail.com', 'yes', 'yes', '10', 'yes', 'fillYourself'),
+(9, 11, 'Syed', 'Bukhari', '123 jk123 k2131', '33994040353', 0, 'f4futuretech@gmail.com', 'no', 'no', '10', 'yes', 'fillYourself');
 
 -- --------------------------------------------------------
 
@@ -260,7 +282,8 @@ CREATE TABLE `marriage` (
 INSERT INTO `marriage` (`MarriageID`, `UserID`, `spouseName`, `dateOfMarriage`, `stateCountryOfMarriage`, `spouseBirthday`, `proofOfSpouseCitizenship`, `placeOfDivorce`, `dateOfDivorce`, `obtainDecreeOfDivorce`, `updatedAt`) VALUES
 (46, 63, 'Current Spouse', '2024-07-05', 'GOAwrDPZwa', '2024-07-17', 'US Passport', NULL, NULL, NULL, '2024-07-25 01:02:42'),
 (47, 64, 'Current Spouse', '2024-07-05', 'GOAwrDPZwa', '2024-07-17', 'US Passport', NULL, NULL, NULL, '2024-07-25 01:03:17'),
-(48, 65, 'Current Spouse', '2024-07-12', '0W8oKfSCmt', '2024-07-15', 'US birth certificate', NULL, NULL, NULL, '2024-07-25 01:03:53');
+(48, 65, 'Current Spouse', '2024-07-12', '0W8oKfSCmt', '2024-07-15', 'US birth certificate', NULL, NULL, NULL, '2024-07-25 01:03:53'),
+(49, 66, 'Fernando Gutierrez ', '2011-06-18', 'Maine, USA', '1960-07-15', 'US Passport', NULL, NULL, NULL, '2024-07-27 01:39:37');
 
 -- --------------------------------------------------------
 
@@ -297,6 +320,13 @@ CREATE TABLE `offspring` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `offspring`
+--
+
+INSERT INTO `offspring` (`OffspringID`, `UserID`, `fullLegalName`, `birthday`, `stateCountryOfBirth`, `mothersName`, `fathersName`, `gender`, `schoolDetails`, `accessToSchoolRecords`, `createdAt`, `updatedAt`) VALUES
+(1, 66, 'Juanita Gonzalez', '2004-10-14', 'Mexico City, Mexico', 'Maria Yolanda Perez', 'Francisco Julian Perez', 'Female', 'Yes several', 'Yes', '2024-07-27 01:39:37', '2024-07-27 01:39:37');
+
 -- --------------------------------------------------------
 
 --
@@ -322,7 +352,10 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_id`, `ClientID`, `TrxDate`, `PaymentGateway`, `PaymentCleared`, `TrxID`, `TrxStatus`, `Amount`, `Currency`, `Updated`) VALUES
 (1, 10, '2024-07-11', 'credit-card', 1, '21313213', '0', '75', 'USD', '2024-07-27 05:09:29'),
-(2, 11, '2024-07-12', 'paypal', 1, '213123213', '0', '75', 'USD', '2024-07-27 05:37:43');
+(2, 11, '2024-07-12', 'paypal', 1, '213123213', '0', '75', 'USD', '2024-07-27 05:37:43'),
+(3, 12, '2024-07-27', 'credit-card', 0, 'TestingTesting', '0', '75', 'USD', '2024-07-27 12:47:49'),
+(4, 13, '2024-07-27', 'credit-card', 0, 'TestingId', '0', '50', 'USD', '2024-07-27 18:06:03'),
+(5, 11, '2022-04-03', 'credit-card', 0, '21313213', '0', '50', 'USD', '2024-07-28 02:07:32');
 
 -- --------------------------------------------------------
 
@@ -353,10 +386,22 @@ CREATE TABLE `proofofresidency` (
 CREATE TABLE `residency_documents` (
   `DocumentID` int NOT NULL,
   `UserID` int NOT NULL,
-  `DocumentType` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Tax Return, W2, BirthCertificate of US born child, Rental Contract, Cellphone, HousePhone, Electric, Water, Gas, Sewer, etc.',
+  `DocumentType` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Tax Return, W2, BirthCertificate of US born child, Rental Contract, Cellphone, HousePhone, Electric, Water, Gas, Sewer, etc.',
   `DocumentDescription` text COLLATE utf8mb4_general_ci,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `residency_documents`
+--
+
+INSERT INTO `residency_documents` (`DocumentID`, `UserID`, `DocumentType`, `DocumentDescription`, `updatedAt`) VALUES
+(86, 66, 'Tax Return', '2010-2023', '2024-07-27 01:39:37'),
+(87, 66, 'Childern Birth Certificate', 'Adam, Colorado, 2/9/1989', '2024-07-27 01:39:37'),
+(88, 66, 'W-2', 'Name of employer', '2024-07-27 01:39:37'),
+(89, 66, 'Driving License', 'New Jersey, Arizona, Colorado, ', '2024-07-27 01:39:37'),
+(90, 66, 'State ID', 'Library card', '2024-07-27 01:39:37'),
+(91, 66, 'Other Documents', 'Money transfers from the US to Mexico, Cell phone bill, hospital visits, doctor\'s visit.', '2024-07-27 01:39:37');
 
 -- --------------------------------------------------------
 
@@ -366,13 +411,13 @@ CREATE TABLE `residency_documents` (
 
 CREATE TABLE `screen` (
   `screen_id` int NOT NULL,
-  `ScreenName` varchar(14) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `ScreenName` varchar(14) DEFAULT NULL,
   `Sequence` varchar(2) DEFAULT NULL,
   `FieldName` varchar(49) DEFAULT NULL,
-  `EnglishLabel` varchar(76) DEFAULT NULL,
-  `EnglishHelp` varchar(241) DEFAULT NULL,
-  `SpanishLabel` varchar(89) DEFAULT NULL,
-  `SpanishHelp` varchar(304) DEFAULT NULL,
+  `EnglishLabel` varchar(500) DEFAULT NULL,
+  `EnglishHelp` varchar(1000) DEFAULT NULL,
+  `SpanishLabel` varchar(500) DEFAULT NULL,
+  `SpanishHelp` varchar(1000) DEFAULT NULL,
   `Updated` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
@@ -394,9 +439,9 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 (11, 'Inquiry Form', '3', 'Current State, Country of Residence', 'Your current state and country of residence', 'Enter the US State of your primary residence. If you\'re not currently residing in the US, enter the state and country were you\'re currently residing.', 'Su estado actual y país de residencia', 'Ingrese el estado estadounidense de su residencia principal. Si actualmente no reside en los EE. UU., ingrese el estado y el país donde reside actualmente.', '2024-07-15 11:07:52'),
 (12, 'Inquiry Form', '4', 'PhoneNumber', 'Cell Phone Number', 'Enter your US cell phone number. If your cell phone is not American, select the code for that country first.', 'Número Celular', 'Ingrese su número de teléfono celular de EE. UU. Si tu celular no es americano, selecciona primero el código de ese país.', '2024-07-15 11:07:52'),
 (13, 'Inquiry Form', '5', 'email', 'Your email address', 'Enter your primary email address, if you don\'t have an email address, leave it blank.', 'Su dirección de correo electrónico', 'Ingrese su dirección de correo electrónico principal; si no tiene una dirección de correo electrónico, déjela en blanco.', '2024-07-15 11:07:52'),
-(14, 'Inquiry Form', '6', 'HelpwithQualifyingForm', 'Do you need help completing the PIPE Qualification form?', 'If you\'re not comfortable filling computer forms, you can schedule help with one of our assistants for an additional fee of $25 USD by checking \"Yes.\"', '¿Necesita ayuda para completar el formulario de Calificación PIPE?', 'Si no se siente cómodo completando formularios por computadora, puede programar ayuda con uno de nuestros asistentes por una tarifa adicional de $25 USD marcando \"Sí\".', '2024-07-15 11:07:52'),
-(15, 'Inquiry Form', '7', 'PIPEQualifyingFee', 'Payment options', 'Select one of the 5 payment option that\'s most convenient for you. We\'ll be able to fill in your qualification data as soon as the payment has cleared. ', 'Opciones de Pago', 'Selecione una de las 5 forma de pago que más le convenga. Podremos completar sus datos de calificación tan pronto como se haya liquidado el pago. ', '2024-07-15 11:07:52'),
-(16, 'Inquiry Form', '8', 'Questions', 'Do do have any questions before we can qualify you?', '', '¿Tiene alguna pregunta antes de que podamos calificarlo?', '', '2024-07-15 11:07:52'),
+(14, 'Inquiry Form', '12', 'HelpwithQualifyingForm', 'Do you need help completing the PIPE Qualification form?', 'If you\'re not comfortable filling computer forms, you can schedule help with one of our assistants for an additional fee of $25 USD.', '¿Necesita ayuda para completar el formulario de Calificación PIPE?', 'Si no se siente cómodo completando formularios por computadora, puede programar ayuda con uno de nuestros asistentes por una tarifa adicional de $25 USD.', '2024-07-15 11:07:52'),
+(15, 'Inquiry Form', '15', 'PIPEQualifyingFee', 'Payment options', 'Select one of the 5 payment option that\'s most convenient for you. We\'ll be able to fill in your qualification data as soon as the payment has cleared. ', 'Opciones de Pago', 'Selecione una de las 5 forma de pago que más le convenga. Podremos completar sus datos de calificación tan pronto como se haya liquidado el pago. ', '2024-07-15 11:07:52'),
+(16, 'Inquiry Form', '16', 'Questions', 'Do do have any questions before we can qualify you?', '', '¿Tiene alguna pregunta antes de que podamos calificarlo?', '', '2024-07-15 11:07:52'),
 (17, '', '', '', '', '', '', '', '2024-07-15 11:07:52'),
 (18, 'Qualification', '0', 'PIPE Qualification', 'PIPE Immigration Qualification ', 'The data you provide during the process will be used to determine if you qualify and how much effort will be required to get you the benefits of the PIPE program.', 'Calificación Para el Programa de inmigración PIPE ', 'Los datos que proporcione durante el proceso se utilizarán para determinar si califica y cuánto esfuerzo se requerirá para obtener los beneficios del programa PIPE.', '2024-07-15 11:07:52'),
 (19, 'Qualification', '1', 'Firstname', 'Your First Name(s)', 'Enter your first name(s) as they appear in your passport or your birth certificate.', 'Su(s) nombre(s)', 'Ingrese su(s) nombre(s) tal como aparecen en su pasaporte o en su certificado de nacimiento.', '2024-07-15 11:07:52'),
@@ -484,7 +529,18 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 (111, 'Log In', '4', 'login', 'Login', 'Enter your login credentials', 'Iniciar sesión', 'Ingrese sus credenciales de inicio de sesión', '2024-07-25 23:21:07'),
 (112, 'Log In', '5', 'signUp', 'Sign Up', 'Create a new account', 'Registrarse', 'Crear una nueva cuenta', '2024-07-25 23:21:07'),
 (113, 'Log In', '6', 'fullName', 'Full Name', 'Enter your full name', 'Nombre completo', 'Ingrese su nombre completo', '2024-07-25 23:21:07'),
-(114, 'Log In', '7', 'confirmPassword', 'Confirm Password', 'Re-enter your password', 'Confirmar contraseña', 'Reingrese su contraseña', '2024-07-25 23:21:07');
+(114, 'Log In', '7', 'confirmPassword', 'Confirm Password', 'Re-enter your password', 'Confirmar contraseña', 'Reingrese su contraseña', '2024-07-25 23:21:07'),
+(115, 'Inquiry Form', '6', 'Presence07172024', 'Were you present in the USA on June 17, 2024?', 'Were you physically present in the US on July 17th, 2024?', '¿Estuvo presente en EE. UU. el 17 de junio de 2024?', '¿Estuvo físicamente presente en los EE. UU. el 17 de julio de 2024?', '2024-07-27 15:01:43'),
+(116, 'Inquiry Form', '7', 'MarriedtoUSCitizen', 'Are you lawfully married to a United States citizen and did that marriage oc', 'Do you have a certificate of your marriage?', '¿Está usted casado legalmente con un ciudadano estadounidense y ese matrimonio se produjo', '¿Tiene su certificado de su matrimonio?', '2024-07-27 15:13:19'),
+(118, 'Inquiry Form', '8', 'USCPP10years', 'Do you have documentation that demonstrates your continuous physical presence in the US for the last 10 years? E.g., IRS 1040, birth certificate of US born children, W-2, driver_s license, etc.', 'Can you demonstrate with documentation that you_ve been in the US for the past 10 years?', '¿Tiene documentación que demuestre su presencia física continua en los EE. UU. durante los últimos 10 años? Por ejemplo, IRS 1040, certificado de nacimiento de niños nacidos en los EE. UU., W-2, licencia de conducir, etc. ', '¿Puede demostrar con documentación que ha estado en los EE. UU. durante los últimos 10 años?', '2024-07-27 15:18:36'),
+(119, 'Inquiry Form', '9', 'NoMajorIssues', 'Can you confirm that you do not currently have a contagious disease and have never been convicted of terrorism, drug trafficking, addiction, child-related or violent crimes, felonies, prostitution, human trafficking, deportation, polygamy, or any other criminal activity that would bar you from entering the US?', 'If you have been diagnosed with a contagious disease, or convicted of certain crimes, it_s likely that the US immigration will deny you PIPE, unless your case can be mitigated with the right documentation.', '¿Puede confirmar que actualmente no padece una enfermedad contagiosa y que nunca ha sido condenado por terrorismo, tráfico de drogas, adicción, delitos violentos o relacionados con niños, delitos graves, prostitución, trata de personas, deportación, poligamia o cualquier otra actividad delictiva que le impediría entrar a los Estados Unidos?', 'Si le han diagnosticado una enfermedad contagiosa o le han condenado por ciertos delitos, es probable que la inmigración estadounidense le niegue el PIPE, a menos que su caso pueda mitigarse con la documentación adecuada', '2024-07-27 15:22:56'),
+(120, 'Inquiry Form', '10', 'OptionstoQualify', 'The next step is to get you qualified for the PIPE program. Please select the one most suitable option from the 4 choices below:', 'We need to understand what data we need to submit to US immigration to qualify you for the PIPE program, for that we need to understand the data that you have available.', 'El siguiente paso es qualificar para el programa PIPE. Seleccione la opción más adecuada para ti de las 4 opciones a continuación', 'Necesitamos comprender qué datos debemos enviar a inmigración de EE. UU. para calificarlo para el programa PIPE, para eso necesitamos todos tus datos que tengas disponibles.', '2024-07-27 15:25:28'),
+(121, 'Inquiry Form', '13', 'OnlineConf', 'You can schedule up an online video conference with one of our staff members', 'Call our main office at 602-297-2005 or visit us at 7220 N 20th Street, Suite F, Phoenix, AZ 85020, Monday through Friday between 9 AM and 5 PM.', 'Puede programar una videoconferencia en línea con un miembro de nuestro personal.', 'Llame a nuestra oficina principal al 602-297-2005 o visitanos a 7220 N 20th Street, Suite F, Phoenix, AZ 85020, lunes a viernes entre 9 AM a 5 PM.', '2024-07-27 15:59:16'),
+(122, 'Inquiry Form', '14', 'ConsultwithLawyer', 'You can book a legal consultation with one of our lawyers at “The Law Office of Nic Suriel” in Phoenix, AZ', 'Call our main office at 602-297-2005 or visit us at 7220 N 20th Street, Suite F, Phoenix, AZ 85020, Monday through Friday between 9 AM and 5 PM.', 'Si desea reservar una consulta legal en “La Oficina de Nic Suriel\" en Phoenix, AZ', 'Llame a nuestra oficina principal al 602-297-2005 o visitanos a 7220 N 20th Street, Suite F, Phoenix, AZ 85020, lunes a viernes entre 9 AM a 5 PM.', '2024-07-27 16:05:35'),
+(123, 'Inquiry Form', '11', 'Online', 'You can complete our PIPE Qualification online form and within 36 hours we will let you know what additional documentation we will need to qualify you for the PIPE program. ', 'Within 36 hours we can inform you of what specific documents will be required to qualify you for the PIPE immigration program. ', 'Puede completar nuestro formulario de Calificación PIPE en línea y dentro de 36 horas le informaremos el documento adicional que necesitaremos para calificarlo para el programa PIPE.', 'Nuestra Calificación PIPE en línea pasa en menos de 36 horas. Y despues le informaremos qué documentación adicional necesitaremos para calificarlo para el programa PIPE.', '2024-07-27 16:14:18'),
+(124, 'Inquiry Form', '17', 'inquiry_form', 'If you need any help to fill out our PIPE Qualification online form, we can book one of our staff members to help you.', 'If you need any help to fill out our PIPE Qualification online form, we can book one of our staff members to help you.', 'Si necesita ayuda para completar nuestro formulario de calificación PIPE en línea, podemos reservar a uno de nuestros miembros del personal para ayudarle.', 'Si necesita ayuda para completar nuestro formulario de calificación PIPE en línea, podemos reservar a uno de nuestros miembros del personal para ayudarle.', '2024-07-28 01:21:56'),
+(125, 'Inquiry Form', '18', 'terms_and_conditions', 'I accept. <span class=\"text-muted\">By checking \'Accept\', you agree that we\'re only providing limited legal advice and to our <a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#tacModal\" class=\"text-primary\">privacy statement</a>.</span>', 'I accept. <span class=\"text-muted\">By checking \'Accept\', you agree that we\'re only providing limited legal advice and to our <a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#tacModal\" class=\"text-primary\">privacy statement</a>.</span>', 'Acepto. <span class=\"text-muted\">Al marcar \'Aceptar\', usted acepta que solo estamos proporcionando asesoría legal limitada y a nuestra <a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#tacModal\" class=\"text-primary\">declaración de privacidad</a>.</span>', 'Acepto. <span class=\"text-muted\">Al marcar \'Aceptar\', usted acepta que solo estamos proporcionando asesoría legal limitada y a nuestra <a href=\"#\" data-bs-toggle=\"modal\" data-bs-target=\"#tacModal\" class=\"text-primary\">declaración de privacidad</a>.</span>', '2024-07-28 01:26:54'),
+(126, 'Inquiry Form', '19', 'payment_method_information', 'We can determine if you qualify for the new PIPE program for a fee of <span class=\"fee fw-bold\"></span> USD. Please select your payment method below.', '', 'Podemos determinar si califica para el nuevo programa PIPE por una tarifa de <span id=\"fee\" class=\"fw-bold\"></span> USD. Por favor, seleccione su método de pago a continuación.', '', '2024-07-28 01:34:34');
 
 -- --------------------------------------------------------
 
@@ -577,7 +633,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`UserID`, `ClientID`, `firstName`, `middleName`, `lastName`, `birthday`, `birthPlace`, `citizenshipCountry`, `gender`, `createdAt`, `updatedAt`) VALUES
 (63, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-04', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:02:42', '2024-07-25 01:02:42'),
 (64, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-04', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:03:17', '2024-07-25 01:03:17'),
-(65, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-24', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:03:53', '2024-07-25 01:03:53');
+(65, 3, 'Syed', 'Muhammad Anas', 'Bukhari', '2024-07-24', 'Pakistan', 'Pakistan', 'male', '2024-07-25 01:03:53', '2024-07-25 01:03:53'),
+(66, NULL, 'Maria', 'Hernanda', 'Gonzales', '1965-12-18', 'Oaxaca, Mexico', 'Mexico', 'female', '2024-07-27 01:39:37', '2024-07-27 01:39:37');
 
 -- --------------------------------------------------------
 
@@ -603,10 +660,17 @@ CREATE TABLE `us_entry` (
   `dateOfEntry` date NOT NULL,
   `stateOfEntry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `methodOfEntry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `anyIllegalDocumentOnEntry` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `detainedByUSPatrol` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `anyIllegalDocumentOnEntry` text COLLATE utf8mb4_general_ci NOT NULL,
+  `detainedByUSPatrol` text COLLATE utf8mb4_general_ci NOT NULL,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `us_entry`
+--
+
+INSERT INTO `us_entry` (`UserID`, `dateOfEntry`, `stateOfEntry`, `methodOfEntry`, `anyIllegalDocumentOnEntry`, `detainedByUSPatrol`, `updatedAt`) VALUES
+(66, '2008-02-06', 'Arizona', 'Crossed the border by car', 'My sister\'s green card.', 'Long story about the details', '2024-07-27 01:39:37');
 
 -- --------------------------------------------------------
 
@@ -640,8 +704,10 @@ CREATE TABLE `verification_codes` (
 --
 
 INSERT INTO `verification_codes` (`CodeID`, `ClientID`, `verification_code`, `expires_at`, `created_at`) VALUES
-(14, 10, '320072', '2024-07-26 21:56:00', '2024-07-26 23:56:00'),
-(15, 11, '125767', '2024-07-26 22:32:58', '2024-07-27 00:32:58');
+(15, 11, '125767', '2024-07-26 22:32:58', '2024-07-27 00:32:58'),
+(16, 12, '582581', '2024-07-27 02:45:18', '2024-07-27 01:45:18'),
+(17, 13, '295257', '2024-07-27 18:58:40', '2024-07-27 17:58:40'),
+(18, 14, '121806', '2024-07-27 20:11:56', '2024-07-27 19:11:56');
 
 --
 -- Indexes for dumped tables
@@ -770,13 +836,13 @@ ALTER TABLE `verification_codes`
 -- AUTO_INCREMENT for table `additional_considerations`
 --
 ALTER TABLE `additional_considerations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -788,7 +854,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -800,43 +866,43 @@ ALTER TABLE `employer`
 -- AUTO_INCREMENT for table `encounter`
 --
 ALTER TABLE `encounter`
-  MODIFY `EncounterID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `EncounterID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `immigration_inquiry`
 --
 ALTER TABLE `immigration_inquiry`
-  MODIFY `InquiryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `InquiryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `marriage`
 --
 ALTER TABLE `marriage`
-  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `offspring`
 --
 ALTER TABLE `offspring`
-  MODIFY `OffspringID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `OffspringID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
-  MODIFY `DocumentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `DocumentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `systemdynamicdata`
@@ -848,7 +914,7 @@ ALTER TABLE `systemdynamicdata`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `verification_attempts`
@@ -860,7 +926,7 @@ ALTER TABLE `verification_attempts`
 -- AUTO_INCREMENT for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
-  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
