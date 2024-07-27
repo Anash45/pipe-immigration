@@ -1146,7 +1146,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="date" name="childBirthday[]"
-                                                class="form-control table-input date" readonly>
+                                                class="form-control table-input date">
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
@@ -1187,7 +1187,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="date" name="childBirthday[]"
-                                                class="form-control table-input date" readonly>
+                                                class="form-control table-input date">
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
@@ -1228,7 +1228,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="date" name="childBirthday[]"
-                                                class="form-control table-input date" readonly>
+                                                class="form-control table-input date">
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
