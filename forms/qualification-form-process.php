@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $birthPlace = $_POST['birthPlace'] ?? '';
     $citizenshipCountry = $_POST['citizenshipCountry'] ?? '';
     $gender = $_POST['gender'] ?? '';
-    $clientID = 3;
+    $clientID = $_SESSION['CliendID'];
 
     // Retrieve form data for US Address
     $careOfName = $_POST['careOfName'] ?? '';
