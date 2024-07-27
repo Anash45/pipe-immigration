@@ -480,7 +480,9 @@ input:focus {
 .lang-spanish .es{
     display: inline;
 }
-
+.form-control[readonly] {
+    background-color: #ffffff;
+}
 
 .inquiry-bottom .form-check-label,
 .inquiry-bottom .form-label{

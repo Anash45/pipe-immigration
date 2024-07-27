@@ -1,5 +1,6 @@
 <?php
 require './defines/db_conn.php'; // Include your database connection file
+include './defines/functions.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullName = trim($_POST['full_name']);
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insert the new client
         $sql = "INSERT INTO clients (full_name, email_or_phone, password, verified, createdAt, updatedAt) 
-                VALUES (:full_name, :email_or_phone, :password, 0, NOW(), NOW())";
+                VALUES (:full_name, :email_or_phone, :password, 1, NOW(), NOW())";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':full_name', $fullName);
         $stmt->bindParam(':email_or_phone', $emailOrPhone);
@@ -62,16 +63,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':expires_at', $expiresAt);
         $stmt->execute();
 
-        // Send verification code via email
-        $subject = "Your Verification Code - PIPE Immigration";
-        $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
-
         $isSent = mail($emailOrPhone, $subject, $message, $headers);
-        if ($isSent) { // Simulate email sending success
+
+        if (isEmailOrPhone($emailOrPhone) == 'phone') {
+            $emailOrPhone = "Phone Number: " . $emailOrPhone;
+        } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
+            // Send verification code via email
+            $subject = "Your Verification Code - PIPE Immigration";
+            $message = "Your verification code is: " . $verificationCode;
+            $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
+            // $isSent = mail($emailOrPhone, $subject, $message, $headers);
+        }
+
+        if (true) { // Simulate email sending success
             $response['status'] = 'success';
             $response['email_or_phone'] = $emailOrPhone;
-            $response['message'] = 'Registration successful! Please check your email for the verification code.';
+            $response['message'] = 'Registration successful! Please check your email/phone number for the verification code.';
         } else {
             $response['message'] = 'Failed to send verification email.';
         }

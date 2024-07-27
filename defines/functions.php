@@ -412,6 +412,113 @@ function insertAdditionalRecommendation(
     }
 }
 
+function getSystemDataValue($key)
+{
+    global $pdo; // Use the PDO instance from the db_conn.php file
+
+    try {
+        $sql = "SELECT Value FROM systemdynamicdata WHERE KeyName = :key";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':key', $key);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result['Value'];
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        return "Error: " . $e->getMessage();
+    }
+}
+
+function getClientById($clientId)
+{
+    global $pdo; // Use the global $pdo object for database connection
+
+    // Prepare the response
+    $clientDetails = null;
+
+    try {
+        // SQL query to fetch client details
+        $sql = "SELECT * FROM clients WHERE ClientID = :client_id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $clientId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Fetch the client details
+        $clientDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Handle the error (for example, log it or display an error message)
+        error_log("Error fetching client details: " . $e->getMessage());
+    }
+
+    return $clientDetails;
+}
+
+
+function isEmailOrPhone($input)
+{
+    // Regular expression for phone number (format: (999) 999-9999 or (999)999-9999)
+    $phonePattern = '/^\(\d{3}\)\s?\d{3}-\d{4}$/';
+
+    // Regular expression for email
+    $emailPattern = '/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/';
+
+    // Check if the input matches the phone number pattern
+    if (preg_match($phonePattern, $input)) {
+        return 'phone';
+    }
+
+    // Check if the input matches the email pattern
+    if (preg_match($emailPattern, $input)) {
+        return 'email';
+    }
+
+    // If neither pattern matches
+    return 'invalid';
+}
+function isPaymentCleared($clientId) {
+    global $pdo; // Use the global $pdo variable for database connection
+
+    // Validate input
+    if (!is_numeric($clientId)) {
+        throw new InvalidArgumentException('Invalid ClientID');
+    }
+
+    try {
+        // Prepare SQL query
+        $sql = "SELECT PaymentCleared FROM payment WHERE ClientID = :clientId ORDER BY TrxDate DESC LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':clientId', $clientId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if a record was found
+        if (!$result) {
+            return 'no-inquiry'; // No record found
+        }
+
+        // Check if payment is cleared
+        if ($result['PaymentCleared'] == 1) {
+            return 'cleared'; // Payment is cleared
+        } else {
+            return 'not-cleared'; // Payment is not cleared
+        }
+    } catch (PDOException $e) {
+        // Handle exception
+        error_log("Error checking payment status: " . $e->getMessage());
+        return 'error'; // You may want to return a generic error status
+    }
+}
+function isLoggedIn()
+{
+    return isset($_SESSION['ClientID']);
+}
 if (isset($_GET['lang'])) {
     if ($_GET['lang'] == 'english' || $_GET['lang'] == 'spanish') {
         setLanguage($_GET['lang']);

@@ -1,6 +1,16 @@
 <?php
 include './defines/db_conn.php';
 include './defines/functions.php';
+
+if (isLoggedIn()) {
+    $clientId = $_SESSION['ClientID'];
+
+    $checkPaymentStatus = isPaymentCleared($clientId);
+
+    if ($checkPaymentStatus !== 'cleared') {
+        header('location: index.php');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,8 +92,8 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 3, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" required class="form-control mt-1 date" id="birthday"
-                                                    name="birthday" placeholder="MM / DD / YY">
+                                                <input type="text" required class="form-control mt-1 date" readonly
+                                                    id="birthday" name="birthday" placeholder="MM/DD/YY">
                                                 <img src="./assets/images/calendar.svg" alt="Icon"
                                                     class="inp-icon-right calendar cursor-point">
                                             </div>
@@ -127,7 +137,6 @@ include './defines/functions.php';
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div mt-1">
                                                 <select class="form-control mt-1" required id="gender" name="gender">
-                                                    <option value="">Select gender</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                 </select>
@@ -159,7 +168,6 @@ include './defines/functions.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-5 col-lg-6"></div>
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
@@ -186,6 +194,38 @@ include './defines/functions.php';
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="street2" name="street2"
                                                     placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12 mb-3 pt-3">
+                                            <label for="residency"
+                                                class="form-label opacity-0 gap-1 d-flex align-items-center"><span>Residency</span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    title="" class="help-icon" alt="Icon" width="16"></label>
+                                            <div class="d-flex gap-3 align-items-center justify-content-center">
+                                                <div class="form-check mb-0">
+                                                    <label class="form-check-label" for="residenceApt"> Apt. </label>
+                                                    <input class="form-check-input" type="radio" value="Apartment"
+                                                        id="residenceApt" name="residencyType">
+                                                </div>
+                                                <div class="form-check mb-0">
+                                                    <label class="form-check-label" for="residenceSte"> Ste. </label>
+                                                    <input class="form-check-input" type="radio" value="Suite"
+                                                        id="residenceSte" name="residencyType">
+                                                </div>
+                                                <div class="form-check mb-0">
+                                                    <label class="form-check-label" for="residenceFlr"> Floor. </label>
+                                                    <input class="form-check-input" type="radio" value="Flr"
+                                                        id="residenceFlr" name="residencyType">
+                                                </div>
+                                                <div class="input-div flex-grow-1">
+                                                    <input type="text" size="10" maxlength="10"
+                                                        class="form-control mt-1" id="residency" name="residency"
+                                                        placeholder="">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -378,37 +418,6 @@ include './defines/functions.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-5 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-12 mb-3 pt-3">
-                                            <label for="residency"
-                                                class="form-label opacity-0 gap-1 d-flex align-items-center"><span>Residency</span><img
-                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
-                                                    title="" class="help-icon" alt="Icon" width="16"></label>
-                                            <div class="d-flex gap-3 align-items-center justify-content-center">
-                                                <div class="form-check mb-0">
-                                                    <label class="form-check-label" for="residenceApt"> Apt. </label>
-                                                    <input class="form-check-input" type="radio" value="Apartment"
-                                                        id="residenceApt" name="residencyType">
-                                                </div>
-                                                <div class="form-check mb-0">
-                                                    <label class="form-check-label" for="residenceSte"> Ste. </label>
-                                                    <input class="form-check-input" type="radio" value="Suite"
-                                                        id="residenceSte" name="residencyType">
-                                                </div>
-                                                <div class="form-check mb-0">
-                                                    <label class="form-check-label" for="residenceFlr"> Floor. </label>
-                                                    <input class="form-check-input" type="radio" value="Flr"
-                                                        id="residenceFlr" name="residencyType">
-                                                </div>
-                                                <div class="input-div flex-grow-1">
-                                                    <input type="text" class="form-control mt-1" id="residency"
-                                                        name="residency" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -454,8 +463,8 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 20, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="dateOfMarriage"
-                                                    name="dateOfMarriage" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="dateOfMarriage" name="dateOfMarriage" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -485,8 +494,8 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 18, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="spouseBirthday"
-                                                    name="spouseBirthday" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="spouseBirthday" name="spouseBirthday" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -555,8 +564,9 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 20, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="exDateOfMarriage"
-                                                    name="exDateOfMarriage" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="exDateOfMarriage" name="exDateOfMarriage"
+                                                    placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -602,8 +612,8 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 76, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="exDateOfDivorce"
-                                                    name="exDateOfDivorce" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="exDateOfDivorce" name="exDateOfDivorce" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -651,8 +661,8 @@ include './defines/functions.php';
                                                     title="<?php echo getTranslation('Qualification', 22, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="dateOfEntry"
-                                                    name="dateOfEntry[]" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="dateOfEntry" name="dateOfEntry[]" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -974,8 +984,9 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 78, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="dateOfEncounter"
-                                                    name="dateOfEncounter[]" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="dateOfEncounter" name="dateOfEncounter[]"
+                                                    placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -1131,7 +1142,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="text" name="childBirthday[]"
-                                                class="form-control table-input date">
+                                                class="form-control table-input date" readonly>
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
@@ -1172,7 +1183,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="text" name="childBirthday[]"
-                                                class="form-control table-input date">
+                                                class="form-control table-input date" readonly>
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
@@ -1213,7 +1224,7 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                         </td>
                                         <td>
                                             <input type="text" name="childBirthday[]"
-                                                class="form-control table-input date">
+                                                class="form-control table-input date" readonly>
                                         </td>
                                         <td>
                                             <textarea name="childStateCountryOfBirth[]"
@@ -1306,8 +1317,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 43, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="startDate"
-                                                    name="startDate[]" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="startDate" name="startDate[]" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -1336,8 +1347,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 44, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="lastDate"
-                                                    name="jobLastDate[]" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly id="lastDate"
+                                                    name="jobLastDate[]" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -1434,8 +1445,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 49, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" id="degreeDate"
-                                                    name="degreeDate" placeholder="MM / DD / YY">
+                                                <input type="text" class="form-control mt-1 date" readonly
+                                                    id="degreeDate" name="degreeDate" placeholder="MM/DD/YY">
                                             </div>
                                         </div>
                                     </div>
@@ -1692,7 +1703,12 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                 });
             }
             $(function () {
-                $(".date").datepicker();
+                $(".date").datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    dateFormat: "mm/dd/yy",
+                    yearRange: "-100:+0", // Adjust the year range as needed
+                });
                 $(".date").on("change", function () {
                     $(this).valid();
                 });

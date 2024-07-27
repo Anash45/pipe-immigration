@@ -58,7 +58,7 @@ include './defines/functions.php';
                                 <div class="input-div">
                                     <input type="text" id="full_name" name="full_name"
                                         placeholder="Enter your Full Name" class="form-control poppins">
-                                    <img src="./assets/images/envelope.svg" alt="full_name" class="inp-icon-left">
+                                    <img src="./assets/images/user.svg" alt="full_name" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
                                         title="<?php echo getTranslation('Log In', 6, 'help'); ?>">
@@ -103,14 +103,20 @@ include './defines/functions.php';
                                     <img src="./assets/images/eye.svg" onclick="toggleViewPassword(event)" alt="Icon"
                                         width="14" class="show-password">
                                 </div>
-                                <p class="text-end"><a href="#"
-                                        class="text-white forgot-link" onclick="openResendVerificationModal()">Verify account</a>
+                                <p class="text-end"><a href="#" class="text-white forgot-link"
+                                        onclick="openResendVerificationModal()">Verify account</a>
                                 </p>
                             </div>
                             <div class="btns px-4 text-center pt-4">
                                 <div id="responseMessage"></div>
                                 <button class="btn btn-primary w-100 px-5 fw-bold inter text-white" type="submit">Sign
                                     Up</button>
+                                <div class="text-center mt-4">
+                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Already have an
+                                        account?</a>
+                                    <a href="./login.php"
+                                        class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 4, 'label'); ?></a>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -287,7 +293,7 @@ include './defines/functions.php';
                         $.validator.addMethod("emailOrPhone", function (value, element) {
                             // Regular expressions for email and phone validation
                             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                            var phonePattern = /^(?:\+?\d{1,3})?[-.\s]?(?:\(?\d{1,4}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/; // More flexible phone number pattern
+                            var phonePattern = /^\(\d{3}\)\s?\d{3}-\d{4}$/; // More flexible phone number pattern
 
                             // Check if the value matches either email or phone pattern
                             return this.optional(element) || emailPattern.test(value) || phonePattern.test(value);
