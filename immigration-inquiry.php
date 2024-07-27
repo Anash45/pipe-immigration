@@ -274,8 +274,8 @@ if (isLoggedIn()) {
                                                             <option value="credit-card"
                                                                 data-image="./assets/images/Mastercard.svg">Credit Card
                                                             </option>
-                                                            <option value="paypal"
-                                                                data-image="./assets/images/PayPal.svg"> PayPal</option>
+                                                            <!-- <option value="paypal"
+                                                                data-image="./assets/images/PayPal.svg"> PayPal</option> -->
                                                             <option value="zelle"
                                                                 data-image="./assets/images/Etherium.svg"> Zelle
                                                             </option>
