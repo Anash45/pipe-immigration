@@ -10,7 +10,7 @@ if (isLoggedIn()) {
     if ($checkPaymentStatus !== 'cleared') {
         header('location: index.php');
     }
-}else{
+} else {
     header('location: login.php');
 }
 ?>
@@ -94,10 +94,8 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 3, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" required class="form-control mt-1 date" readonly
-                                                    id="birthday" name="birthday" placeholder="MM/DD/YY">
-                                                <img src="./assets/images/calendar.svg" alt="Icon"
-                                                    class="inp-icon-right calendar cursor-point">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="birthday" name="birthday">
                                             </div>
                                         </div>
                                     </div>
@@ -465,8 +463,8 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 20, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="dateOfMarriage" name="dateOfMarriage" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="dateOfMarriage" name="dateOfMarriage">
                                             </div>
                                         </div>
                                     </div>
@@ -496,8 +494,8 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 18, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="spouseBirthday" name="spouseBirthday" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="spouseBirthday" name="spouseBirthday">
                                             </div>
                                         </div>
                                     </div>
@@ -566,9 +564,9 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 20, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
+                                                <input type="date" class="form-control mt-1"
                                                     id="exDateOfMarriage" name="exDateOfMarriage"
-                                                    placeholder="MM/DD/YY">
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -614,8 +612,8 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 76, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="exDateOfDivorce" name="exDateOfDivorce" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="exDateOfDivorce" name="exDateOfDivorce">
                                             </div>
                                         </div>
                                     </div>
@@ -663,8 +661,8 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Qualification', 22, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="dateOfEntry" name="dateOfEntry[]" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="dateOfEntry" name="dateOfEntry[]">
                                             </div>
                                         </div>
                                     </div>
@@ -986,9 +984,9 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 78, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
+                                                <input type="date" class="form-control mt-1"
                                                     id="dateOfEncounter" name="dateOfEncounter[]"
-                                                    placeholder="MM/DD/YY">
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -1319,8 +1317,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 43, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="startDate" name="startDate[]" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="startDate" name="startDate[]">
                                             </div>
                                         </div>
                                     </div>
@@ -1349,8 +1347,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 44, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly id="lastDate"
-                                                    name="jobLastDate[]" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1" id="lastDate"
+                                                    name="jobLastDate[]">
                                             </div>
                                         </div>
                                     </div>
@@ -1447,8 +1445,8 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
                                                     title="<?php echo getTranslation('Qualification', 49, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
-                                                <input type="text" class="form-control mt-1 date" readonly
-                                                    id="degreeDate" name="degreeDate" placeholder="MM/DD/YY">
+                                                <input type="date" class="form-control mt-1"
+                                                    id="degreeDate" name="degreeDate">
                                             </div>
                                         </div>
                                     </div>
