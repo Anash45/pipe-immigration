@@ -1722,12 +1722,12 @@ Utility Bills Type, e.g., electricity, Name of the account holder, Service addre
             });
 
             $(document).ready(function () {
-                let inputs = document.querySelectorAll('.phone-number');
-                for (let i = 0; i < inputs.length; i++) {
-                    window.intlTelInput(inputs[i], {
-                        separateDialCode: true
-                    });
-                }
+                // let inputs = document.querySelectorAll('.phone-number');
+                // for (let i = 0; i < inputs.length; i++) {
+                //     window.intlTelInput(inputs[i], {
+                //         separateDialCode: true
+                //     });
+                // }
 
                 $('.show-previous-marriage').on('click', function () {
                     $('.sec-4').show();
