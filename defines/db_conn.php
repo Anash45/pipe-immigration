@@ -16,7 +16,7 @@ $db = "imminzio_test"; // Change this to your MySQL database name
 // $db   = 'pipe-immigration';
 // $user = 'root';
 // $pass = 'root';
-// $charset = 'utf8mb4';
+$charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
