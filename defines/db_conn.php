@@ -4,7 +4,7 @@ require './db_conn.php';
 
 $host = "localhost"; // Change this if your database is hosted on a different server
 $user = "imminzio_f4ft"; // Change this to your MySQL username
-$pass = "*[FfOr.]_d#]"; // Change this to your MySQL password
+$pass = "plS9v;x1v5JQ"; // Change this to your MySQL password
 $db = "imminzio_test"; // Change this to your MySQL database name
 
 // $host = 'localhost';
