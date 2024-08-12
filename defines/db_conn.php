@@ -5,7 +5,7 @@ require './defines/keys.php';
 $host = "localhost"; // Change this if your database is hosted on a different server
 $user = "imminzio_f4ft"; // Change this to your MySQL username
 $pass = "*[FfOr.]_d#]"; // Change this to your MySQL password
-$db = "imminzio_pipe";// Change this to your MySQL database name
+$db = "imminzio_test";// Change this to your MySQL database name
 
 // $host = 'localhost';
 // $db   = 'u956940883_pipe';
