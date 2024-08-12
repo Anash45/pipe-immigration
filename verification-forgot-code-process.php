@@ -37,6 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         $verificationResult = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+        // Second Query with ClientID Check
+        $sql2 = "
+SELECT *
+FROM systemdynamicdata sdd
+WHERE sdd.KeyName = 'MasterCode'
+AND sdd.Value = :verification_code
+AND EXISTS (
+    SELECT 1
+    FROM clients c
+    WHERE c.ClientID = :client_id
+)
+";
+        $stmt2 = $pdo->prepare($sql2);
+        $stmt2->bindParam(':verification_code', $enteredCode);
+        $stmt2->bindParam(':client_id', $userId);  // Bind ClientID to the query
+        $stmt2->execute();
+        $masterCode = $stmt2->fetch(PDO::FETCH_ASSOC);
+
         if ($verificationResult) {
             // Hash the new password
             $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);

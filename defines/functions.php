@@ -2,6 +2,9 @@
 
 session_start();
 
+require 'vendor/autoload.php';
+use Twilio\Rest\Client;
+
 function getLanguage()
 {
     if (isset($_SESSION['language'])) {
@@ -28,6 +31,8 @@ function getTranslation($screenName, $sequence, $type)
         $field = ($language === 'english') ? 'EnglishLabel' : 'SpanishLabel';
     } elseif ($type === 'help') {
         $field = ($language === 'english') ? 'EnglishHelp' : 'SpanishHelp';
+    } elseif ($type === 'placeholder') {
+        $field = ($language === 'english') ? 'englishPlaceholder' : 'spanishPlaceholder';
     } else {
         return "Invalid type specified.";
     }
@@ -381,16 +386,17 @@ function insertAdditionalRecommendation(
     $deportedFromUS,
     $citizenshipAfter96,
     $electionsVoted,
-    $capacityToSupport
+    $capacityToSupport,
+    $otherQuestions
 ) {
     global $pdo; // Use the PDO connection from db_conn.php
 
     $sql = "INSERT INTO `additional_considerations` (
                 `UserID`, `anyCommunicableDisease`, `anyMissingVaccines`, `anyMentalDisorder`, `accusedDrugAddiction`, `accusedChildAbduction`,
-                `deportedFromUS`, `citizenshipAfter96`, `electionsVoted`, `capacityToSupport`, `updatedAt`
+                `deportedFromUS`, `citizenshipAfter96`, `electionsVoted`, `capacityToSupport`, `otherQuestions`, `updatedAt`
             ) VALUES (
                 :userID, :anyCommunicableDisease, :anyMissingVaccines, :anyMentalDisorder, :accusedDrugAddiction, :accusedChildAbduction,
-                :deportedFromUS, :citizenshipAfter96, :electionsVoted, :capacityToSupport, NOW()
+                :deportedFromUS, :citizenshipAfter96, :electionsVoted, :capacityToSupport, :otherQuestions, NOW()
             )";
 
     try {
@@ -405,6 +411,7 @@ function insertAdditionalRecommendation(
         $stmt->bindParam(':citizenshipAfter96', $citizenshipAfter96);
         $stmt->bindParam(':electionsVoted', $electionsVoted);
         $stmt->bindParam(':capacityToSupport', $capacityToSupport);
+        $stmt->bindParam(':otherQuestions', $otherQuestions);
 
         return $stmt->execute();
     } catch (PDOException $e) {
@@ -439,7 +446,7 @@ function getClientById($clientId)
     global $pdo; // Use the global $pdo object for database connection
 
     // Prepare the response
-    $clientDetails = null;
+    $userDetails = null;
 
     try {
         // SQL query to fetch client details
@@ -449,20 +456,62 @@ function getClientById($clientId)
         $stmt->execute();
 
         // Fetch the client details
-        $clientDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         // Handle the error (for example, log it or display an error message)
         error_log("Error fetching client details: " . $e->getMessage());
     }
 
-    return $clientDetails;
+    return $userDetails;
 }
 
+function sendVerificationCodePhone($phone, $code)
+{
+    // Your Twilio credentials
+    $sid = TWILIO_SID;
+    $token = TWILIO_TOKEN;
+    $twilio = new Client($sid, $token);
+
+    try {
+        // Send the SMS
+        $twilio->messages->create(
+            $phone, // to
+            [
+                'from' => '+18722105701',
+                'body' => "Your verification code is: $code. The Law Offices of Lic. Suriel."
+            ]
+        );
+        return true;
+    } catch (Twilio\Exceptions\RestException $e) {
+        return false;
+    }
+}
+function getAllProducts()
+{
+    global $pdo; // Use the global PDO connection
+
+    // SQL query to fetch all products
+    $sql = "SELECT * FROM product WHERE `status` = 'Active' ORDER BY `sequence`";
+
+    try {
+        // Prepare and execute the statement
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        // Fetch all results
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Return the result
+        return $products;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
 
 function isEmailOrPhone($input)
 {
     // Regular expression for phone number (format: (999) 999-9999 or (999)999-9999)
-    $phonePattern = '/^\(\d{3}\)\s?\d{3}-\d{4}$/';
+    $phonePattern = '/^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/';
 
     // Regular expression for email
     $emailPattern = '/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/';
@@ -480,7 +529,8 @@ function isEmailOrPhone($input)
     // If neither pattern matches
     return 'invalid';
 }
-function isPaymentCleared($clientId) {
+function isPaymentCleared($clientId)
+{
     global $pdo; // Use the global $pdo variable for database connection
 
     // Validate input
@@ -489,8 +539,9 @@ function isPaymentCleared($clientId) {
     }
 
     try {
+        // $clientId;
         // Prepare SQL query
-        $sql = "SELECT PaymentCleared FROM payment WHERE ClientID = :clientId ORDER BY TrxDate DESC LIMIT 1";
+        $sql = "SELECT PaymentCleared FROM payment WHERE ClientID = :clientId ORDER BY TrxDate DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':clientId', $clientId, PDO::PARAM_INT);
         $stmt->execute();
@@ -515,9 +566,279 @@ function isPaymentCleared($clientId) {
         return 'error'; // You may want to return a generic error status
     }
 }
+
+function getUserById($clientId)
+{
+    global $pdo;
+
+    try {
+        // Prepare SQL query to fetch user record based on ClientID
+        $sql = "SELECT * FROM user WHERE ClientID = :client_id ORDER BY UserID DESC Limit 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $clientId);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            return $user;
+        } else {
+            return null; // No record found
+        }
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+
+function getInquiryByClient($clientId)
+{
+    global $pdo;
+
+    try {
+        // Prepare SQL query to fetch user record based on ClientID
+        $sql = "SELECT * FROM immigration_inquiry WHERE ClientID = :client_id ORDER BY InquiryId DESC Limit 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $clientId);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            return $user;
+        } else {
+            return null; // No record found
+        }
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+function getAddressByUserID($UserID)
+{
+    global $pdo;
+
+    try {
+        // Prepare SQL query to fetch user record based on ClientID
+        $sql = "SELECT * FROM `address` WHERE UserID  = :UserID ORDER BY UserID Limit 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+        $address = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($address) {
+            return $address;
+        } else {
+            return null; // No record found
+        }
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+function getMarriageByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM marriage WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $marriageStatus = $stmt->fetchAll();
+        return $marriageStatus !== false ? $marriageStatus : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getUsEntriesByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM us_entry WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetchAll();
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getUsResidencyProofByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM residency_documents WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $residency_documents = $stmt->fetchAll();
+        return $residency_documents !== false ? $residency_documents : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+
+function getUsEncountersByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM encounter WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetchAll();
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getOffspringsByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM offspring WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetchAll();
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getEmployerByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM employer WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getCertificationByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM certification WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getAdditionalConsiderationsByUserId($UserID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM additional_considerations WHERE UserID = :UserID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':UserID', $UserID);
+        $stmt->execute();
+
+        $us_entries = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $us_entries !== false ? $us_entries : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function getDocumentsByClientId($clientID) {
+    global $pdo;
+
+    $sql = "
+        SELECT d.docname, d.LinktoUSCISdoc
+        FROM uscisdocs d
+        JOIN clients c ON d.UserID = c.ClientID
+        WHERE c.ClientID = :clientID
+    ";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':clientID', $clientID, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error fetching documents: " . $e->getMessage());
+        return [];
+    }
+}
+
+function insertDocument($userID, $docname, $linkToUSCISdoc)
+{
+    global $pdo;
+
+    // Prepare the SQL statement
+    $sql = "
+        INSERT INTO uscisdocs (UserID, docname, LinktoUSCISdoc)
+        VALUES (:userID, :docname, :linkToUSCISdoc)
+    ";
+
+    try {
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
+
+        // Bind parameters
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+        $stmt->bindParam(':docname', $docname, PDO::PARAM_STR);
+        $stmt->bindParam(':linkToUSCISdoc', $linkToUSCISdoc, PDO::PARAM_STR);
+
+        // Execute the statement
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        // Handle exception (e.g., log it or display an error message)
+        error_log("Error inserting document: " . $e->getMessage());
+        return false;
+    }
+}
+
+$supportEmail = getSystemDataValue('emailforSupport');
+$supportEmailSpanish = getSystemDataValue('emailforSupportEspañol');
+
 function isLoggedIn()
 {
     return isset($_SESSION['ClientID']);
+}
+
+function isAdmin()
+{
+    return $_SESSION['status'] == 'admin';
 }
 if (isset($_GET['lang'])) {
     if ($_GET['lang'] == 'english' || $_GET['lang'] == 'spanish') {

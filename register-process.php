@@ -1,9 +1,10 @@
 <?php
 require './defines/db_conn.php'; // Include your database connection file
-include './defines/functions.php';
+require './defines/functions.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullName = trim($_POST['full_name']);
+    $firstName = trim($_POST['first_name']);
+    $lastName = trim($_POST['last_name']);
     $emailOrPhone = trim($_POST['email_or_phone']);
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirm_password']);
@@ -11,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = ['status' => 'error', 'message' => '']; // Initialize response array
 
     // Check if all fields are present
-    if (empty($fullName) || empty($emailOrPhone) || empty($password) || empty($confirmPassword)) {
+    if (empty($firstName) || empty($lastName) || empty($emailOrPhone) || empty($password) || empty($confirmPassword)) {
         $response['message'] = '
     <span class="en">All fields are required!</span>
     <span class="es">¡Todos los campos son obligatorios!</span>
@@ -45,13 +46,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
+        $verified = 0;
+        if (isEmailOrPhone($emailOrPhone) == 'phone') {
+            $verified = 0;
+        } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
+            $verified = 0;
+        }
+
         // Insert the new client
-        $sql = "INSERT INTO clients (full_name, email_or_phone, password, verified, createdAt, updatedAt) 
-                VALUES (:full_name, :email_or_phone, :password, 1, NOW(), NOW())";
+        $sql = "INSERT INTO clients (first_name, last_name, email_or_phone, password, verified, createdAt, updatedAt) 
+                VALUES (:first_name, :last_name, :email_or_phone, :password, :verified, NOW(), NOW())";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':full_name', $fullName);
+        $stmt->bindParam(':first_name', $firstName);
+        $stmt->bindParam(':last_name', $lastName);
         $stmt->bindParam(':email_or_phone', $emailOrPhone);
         $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':verified', $verified);
         $stmt->execute();
 
         $clientId = $pdo->lastInsertId();
@@ -69,30 +79,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':expires_at', $expiresAt);
         $stmt->execute();
 
+        $emailForSupportEspanol = getSystemDataValue('emailforSupportEspañol');
+        $emailForSupport = getSystemDataValue('emailforSupport');
+
+        if (getLanguage() == 'english') {
+            $supportString = 'If you have difficulty creating an account send us email at ' . $emailForSupport;
+        } else {
+            $supportString = 'Si tiene dificultades para crear una cuenta envíenos un correo electrónico a ' . $emailForSupportEspanol;
+        }
+
+        if (getLanguage() == 'english') {
+            $supportEmail = getSystemDataValue('emailforSupport');
+        } else {
+            $supportEmail = getSystemDataValue('emailforSupportEspañol');
+        }
 
         if (isEmailOrPhone($emailOrPhone) == 'phone') {
-            $emailOrPhone = "Phone Number: " . $emailOrPhone;
+            $isSent = sendVerificationCodePhone($emailOrPhone, $verificationCode);
+            if ($isSent) {
+                $response['status'] = 'success';
+                $response['emailOrPhone'] = 'phone';
+                $response['email_or_phone'] = $emailOrPhone;
+                $response['message'] = '
+        <span class="en">Registration successful! Please check your phone number for the verification code.</span>
+        <span class="es">¡Registro exitoso! Por favor, revisa tu correo número de teléfono para el código de verificación.</span>
+    ';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = '
+    <span class="en">Currently, we only support North American phone number. If you\'re having any difficulty creating an account, send us an email at x'.$supportEmail.' and we\'ll verify your account manually.</span>
+    <span class="es">Actualmente solo admitimos números de teléfono de América del Norte. Envíanos un correo electrónico a '.$supportEmail.' para verificar manualmente.</span>
+    <br>' . $supportString . '
+';
+            }
         } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
             // Send verification code via email
             $subject = "Your Verification Code - PIPE Immigration";
             $message = "Your verification code is: " . $verificationCode;
-            $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
-            $isSent = mail($emailOrPhone, $subject, $message, $headers);
-        }
+            // $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
+            $isSent = mail($emailOrPhone, $subject, $message);
 
-        if ($isSent) { // Simulate email sending success
-            $response['status'] = 'success';
-            $response['email_or_phone'] = $emailOrPhone;
-            $response['message'] = '
-    <span class="en">Registration successful! Please check your email/phone number for the verification code.</span>
+            if ($isSent) { // Simulate email sending success
+                $response['status'] = 'success';
+                $response['emailOrPhone'] = 'email';
+                $response['email_or_phone'] = $emailOrPhone;
+                $response['message'] = '
+    <span class="en">Registration successful! Please check your email for the verification code.</span>
     <span class="es">¡Registro exitoso! Por favor, revisa tu correo electrónico/número de teléfono para el código de verificación.</span>
-';
-        } else {
-            $response['message'] = '
+<br>' . $supportString . '';
+            } else {
+                $response['emailOrPhone'] = 'email';
+                $response['message'] = '
     <span class="en">Failed to send verification email.</span>
     <span class="es">No se pudo enviar el correo electrónico de verificación.</span>
+    <br>' . $supportString . '
 ';
+            }
         }
+
 
         echo json_encode($response);
     } catch (PDOException $e) {

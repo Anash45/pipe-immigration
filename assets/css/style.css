@@ -90,7 +90,7 @@ main {
 }
 .msg-error{
     color: red !important;
-    font-size: 12px;
+    font-size: 14px;
     position: absolute;
     top: 38px;
 }
@@ -216,7 +216,7 @@ main {
 }
 
 .main-form-page label {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     margin-bottom: 0;
 }

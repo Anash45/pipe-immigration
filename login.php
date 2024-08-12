@@ -9,8 +9,9 @@ include './defines/functions.php';
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login - US PIPE Immigration Program</title>
+        <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css?v=4">
+        <link rel="stylesheet" href="./assets/css/style.css?v=5">
     </head>
 
     <body class="login-page red-hat-display lang-<?php echo getLanguage(); ?>">
@@ -44,8 +45,7 @@ include './defines/functions.php';
                         ?>
                     </div>
                     <h2 class="fw-bold form-title mb-4"> US PIPE <br> IMMIGRATION PROGRAM </h2>
-                    <p class="form-desc"> Find out from a competent, seasoned US Lawyer, If you qualify for this new
-                        immigration program </p>
+                    <p class="form-desc"> <?php echo getTranslation('Create Account', 1, 'label'); ?> </p>
                 </div>
                 <div class="page-form-sec py-5 flex-grow-1">
                     <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" method="post" id="loginForm">
@@ -56,7 +56,7 @@ include './defines/functions.php';
                             <div class="form-group mb-4">
                                 <label for="email"><?php echo getTranslation('Log In', 1, 'label'); ?></label>
                                 <div class="input-div">
-                                    <input type="text" id="email" placeholder="Email/Phone number"
+                                    <input type="text" id="email" placeholder="<?php echo getTranslation('Log In', 1, 'placeholder'); ?>"
                                         class="form-control poppins">
                                     <img src="./assets/images/envelope.svg" alt="Email" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
@@ -67,9 +67,11 @@ include './defines/functions.php';
                             <div class="form-group mb-sm-5 mb-4">
                                 <label for="password"><?php echo getTranslation('Log In', 2, 'label'); ?></label>
                                 <div class="input-div">
-                                    <input type="password" id="password" placeholder="Password"
+                                    <input type="password" id="password" placeholder="<?php echo getTranslation('Log In', 2, 'placeholder'); ?>"
                                         class="form-control poppins">
                                     <img src="./assets/images/lock.svg" alt="Lock" class="inp-icon-left">
+                                    <img src="./assets/images/eye.svg" onclick="toggleViewPassword(event)" alt="Icon"
+                                        width="14" class="show-password">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
                                         title="<?php echo getTranslation('Log In', 2, 'help'); ?>">
@@ -83,8 +85,9 @@ include './defines/functions.php';
                                 <button class="btn btn-primary w-100 px-5 inter fw-bold text-white"
                                     type="submit"><?php echo getTranslation('Log In', 4, 'label'); ?></button>
                                 <div class="text-center mt-4">
-                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Don't have an
-                                        account?</a>
+                                    <a href="#" class="create-account-link text-white d-inline-block mb-3"><span
+                                            class="en">Don't have an account?</span><span class="es">¿No tienes una
+                                            cuenta?</span></a>
                                     <a href="./register.php"
                                         class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 5, 'label'); ?></a>
                                 </div>
@@ -100,14 +103,17 @@ include './defines/functions.php';
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body poppins text-center">
-                        <h2 class="py-4 fm-title inter mt-4 text-black">Forgot Password?</h2>
+                        <h2 class="py-4 fm-title inter mt-4 text-black"><span class="en">Forgot Password?</span><span
+                                class="es"> ¿Has olvidado tu contraseña?</span></h2>
                         <div class="text-center">
                             <img src="./assets/images/forgot-password.png" alt="Forgot" class="img-fluid" width="217">
                         </div>
                         <div class="mb-4">
-                            <p class="mt-4 inter fm-text"><span class="d-md-block d-inline">We'll send you an email or a
-                                    text to the address</span>
-                                <span class="d-md-block d-inline">that you registered with us</span>
+                            <p class="mt-4 inter fm-text"><span class="d-md-block d-inline"><span class="en">We'll send
+                                        you an email or a text to the address</span><span class="es">Le enviaremos un
+                                        correo electrónico o un mensaje de texto a la dirección</span></span>
+                                <span class="d-md-block d-inline"><span class="en">that you registered with
+                                        us</span><span class="es">que registraste con nosotros</span></span>
                             </p>
                         </div>
                         <div id="emailPhoneConfirm"
@@ -120,7 +126,8 @@ include './defines/functions.php';
                         <div id="verifyResponse"></div>
                         <div class="py-5 mb-5 px-5">
                             <button class="btn btn-primary w-100 px-5 inter fw-bold text-white" type="submit"
-                                onclick="sendCode()">Next</button>
+                                onclick="sendCode()"><span class="en">Next</span><span
+                                    class="es">Próximo</span></button>
                         </div>
                     </div>
                 </div>
@@ -135,12 +142,16 @@ include './defines/functions.php';
                             <div class="d-flex align-items-center justify-content-between mb-5">
                                 <img src="./assets/images/arrow-left.svg" alt="Arrow" height="16"
                                     onclick="closeVerifyAndOpenForgotModal()">
-                                <h4 class="fm-subtitle mb-0 inter">Forgot Password</h4>
+                                <h4 class="fm-subtitle mb-0 inter"><span class="en">Forgot Password</span><span
+                                        class="es">Has olvidado tu contraseña</span></h4>
                                 <img src="./assets/images/arrow-left.svg" alt="Arrow" height="16"
                                     onclick="closeVerifyAndOpenForgotModal()" class="opacity-0">
                             </div>
-                            <h2 class="py-4 fm-title inter">Verify</h2>
-                            <p class="mb-5 fm-desc">Please enter the code we sent you to email</p>
+                            <h2 class="py-4 fm-title inter"><span class="en">Verify</span><span
+                                    class="es">Verificar</span></h2>
+                            <p class="mb-5 fm-desc"><span class="en">Please enter the code we sent you to email/phone
+                                    number</span><span class="es">Por favor ingresa el código que te enviamos al correo
+                                    electrónico/número de teléfono</span></p>
                             <div class="code-input mb-5">
                                 <input type="text" maxlength="1" class="code-box" id="codeBox1">
                                 <input type="text" maxlength="1" class="code-box" id="codeBox2">
@@ -150,13 +161,15 @@ include './defines/functions.php';
                                 <input type="text" maxlength="1" class="code-box" id="codeBox6">
                             </div>
                             <div class="mb-4">
-                                <label for="new_password">New Password</label>
+                                <label for="new_password"><span class="en">New Password</span><span class="es">Nueva
+                                        contraseña</span></label>
                                 <input type="password" class="form-control" id="new_password">
                             </div>
                             <div id="resetResponse"></div>
                             <div class="py-5 mb-5 px-5">
                                 <button class="btn btn-primary w-100 px-5 inter fw-bold text-white" type="button"
-                                    onclick="setNewPassword()">Verify</button>
+                                    onclick="setNewPassword()"><span class="en">Verify</span><span
+                                        class="es">Verificar</span></button>
                             </div>
                         </form>
                     </div>
@@ -170,9 +183,11 @@ include './defines/functions.php';
                     <div class="modal-body p-5 poppins text-center inter">
                         <div class="pb-5">
                             <img src="./assets/images/correct-code.svg" alt="Icon" height="184" class="mb-3 img-fluid">
-                            <h4 class="cr-title mb-3">Congratulations !</h4>
-                            <p class="mb-0 cr-text">Password Reset successful <br> You'll be redirected to the login
-                                screen now</p>
+                            <h4 class="cr-title mb-3"><span class="en">Congratulations !</span><span
+                                    class="es">Felicidades !</span></h4>
+                            <p class="mb-0 cr-text"><span class="en">Password Reset successful <br> You'll be redirected
+                                    to the login screen now </span><span class="es">Restablecimiento de contraseña
+                                    exitoso <br> Serás redirigido al inicio de sesión pantalla ahora</span></p>
                         </div>
                     </div>
                 </div>
@@ -186,9 +201,12 @@ include './defines/functions.php';
                         <div class="pb-5">
                             <img src="./assets/images/incorrect-code.svg" alt="Icon" height="184"
                                 class="mb-3 img-fluid">
-                            <h4 class="cr-title mb-3">Incorrect Code !</h4>
-                            <p class="mb-0 cr-text">Oops! It looks like you've entered the code incorrectly three times.
-                                We've sent you a new code to try again.</p>
+                            <h4 class="cr-title mb-3"><span class="en">Incorrect Code !</span><span class="es">Código
+                                    incorrecto !</span></h4>
+                            <p class="mb-0 cr-text"><span class="en">Oops! It looks like you've entered the code
+                                    incorrectly three times. We've sent you a new code to try again.</span><span
+                                    class="es">¡Ups! Parece que has introducido el código incorrectamente tres veces. Te
+                                    hemos enviado un nuevo código para que vuelvas a intentarlo.</span></p>
                         </div>
                     </div>
                 </div>
@@ -199,11 +217,22 @@ include './defines/functions.php';
     <body>
         <script src="./assets/js/jquery-3.6.1.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/js/script.js?v=4"></script>
+        <script src="./assets/js/script.js?v=5"></script>
         <script>
             function openCodeModal() {
                 $('#forgotModal').modal('hide');
                 $('#verifyCodeModal').modal('show');
+            }
+            function toggleViewPassword(event) {
+                let target = $(event.target);
+                let passwordInput = target.siblings('.form-control');
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    target.text('Hide');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    target.text('Show');
+                }
             }
 
             function setNewPassword() {
@@ -234,35 +263,35 @@ include './defines/functions.php';
                             // Determine the message to display based on response status
                             let message;
                             $('#verifyCodeModal').modal('hide');
-                                $('#new_password').val('');
-                                $('.code-box').val('');
-                                $('#email').val('');
-                                $('#resetResponse').html('');
-                                $('#verifyResponse').html('');
+                            $('#new_password').val('');
+                            $('.code-box').val('');
+                            $('#email').val('');
+                            $('#resetResponse').html('');
+                            $('#verifyResponse').html('');
                             if (response.status === 'success') {
                                 $('#correctCodeModal').modal('show');
                             } else {
                                 $('#incorrectCodeModal').modal('show');
                             }
-                            
+
                         },
                         error: function (xhr, status, error) {
                             // Handle errors if any
                             $('#resetResponse').html('<span class="en">An error occurred. Please try again later.</span><span class="es">Ocurrió un error. Por favor, inténtelo de nuevo más tarde.</span>').addClass('text-danger');
                         }
                     });
-                }else{
+                } else {
                     $('#resetResponse').html('<span class="en">Password should be atleast 6 characters long!</span><span class="es">¡La contraseña debe tener al menos 6 caracteres!</span>').addClass('text-danger');
                 }
             }
             function openForgotModal() {
                 if ($('#email').val() == '') {
                     $("#loginResponse").html(
-                        '<span class="en">Enter email first!</span>' +
+                        '<span class="en">Enter email/phone number first!</span>' +
                         '<span class="es">¡Primero ingrese el correo electrónico!</span>'
                     ).addClass('alert-danger').removeClass('alert-success');
                 } else {
-                    $('#emailPhoneConfirm').html(`<p class="mb-0">Email</p>
+                    $('#emailPhoneConfirm').html(`<p class="mb-0">Email/Phone number</p>
                             <p class="text-black mb-0 d-flex align-items-center gap-4 justify-content-center"><img
                                     src="./assets/images/mail-fill.svg" alt="Icon"
                                     height="21"><span>${$('#email').val()}</span></p>`);
@@ -355,13 +384,17 @@ include './defines/functions.php';
                             if (response.status === 'success') {
                                 // Save ClientID and name in session (Note: This should be handled by the server)
                                 // Redirect or handle the login success (e.g., redirect to a dashboard page)
-                                window.location.href = 'index.php'; // Update this URL as needed
+                                if(response.user == 'admin'){
+                                    window.location.href = 'fillPdfG8.php'; // Update this URL as needed
+                                }else{
+                                    window.location.href = 'index.php'; // Update this URL as needed
+                                }
                             } else if (response.status === 'error') {
                                 // Show error message
-                                $("#loginResponse").html(
-                                    '<span class="en">' + response.message + '</span>' +
-                                    '<span class="es">' + response.message + '</span>'
-                                ).addClass('alert-danger').removeClass('alert-success');
+                                if (response.type != undefined && response.type == 'not_verified') {
+                                    window.location.href = 'register.php?verify=' + emailOrPhone;
+                                }
+                                $("#loginResponse").html(response.message).addClass('alert-danger').removeClass('alert-success');
                             }
                         },
                         error: function (xhr, status, error) {

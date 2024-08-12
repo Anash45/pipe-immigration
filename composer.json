@@ -1,5 +1,9 @@
 {
     "require": {
-        "twilio/sdk": "^8.2"
+        "twilio/sdk": "^8.2",
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.6",
+        "mikehaertl/php-pdftk": "^0.13.1",
+        "tmw/fpdm": "^2.9"
     }
 }

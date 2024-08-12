@@ -165,6 +165,7 @@ $(document).ready(function () {
                         if (response.type == 'success') {
                             $('#response').html(`<div class='alert alert-success'><span class='en'>User data inserted successfully!</span><span class='es'>¡Datos del usuario insertados con éxito!</span></div>`);
                             $(form).trigger('reset');
+                            location.reload();
                         } else {
                             $('#response').html(`<div class='alert alert-danger'><span class='en'>Error inserting user data!</span><span class='es'>¡Error al insertar los datos del usuario!</span></div>`);
                         }
@@ -180,3 +181,24 @@ $(document).ready(function () {
         });
     }
 })
+
+function isEmailOrPhone(input) {
+    // Regular expression for phone number (format: +123 456 7890 or 123-456-7890)
+    const phonePattern = /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+
+    // Regular expression for email
+    const emailPattern = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+
+    // Check if the input matches the phone number pattern
+    if (phonePattern.test(input)) {
+        return 'phone';
+    }
+
+    // Check if the input matches the email pattern
+    if (emailPattern.test(input)) {
+        return 'email';
+    }
+
+    // If neither pattern matches
+    return 'invalid';
+}

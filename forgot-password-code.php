@@ -1,6 +1,6 @@
 <?php
 require './defines/db_conn.php'; // Include your database connection file
-
+require './defines/functions.php';	
 // echo json_encode($_POST);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailOrPhone = $_POST['email_or_phone'];
@@ -44,24 +44,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':expires_at', $expiresAt);
         $stmt->execute();
 
-        // Send verification code via email
-        $subject = "Your New Verification Code - PIPE Immigration";
-        $message = "Your new verification code is: " . $verificationCode;
-        $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
-
-        // Use mail() function to send the email
-        $isSent = mail($emailOrPhone, $subject, $message, $headers);
-        if ($isSent) {
-            $response['status'] = 'success';
-            $response['message'] = '
-    <span class="en">A new verification code has been sent to your email.</span>
-    <span class="es">Se ha enviado un nuevo código de verificación a su correo electrónico.</span>
-';
+        if (getLanguage() == 'english') {
+            $supportEmail = getSystemDataValue('emailforSupport');
         } else {
-            $response['message'] = '
-    <span class="en">Failed to send verification email.</span>
-    <span class="es">No se pudo enviar el correo electrónico de verificación.</span>
+            $supportEmail = getSystemDataValue('emailforSupportEspañol');
+        }
+
+        if (isEmailOrPhone($emailOrPhone) == 'phone') {
+            $isSent = sendVerificationCodePhone($emailOrPhone, $verificationCode);
+            if ($isSent) {
+                $response['status'] = 'success';
+                $response['emailOrPhone'] = 'phone';
+                $response['email_or_phone'] = $emailOrPhone;
+                $response['message'] = '
+        <span class="en">A new verification code has been sent to your phone number.</span>
+        <span class="es">Se ha enviado un nuevo código de verificación a su número de teléfono.</span>
+    ';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = '
+    <span class="en">Currently we only support North American phone numbers. Email us at ' . $supportEmail . ' to verify manually.</span>
+    <span class="es">Actualmente solo admitimos números de teléfono de América del Norte. Envíanos un correo electrónico a ' . $supportEmail . ' para verificar manualmente.</span>
+    <br>' . $supportString . '
 ';
+            }
+        } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
+            // Send verification code via email
+            $subject = "Your Verification Code - PIPE Immigration";
+            $message = "Your verification code is: " . $verificationCode;
+            // $headers = "From: PIPE Immigration <no-reply@f4futuretech.com>"; // Set the sender email address
+            $isSent = mail($emailOrPhone, $subject, $message);
+
+            if ($isSent) {
+                $response['status'] = 'success';
+                $response['message'] = '
+        <span class="en">A new verification code has been sent to your email.</span>
+        <span class="es">Se ha enviado un nuevo código de verificación a su correo electrónico.</span>
+    ';
+            } else {
+                $response['message'] = '
+        <span class="en">Failed to send verification email.</span>
+        <span class="es">No se pudo enviar el correo electrónico de verificación.</span>
+    ';
+            }
         }
 
         echo json_encode($response);

@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Check if the user exists
-        $sql = "SELECT ClientID, full_name, password, verified FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT ClientID, first_name, last_name, password, verified, `status` FROM clients WHERE email_or_phone = :email_or_phone";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':email_or_phone', $emailOrPhone);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
-            $response['message'] = 'User not found!';
+            $response['message'] = '<span class="en">User not found!</span><span class="es">Usuario no encontrado.</span>';
             echo json_encode($response);
             exit;
         }
@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if the user is verified
         if (!$user['verified']) {
+            $response['type'] = 'not_verified';
             $response['message'] = 'User is not verified!';
             echo json_encode($response);
             exit;
@@ -38,9 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Set session variables
         $_SESSION['ClientID'] = $user['ClientID'];
-        $_SESSION['full_name'] = $user['full_name'];
+        $_SESSION['full_name'] = $user['first_name'].' '.$user['last_name'];
+        $_SESSION['status'] = ($user['status'] == 'admin') ? $user['status'] : 'user';
 
         $response['status'] = 'success';
+        $response['user'] = $_SESSION['status'];
         $response['message'] = 'Login successful!';
         echo json_encode($response);
     } catch (PDOException $e) {

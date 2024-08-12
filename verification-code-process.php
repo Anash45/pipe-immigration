@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
+            $response['email_or_phone'] = $verifyEmailOrPhone;
             $response['status'] = 'error';
             $response['message'] = 'User not found!';
             echo json_encode($response);
@@ -34,26 +35,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if the account is locked
         $now = new DateTime();
-        if ($user['locked_until'] && $now < new DateTime($user['locked_until'])) {
-            $response['status'] = 'locked';
-            $response['message'] = 'The validation code has been incorrectly entered 5 times. Your account will be locked for 24 hours. If you need help, email us at support@immigrationAI.Lawyer.';
-            echo json_encode($response);
-            exit;
-        }
 
         // Get current time
         $currentTime = (new DateTime())->format('Y-m-d H:i:s');
 
-        // Verify the code
-        $sql = "SELECT * FROM verification_codes WHERE ClientID = :client_id AND verification_code = :verification_code AND expires_at > :current_time";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':client_id', $userId);
-        $stmt->bindParam(':verification_code', $enteredCode);
-        $stmt->bindParam(':current_time', $currentTime);
-        $stmt->execute();
-        $verificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
+        // First Query
+        $sql1 = "SELECT * FROM verification_codes 
+WHERE ClientID = :client_id 
+AND verification_code = :verification_code 
+AND expires_at > :current_time";
+        $stmt1 = $pdo->prepare($sql1);
+        $stmt1->bindParam(':client_id', $userId);
+        $stmt1->bindParam(':verification_code', $enteredCode);
+        $stmt1->bindParam(':current_time', $currentTime);
+        $stmt1->execute();
+        $verificationCode = $stmt1->fetch(PDO::FETCH_ASSOC);
 
-        if ($verificationCode) {
+        
+        // Second Query
+        $sql2 = "SELECT * FROM systemdynamicdata 
+WHERE KeyName = 'MasterCode' 
+AND Value = :verification_code";
+        $stmt2 = $pdo->prepare($sql2);
+        $stmt2->bindParam(':verification_code', $enteredCode);
+        $stmt2->execute();
+        $masterCode = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+        if ($verificationCode || $masterCode) {
             // Mark the user as verified
             $sql = "UPDATE clients SET verified = 1 WHERE ClientID = :client_id";
             $stmt = $pdo->prepare($sql);
@@ -69,33 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['status'] = 'success';
             $response['message'] = 'Verification successful!';
         } else {
-            // Log unsuccessful attempt
-            $sql = "INSERT INTO verification_attempts (ClientID, is_successful, attempt_time) VALUES (:client_id, 0, NOW())";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':client_id', $userId);
-            $stmt->execute();
-
-            // Count unsuccessful attempts in the last 24 hours
-            $sql = "SELECT COUNT(*) as attempt_count FROM verification_attempts WHERE ClientID = :client_id AND is_successful = 0 AND attempt_time > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':client_id', $userId);
-            $stmt->execute();
-            $attempts = $stmt->fetch(PDO::FETCH_ASSOC)['attempt_count'];
-
-            if ($attempts >= 5) {
-                // Lock the account for 24 hours
-                $lockUntil = date('Y-m-d H:i:s', strtotime('+24 hours'));
-                $sql = "UPDATE clients SET locked_until = :locked_until WHERE ClientID = :client_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':locked_until', $lockUntil);
-                $stmt->bindParam(':client_id', $userId);
-                $stmt->execute();
-
-                $response['status'] = 'locked';
-                $response['message'] = 'The validation code has been incorrectly entered 5 times. Your account will be locked for 24 hours. If you need help, email us at support@immigrationAI.Lawyer.';
-            } else {
-                $response['message'] = 'Invalid verification code!';
-            }
+            $response['message'] = 'Invalid verification code!';
         }
 
         echo json_encode($response);

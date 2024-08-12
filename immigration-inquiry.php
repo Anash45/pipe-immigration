@@ -1,10 +1,11 @@
 <?php
 include './defines/db_conn.php';
 include './defines/functions.php';
-
+// print_r($_SESSION);
 if (isLoggedIn()) {
     $clientId = $_SESSION['ClientID'];
     $userData = getClientById($clientId);
+    // print_r($userData);
     if ($userData !== null) {
         $emailOrPhone = $userData['email_or_phone'];
         $checkType = isEmailOrPhone($emailOrPhone);
@@ -27,25 +28,38 @@ if (isLoggedIn()) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Qualification Data - US PIPE Immigration Program</title>
+        <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css" />
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=4">
+        <link rel="stylesheet" href="./assets/css/style.css?v=5">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
         <main class="py-5">
             <div class="container">
                 <div class="d-flex justify-content-center gap-3 mb-4">
-                    <a href="index.php" class="btn btn-rectangle mx-0 btn-primary">Home</a>
-                    <a href="logout.php" class="btn btn-rectangle mx-0 btn-danger">Logout</a>
+                    <a href="index.php" class="btn btn-rectangle mx-0 btn-primary"><span class="en">HOME</span> <span
+                            class="es">INICIO</span></a>
+                    <a href="logout.php" class="btn btn-rectangle mx-0 btn-danger"><span class="en">LOGOUT</span> <span
+                            class="es">CERRAR SESIÓN</span></a>
                 </div>
-                <div class="d-flex justify-content-center gap-5 align-items-center mb-5">
-                    <a href="?lang=english"
-                        class="lang-link <?php echo $active = (getLanguage() == 'english') ? 'active' : ''; ?> inter text-dark">ENGLISH</a><a
-                        href="?lang=spanish"
-                        class="lang-link inter <?php echo $active = (getLanguage() == 'spanish') ? 'active' : ''; ?> text-dark">SPANISH</a>
+                <div class="d-flex justify-content-center">
+                    <?php
+                    if (getLanguage() == 'english') {
+                        ?>
+                        <a href="?lang=spanish"
+                            class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change btn mx-auto"><img
+                                src="./assets/images/change.svg" alt="Change"> <span>Espanol</span></a>
+                        <?php
+                    } else {
+                        ?>
+                        <a href="?lang=english"
+                            class="btn bg-primary d-flex gap-2 text-black align-items-center fw-bold btn-change btn mx-auto"><img
+                                src="./assets/images/change.svg" alt="Change"> <span>English</span></a>
+                        <?php
+                    }
+                    ?>
                 </div>
                 <h2 class="text-center form-title fw-bold inter mb-4">
                     <?php echo getTranslation('Inquiry Form', 0, 'label'); ?>
@@ -64,7 +78,9 @@ if (isLoggedIn()) {
                                                     title="<?php echo getTranslation('Inquiry Form', 1, 'help'); ?>"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="first_name"
-                                                    name="first_name" placeholder="Enter your first name">
+                                                    name="first_name"
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 1, 'placeholder'); ?>"
+                                                    value="<?php echo $userData['first_name']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +96,8 @@ if (isLoggedIn()) {
                                                     alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="last_name"
-                                                    name="last_name" placeholder="Enter your last name">
+                                                    name="last_name" value="<?php echo $userData['last_name']; ?>"
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 2, 'placeholder'); ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +114,7 @@ if (isLoggedIn()) {
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 inp-wih-icon-left"
                                                     id="currentStateAndCountry" name="currentStateAndCountry"
-                                                    placeholder="New York, United States">
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 3, 'placeholder'); ?>">
                                                 <img src="./assets/images/location.svg" alt="Lock"
                                                     class="inp-icon-left">
                                             </div>
@@ -115,13 +132,15 @@ if (isLoggedIn()) {
                                                     alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 phone-number"
-                                                    id="phoneNumber" name="phoneNumber" placeholder="Phone number" <?php echo $phone = ($checkType == 'phone') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
+                                                    id="phoneNumber" name="phoneNumber"
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 4, 'placeholder'); ?>"
+                                                    <?php echo $phone = ($checkType == 'phone') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
                                             </div>
                                             <div class="form-check mt-3">
                                                 <input class="form-check-input" type="checkbox" id="whatsappConnected"
                                                     name="whatsappConnected">
-                                                <label class="form-check-label" for="whatsapp"> Do you have WhatsApp in
-                                                    your cell? </label>
+                                                <label class="form-check-label" for="whatsapp">
+                                                    <?php echo getTranslation('Inquiry Form', 6, 'label'); ?> </label>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +156,8 @@ if (isLoggedIn()) {
                                                     alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="email" class="form-control mt-1" name="email" id="email"
-                                                    placeholder="Email@lato.com" <?php echo $phone = ($checkType == 'email') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 5, 'placeholder'); ?>"
+                                                    <?php echo $phone = ($checkType == 'email') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
                                             </div>
                                         </div>
                                     </div>
@@ -146,107 +166,98 @@ if (isLoggedIn()) {
                             <div class="row">
                                 <div class="col-xl-7 col-md-8 mx-auto mt-5 inquiry-bottom">
                                     <div class="mb-4">
-                                        <label for="usaPresence"
-                                            class="form-label me-4"><?php echo getTranslation('Inquiry Form', 6, 'label'); ?></label>
                                         <div id="usaPresence" class="d-block">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
+                                                <input class="form-check-input" type="checkbox"
                                                     name="usaPresenceBeforeJun2024" id="usaPresenceYes" value="yes">
-                                                <label class="form-check-label" for="usaPresenceYes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="usaPresenceBeforeJun2024" id="usaPresenceNo" value="no">
-                                                <label class="form-check-label" for="usaPresenceNo">No</label>
+                                                <div class="d-flex gap-2 align-items-start justify-content-between">
+                                                    <label class="form-check-label"
+                                                        for="usaPresenceYes"><?php echo getTranslation('Inquiry Form', 7, 'label'); ?></label>
+                                                    <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 7, 'help'); ?>"
+                                                        alt="Icon" width="16">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Question 2 -->
                                     <div class="mb-4">
-                                        <label for="marriedToUSCitizen"
-                                            class="form-label me-4"><?php echo getTranslation('Inquiry Form', 7, 'label'); ?></label>
                                         <div id="marriedToUSCitizen" class="d-block">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
+                                                <input class="form-check-input" type="checkbox"
                                                     name="marriedToUSCitizenBeforeJun2024" id="marriedToUSCitizenYes"
                                                     value="yes">
-                                                <label class="form-check-label" for="marriedToUSCitizenYes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="marriedToUSCitizenBeforeJun2024" id="marriedToUSCitizenNo"
-                                                    value="no">
-                                                <label class="form-check-label" for="marriedToUSCitizenNo">No</label>
+                                                <div class="d-flex gap-2 align-items-start justify-content-between">
+                                                    <label class="form-check-label"
+                                                        for="marriedToUSCitizenYes"><?php echo getTranslation('Inquiry Form', 8, 'label'); ?></label>
+                                                    <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 8, 'help'); ?>"
+                                                        alt="Icon" width="16">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Question 3 -->
                                     <div class="mb-4">
-                                        <label for="continuousPresence"
-                                            class="form-label me-4"><?php echo getTranslation('Inquiry Form', 8, 'label'); ?></label>
                                         <div id="continuousPresence" class="d-block">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
+                                                <input class="form-check-input" type="checkbox"
                                                     name="continuousPresenceEvidence" id="continuousPresenceYes"
                                                     value="yes">
-                                                <label class="form-check-label" for="continuousPresenceYes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="continuousPresenceEvidence" id="continuousPresenceNo"
-                                                    value="no">
-                                                <label class="form-check-label" for="continuousPresenceNo">No</label>
+                                                <div class="d-flex gap-2 align-items-start justify-content-between">
+                                                    <label class="form-check-label"
+                                                        for="continuousPresenceYes"><?php echo getTranslation('Inquiry Form', 9, 'label'); ?></label>
+                                                    <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 9, 'help'); ?>"
+                                                        alt="Icon" width="16">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="NoMajorIssues"
-                                            class="form-label me-4"><?php echo getTranslation('Inquiry Form', 9, 'label'); ?></label>
                                         <div id="NoMajorIssues" class="d-block">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="NoMajorIssues" id="NoMajorIssuesYes" value="yes">
-                                                <label class="form-check-label" for="NoMajorIssuesYes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="NoMajorIssues" id="NoMajorIssuesNo" value="no">
-                                                <label class="form-check-label" for="NoMajorIssuesNo">No</label>
+                                                <input class="form-check-input" type="checkbox" name="NoMajorIssues"
+                                                    id="NoMajorIssuesYes" value="yes">
+                                                <div class="d-flex gap-2 align-items-start justify-content-between">
+                                                    <label class="form-check-label"
+                                                        for="NoMajorIssuesYes"><?php echo getTranslation('Inquiry Form', 10, 'label'); ?></label>
+                                                    <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 10, 'help'); ?>"
+                                                        alt="Icon" width="16">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="my-4">
                                         <label for="qualificationOptions"
-                                            class="form-label fw-bold mb-2"><?php echo getTranslation('Inquiry Form', 10, 'label'); ?></label>
+                                            class="form-label fw-bold mb-2"><?php echo getTranslation('Inquiry Form', 11, 'label'); ?></label>
                                         <div id="qualificationOptions">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="suitableQualificationOption" id="fillYourself"
-                                                    value="fillYourself">
-                                                <label class="form-check-label" for="fillYourself">
-                                                    <?php echo getTranslation('Inquiry Form', 11, 'label'); ?></label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="suitableQualificationOption" id="needHelpFilling"
-                                                    value="needHelpFilling">
-                                                <label class="form-check-label" for="needHelpFilling">
-                                                    <?php echo getTranslation('Inquiry Form', 17, 'label'); ?>. </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="suitableQualificationOption" id="needVideoConference"
-                                                    value="needVideoConference">
-                                                <label class="form-check-label" for="needVideoConference">
-                                                    <?php echo getTranslation('Inquiry Form', 13, 'label'); ?></label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio"
-                                                    name="suitableQualificationOption" id="legalConsultationAtLawOffice"
-                                                    value="legalConsultationAtLawOffice">
-                                                <label class="form-check-label" for="legalConsultationAtLawOffice">
-                                                    <?php echo getTranslation('Inquiry Form', 14, 'label'); ?></label>
-                                            </div>
+                                            <?php
+                                            $products = getAllProducts();
+                                            if ($products) {
+                                                $ip = 1;
+                                                foreach ($products as $product) {
+                                                    $productDescription = getLanguage() == 'english' ? $product['description'] : $product['descriptionSpanish'];
+                                                    $productHelp = getLanguage() == 'english' ? $product['EnglishHelp'] : $product['SpanishHelp'];
+                                                    ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="product"
+                                                            id="product<?php echo $ip; ?>"
+                                                            value="<?php echo $product['ProductID']; ?>">
+                                                        <div class="d-flex gap-2 align-items-start justify-content-between">
+                                                            <label class="form-check-label" for="product<?php echo $ip; ?>">
+                                                                <?php echo $productDescription; ?></label>
+                                                            <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                                data-toggle="tooltip" title="<?php echo $productHelp; ?>"
+                                                                alt="Icon" width="16">
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    $ip++;
+                                                }
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -255,15 +266,27 @@ if (isLoggedIn()) {
                                                 <input class="form-check-input" type="checkbox" id="acceptTerms"
                                                     name="acceptTerms">
                                                 <label class="form-check-label" for="acceptTerms">
-                                                    <?php echo getTranslation('Inquiry Form', 18, 'label'); ?></span>
+                                                    <?php echo getTranslation('Inquiry Form', 19, 'label'); ?></span>
                                                 </label>
+                                            </div>
+                                            <div class="text-center col-lg-6 mx-auto">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-5 mb-3">
+                                                    <p class="mb-0 text-center">
+                                                        <?php echo getTranslation('Inquiry Form', 21, 'label'); ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-9 col-lg-10 mx-auto">
+                                                <textarea name="otherQuestions" id="other" class="form-control" rows="8"
+                                                    placeholder="<?php echo getTranslation('Inquiry Form', 17, 'placeholder'); ?>"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-xl-7 col-md-8 mx-auto">
                                             <div
                                                 class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-4">
                                                 <p class="mb-0 text-center">
-                                                    <?php echo getTranslation('Inquiry Form', 19, 'label'); ?>
+                                                    <?php echo getTranslation('Inquiry Form', 20, 'label'); ?>
                                                 </p>
                                             </div>
                                             <div class="row">
@@ -299,20 +322,10 @@ if (isLoggedIn()) {
                             </div>
                         </fieldset>
                     </div>
-                    <div class="text-center col-lg-6 mx-auto">
-                        <div class="d-flex align-items-center justify-content-center gap-2 fee-note roboto mt-5 mb-3">
-                            <p class="mb-0 text-center">"Need further help? Please enter your questions below</p><img
-                                src="./assets/images/question-icon.svg" class="help-icon" data-toggle="tooltip"
-                                title="<?php echo getTranslation('Inquiry Form', 0, 'help'); ?>" alt="Icon" width="16">
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-lg-10 mx-auto">
-                        <textarea name="other" id="other" class="form-control" rows="8"
-                            placeholder="Please enter your questions below"></textarea>
-                    </div>
-                    <div class="text-center my-4">
-                    <div class="formResponse text-center"></div>
-                        <button class="btn btn-rectangle btn-primary"><span>Submit</span></button>
+                    <div class="text-center my-4 position-relative">
+                        <div class="formResponse text-center mb-3"></div>
+                        <button class="btn btn-rectangle btn-primary"><span class="en">Submit</span><span
+                                class="es">Enviar</span></button>
                     </div>
                     <div class="modal fade" id="verifyModal" tabindex="-1" aria-labelledby="verifyModalLabel"
                         aria-hidden="true">
@@ -416,6 +429,64 @@ if (isLoggedIn()) {
                 </div>
             </div>
         </div>
+        <!-- Modal Structure -->
+        <div class="modal fade" id="tacModalSpanish" tabindex="-1" aria-labelledby="tacModalSpanishLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close opacity-0" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <h3 class="modal-title text-center mx-auto" id="tacModalSpanishLabel">SURIEL INMIGRACION: PIPE
+                            CALIFICACIÓN</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="text-center mb-4">**Confidencialidad y Asesoramiento Legal Limitado**</h3>
+                        <h4 class="text-center mb-3">**Garantía de confidencialidad**</h4>
+                        <p>Al ingresar sus datos confidenciales en nuestro sistema inform&aacute;tico, usted reconoce y
+                            acepta los siguientes términos:</p>
+                        <ol>
+                            <li>**Información confidencial**: Toda la información que proporcione será tratada como
+                                confidencial y de propiedad exclusiva. Estamos comprometidos a proteger sus datos
+                                personales de acuerdo con las leyes aplicables y los estándares profesionales.</li>
+                            <li>**Seguridad de datos**: Para proteger sus datos contra el acceso, uso o divulgación no
+                                autorizados, empleamos medidas de seguridad estándar de la industria, incluido el
+                                cifrado y protocolos de acceso seguro.</li>
+                            <li>**Uso de la información**: La información que usted proporcione se utilizará únicamente
+                                con el fin de evaluar sus necesidades legales y brindar asesoramiento legal limitado
+                                durante su consulta inicial.</li>
+                            <li>**No divulgación**: No divulgaremos su información confidencial a ningún tercero sin su
+                                consentimiento explícito, excepto según lo exija la ley.</li>
+                            <li>**Reconocimiento**: Al proporcionar su información, usted reconoce que ha leído y
+                                comprendido esta garantía de confidencialidad y acepta sus términos.</li>
+                        </ol>
+                        <h3 class="text-center mb-4">Asesoramiento y representación legal limitados</h3>
+                        <ol>
+                            <li>**Consulta inicial**: Durante la consulta inicial, le brindaremos asesoramiento legal
+                                limitado según la información que usted proporcione. Este consejo tiene como objetivo
+                                brindarle una comprensión preliminar de su situación legal y sus posibles opciones.</li>
+                            <li>**Sin relación abogado-cliente**: Esta consulta inicial no establece una relación
+                                abogado-cliente más allá del alcance del asesoramiento legal limitado brindado.</li>
+                            <li>**Retención de servicios**: Solo se establecerá una relación abogado-cliente una vez que
+                                usted firme un acuerdo de anticipo formal y proporcione los honorarios de anticipo
+                                requeridos. Hasta entonces, no somos su representante legal y nuestro asesoramiento no
+                                debe interpretarse como la creación de dicha relación.</li>
+                            <li>**Alcance de la representación**: El alcance de nuestra representación legal, incluidos
+                                los servicios y obligaciones específicos, se detallará en el contrato de contratación.
+                                Debe revisar y aceptar estos términos antes de que lo representemos formalmente.</li>
+                            <li>**Reconocimiento**: Al participar en la consulta inicial, usted reconoce que comprende
+                                la naturaleza y las limitaciones del asesoramiento legal brindado y las condiciones para
+                                establecer una relación abogado-cliente.</li>
+                        </ol>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="disagreeTAC()">Cerca</button>
+                        <button type="button" class="btn btn-primary" onclick="agreeTAC()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
     <body>
@@ -423,12 +494,29 @@ if (isLoggedIn()) {
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
             integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./assets/js/script.js?v=4"></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
+        <script src="./assets/js/script.js?v=5"></script>
+        <?php
+        $productArray = [];
+        $products1 = getAllProducts();
+        if ($products1) {
+            foreach ($products1 as $product1) {
+                // Remove any newline characters from the URLs
+                $linkToStripe = str_replace(["\r", "\n"], '', $product1['LinktoStripe']);
+                $linkToStripeSpanish = str_replace(["\r", "\n"], '', $product1['LinktoStripeSpanish']);
+
+                $productArray[] = array($product1['ProductID'], $product1['price'], $linkToStripe, $linkToStripeSpanish);
+            }
+        }
+        ?>
         <script>
+            // Convert PHP array to JSON and escape it for safe embedding
+            let productArray = JSON.parse('<?php echo json_encode($productArray, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>');
+            console.log(productArray); // Optional: to verify the content
             let additionalFee = 0;
             let currentLanguage = '<?php echo getLanguage(); ?>';
             let PIPEQualificationFee = '<?php echo getSystemDataValue('PIPEQualificationFee'); ?>';
@@ -447,8 +535,29 @@ if (isLoggedIn()) {
             let emailforSupport = '<?php echo getSystemDataValue('emailforSupport'); ?>';
 
             function enableVerifyModal() {
-                $('#verifyModal').find('.form-control').attr('required', 'required');
+                // Get the values of first and last name
+                let first_name = $('#first_name').val();
+                let last_name = $('#last_name').val();
+
+                // Combine the names and set it as the value of the payeeNameEmail field
+                $('#payeeNameEmail').val(first_name + ' ' + last_name);
+
+                // Get the current date
+                let d = new Date();
+                let date = d.getDate().toString().padStart(2, '0'); // Ensures two digits
+                let month = (d.getMonth() + 1).toString().padStart(2, '0'); // Adjust for zero-based month and ensures two digits
+                let year = d.getFullYear();
+
+                // Set the paymentDate field value in YYYY-MM-DD format
+                $('#paymentDate').val(year + '-' + month + '-' + date);
+
+                // Log the formatted date for debugging
+                console.log(year + '-' + month + '-' + date);
+
+                // Set the 'required' property for all .form-control elements in the modal
+                $('#verifyModal').find('.form-control').prop('required', true);
             }
+
 
             function disableVerifyModal() {
                 $('#verifyModal').find('.form-control').removeAttr('required');
@@ -476,66 +585,40 @@ if (isLoggedIn()) {
             });
 
             function checkInquiryForm() {
-                let qualificationFee = returnPrice(PIPEQualificationFee);
+                let qualificationFee = 0;
                 let qualificationLink = '';
-                let suitableQualificationOption = $('[name="suitableQualificationOption"]:checked').val();
-                console.log(suitableQualificationOption);
-                if (suitableQualificationOption == 'needHelpFilling') {
+                let product = $('[name="product"]:checked').val();
+                let result = productArray.find(item => (item[0] === product || item[0] === Number(product)));
+
+                console.log(productArray, product, result);
+
+                if (result !== undefined) {
+
+                    console.log(product, result);
                     if ($('#payment-methods').val() == 'credit-card') {
                         enableVerifyModal();
                         if (currentLanguage == 'english') {
-                            qualificationLink = StripeQualPlusHelp;
-                        } else if (currentLanguage == 'spanish') {
-                            qualificationLink = StripeQualPlusHelpEspañol;
-                        }
-                    } else if ($('#payment-methods').val() == 'paypal') {
-                        enableVerifyModal();
-                        qualificationLink = PayPalLinkforQualPlusHelp;
-                    }
-                    additionalFee = returnPrice(HelpEnteringData);
-                } else if (suitableQualificationOption == 'needVideoConference') {
-                    if ($('#payment-methods').val() == 'credit-card') {
-                        enableVerifyModal();
-                        if (currentLanguage == 'english') {
-                            qualificationLink = StripeQualVideoHelp;
-                        } else if (currentLanguage == 'spanish') {
-                            qualificationLink = StripeQualVideoHelpEspañol;
+                            qualificationLink = result[2];
+                        } else {
+                            qualificationLink = result[3];
                         }
                     }
-                    else if ($('#payment-methods').val() == 'paypal') {
-                        enableVerifyModal();
-                        qualificationLink = PayPalLinkforQualVideoHelp;
-                    }
-                    additionalFee = returnPrice(VideoConferencing);
-                } else {
-                    if ($('#payment-methods').val() == 'credit-card') {
-                        enableVerifyModal();
-                        if (currentLanguage == 'english') {
-                            qualificationLink = StripeQual;
-                        } else if (currentLanguage == 'spanish') {
-                            qualificationLink = StripeQualEspañol;
-                        }
-                    }
-                    else if ($('#payment-methods').val() == 'paypal') {
-                        enableVerifyModal();
-                        qualificationLink = PayPalLinkforQualification;
-                    }
-                    additionalFee = 0;
                 }
+                qualificationFee = returnPrice(result[1]);
 
 
-                let totalFeel = qualificationFee + additionalFee;
+                let totalFeel = qualificationFee;
 
                 $('#verifyModalTitle').html(`$${totalFeel}`);
                 $('.fee').html(`$${totalFeel}`);
                 $('#totalFee').val(totalFeel);
                 $('#lastNote').html(`<p class="mt-3 fee-note">
-                    <span class="en">Your link to pay the fee is below, after paying click VERIFY button and fill the confirmation details.</span> 
-                    <span class="es">Su enlace para pagar la tarifa está abajo, después de pagar, haga clic en el botón VERIFICAR y complete los detalles de confirmación.</span>
+                    <span class="en">Your link to pay the fee is below, after paying click VERIFY PAYMENT button and fill the confirmation details.</span> 
+                    <span class="es">Su enlace para pagar la tarifa está abajo, después de pagar, haga clic en el botón VERIFICAR PAGO y complete los detalles de confirmación.</span>
                 </p><p class="mb-3"><a href="${qualificationLink}" target="_blank">${qualificationLink}</a></p>
                 <div class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verifyModal">
-    VERIFY
-</button></div>`);
+                    <span class="en">VERIFY PAYMENT</span><span class="es">VERIFICAR PAGO</span>
+                </button></div>`);
 
 
                 if ($('#payment-methods').val() == 'check-via-mail') {
@@ -551,32 +634,37 @@ if (isLoggedIn()) {
                 } else if ($('#payment-methods').val() == 'in-person') {
                     disableVerifyModal();
                     $('#lastNote').html(`<p class="mt-3">
-                    Pay at our Phoenix office, display "Our office is located at 7220 N 16th Street, Suite F, Phoenix, AZ  85020, Googlepin xxxx. Our office hours are 8 AM to 5 PM, but closed for lunch between 12 PM and 1 PM."
-                    </p>`);
+                    <span class="en">"Our office is located at 7220 N 16th, Suite F, Phoenix, AZ  85020, Google Pin: bit.ly/3LISSp2. Our office hours are 8 AM to 5 PM, closed for lunch from 12 PM to 1 PM."</span>
+                    <span class="es">"Nuestra oficina está ubicada en 7220 N 16th, Suite F, Phoenix, AZ 85020, Google Pin: bit.ly/3LISSp2. Horario de 9 AM a 5 PM., cerrada de 12 PM a 1 PM para almuerzo."</span></p>`);
                 } else if ($('#payment-methods').val() == 'zelle') {
                     enableVerifyModal();
-                    $('#lastNote').html(`<p class="mt-3 fee-note">
-                                    Verify your payment by clicking on the VERIFY button.</p>
+                    $('#lastNote').html(`<p class="mt-3 fee-note"><span class="en">Press the VERIFY PAYMENT button to enter your payment transaction ID, or confirmation #.</span>
+                        <span class="es">Para verificar su pago, oprima VERIFICAR PAGO.</span>
+                    </p>
                                 <div class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verifyModal">
-                    VERIFY
+                    <span class="en">VERIFY PAYMENT</span><span class="es">VERIFICAR PAGO</span>
                 </button></div>`);
                 }
             }
 
             $('#inquiryForm').on('input', function () {
-                checkInquiryForm();
+                if ($('#acceptTerms:checked').length > 0) {
+                    checkInquiryForm();
+                }
             })
 
             function disagreeTAC() {
                 $('#acceptTerms').prop('checked', false);
                 $('#acceptTerms').trigger('change');
                 $('#tacModal').modal('hide');
+                $('#tacModalSpanish').modal('hide');
             }
 
             function agreeTAC() {
                 $('#acceptTerms').prop('checked', true);
                 $('#acceptTerms').trigger('change');
                 $('#tacModal').modal('hide');
+                $('#tacModalSpanish').modal('hide');
             }
 
             function termsAcceptedEnable() {
@@ -644,19 +732,7 @@ if (isLoggedIn()) {
                             required: true,
                             email: true
                         },
-                        usaPresenceBeforeJun2024: {
-                            required: true
-                        },
-                        NoMajorIssues: {
-                            required: true
-                        },
-                        marriedToUSCitizenBeforeJun2024: {
-                            required: true
-                        },
-                        continuousPresenceEvidence: {
-                            required: true
-                        },
-                        suitableQualificationOption: {
+                        product: {
                             required: true
                         },
                         "payment-methods": {
@@ -678,7 +754,7 @@ if (isLoggedIn()) {
                             required: '<span class="en">Last name is required</span><span class="es">El apellido es requerido</span>'
                         },
                         currentStateAndCountry: {
-                            required: '<span class="en">State and Country are required</span><span class="es">El estado y el país son requeridos</span>'
+                            required: '<span class="en">City and State are required</span><span class="es">Se requieren ciudad y estado</span>'
                         },
                         phoneNumber: {
                             required: '<span class="en">Phone number is required</span><span class="es">El número de teléfono es requerido</span>'
@@ -696,7 +772,7 @@ if (isLoggedIn()) {
                         continuousPresenceEvidence: {
                             required: ''
                         },
-                        suitableQualificationOption: {
+                        product: {
                             required: ''
                         },
                         "payment-methods": {
@@ -717,7 +793,12 @@ if (isLoggedIn()) {
                         $(element).removeClass('input-error');
                     },
                     errorPlacement: function (error, element) {
-                        error.insertAfter(element);
+                        if (element.attr("name") === "acceptTerms") {
+                            // Insert the error message into the custom error element
+                            $(".formResponse").html('<span class="en">Before you can make your payment, please ACCEPT our terms and confidentiality agreement.</span><span class="es">Antes de poder realizar su pago, ACEPTE nuestros términos y acuerdo de confidencialidad.</span>').addClass('text-danger').removeClass('text-success');
+                        } else {
+                            error.insertAfter(element);
+                        }
                     },
                     submitHandler: function (form) {
                         $.ajax({
@@ -730,6 +811,7 @@ if (isLoggedIn()) {
                                 // Handle success response
                                 if (response.status === 'success') {
                                     $('.formResponse').html(response.message).addClass('text-success').removeClass('text-danger');
+                                    window.location.href = 'index.php';
                                     $(form).trigger('reset');
                                 } else {
                                     $('.formResponse').html(response.message).addClass('text-danger').removeClass('text-success');
@@ -743,7 +825,47 @@ if (isLoggedIn()) {
                     }
                 });
             });
+            function initAutocomplete() {
+                var currentStateAndCountry = document.getElementById('currentStateAndCountry');
 
+                var autocomplete = new google.maps.places.Autocomplete(currentStateAndCountry, {
+                    types: ['geocode'],
+                    componentRestrictions: { country: 'us' }
+                });
+
+                autocomplete.addListener('place_changed', function () {
+                    var place = autocomplete.getPlace();
+
+                    if (!place.geometry) {
+                        console.log('No details available for input: ' + place.name);
+                        return;
+                    }
+
+                    var addressComponents = place.address_components;
+                    var zip = '';
+                    var city = '';
+                    var state = '';
+
+                    for (var i = 0; i < addressComponents.length; i++) {
+                        var component = addressComponents[i];
+                        if (component.types.includes('postal_code')) {
+                            zip = component.long_name;
+                        } else if (component.types.includes('locality')) {
+                            city = component.long_name;
+                        } else if (component.types.includes('administrative_area_level_1')) {
+                            state = component.long_name;
+                        }
+                    }
+
+                    // Update fields
+                    currentStateAndCountry.value = city + ', ' + state + ' ' + zip;
+
+                });
+            }
+
+            window.onload = function () {
+                initAutocomplete();
+            };
         </script>
     </body>
 

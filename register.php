@@ -9,8 +9,9 @@ include './defines/functions.php';
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Create Account - US PIPE Immigration Program</title>
+        <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css?v=4">
+        <link rel="stylesheet" href="./assets/css/style.css?v=5">
     </head>
 
     <body class="login-page red-hat-display lang-<?php echo getLanguage(); ?>">
@@ -44,8 +45,7 @@ include './defines/functions.php';
                         ?>
                     </div>
                     <h2 class="fw-bold form-title mb-4"> US PIPE <br> IMMIGRATION PROGRAM </h2>
-                    <p class="form-desc"> Find out from a competent, seasoned US Lawyer, If you qualify for this new
-                        immigration program </p>
+                    <p class="form-desc"> <?php echo getTranslation('Create Account', 1, 'label'); ?></p>
                 </div>
                 <div class="page-form-sec py-5 flex-grow-1">
                     <form class="px-sm-5 px-0 py-5 mt-sm-5 mt-0" action="" id="registerForm" method="post">
@@ -54,38 +54,49 @@ include './defines/functions.php';
                                 <?php echo getTranslation('Create Account', 0, 'label'); ?>
                             </h3>
                             <div class="form-group mb-4">
-                                <label for="full_name"><?php echo getTranslation('Log In', 6, 'label'); ?></label>
+                                <label for="first_name"><?php echo getTranslation('Create Account', 8, 'label'); ?></label>
                                 <div class="input-div">
-                                    <input type="text" id="full_name" name="full_name"
-                                        placeholder="Enter your Full Name" class="form-control poppins">
-                                    <img src="./assets/images/user.svg" alt="full_name" class="inp-icon-left">
+                                    <input type="text" id="first_name" name="first_name"
+                                        placeholder="<?php echo getTranslation('Create Account', 8, 'placeholder'); ?>" class="form-control poppins">
+                                    <img src="./assets/images/user.svg" alt="first_name" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
-                                        title="<?php echo getTranslation('Log In', 6, 'help'); ?>">
+                                        title="<?php echo getTranslation('Create Account', 8, 'help'); ?>">
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="last_name"><?php echo getTranslation('Create Account', 9, 'label'); ?></label>
+                                <div class="input-div">
+                                    <input type="text" id="last_name" name="last_name"
+                                        placeholder="<?php echo getTranslation('Create Account', 9, 'placeholder'); ?>" class="form-control poppins">
+                                    <img src="./assets/images/user.svg" alt="last_name" class="inp-icon-left">
+                                    <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
+                                        class="inp-icon-right help-icon" data-bs-toggle="tooltip"
+                                        title="<?php echo getTranslation('Create Account', 9, 'help'); ?>">
                                 </div>
                             </div>
                             <div class="form-group mb-4">
                                 <label
-                                    for="email_or_phone"><?php echo getTranslation('Create Account', 1, 'label'); ?></label>
+                                    for="email_or_phone"><?php echo getTranslation('Create Account', 2, 'label'); ?></label>
                                 <div class="input-div">
                                     <input type="text" id="email_or_phone" name="email_or_phone"
-                                        placeholder="Enter your Email/Phone number" class="form-control poppins">
+                                        placeholder="<?php echo getTranslation('Create Account', 2, 'placeholder'); ?>" class="form-control poppins" value="<?php echo $VerifyemailOrPhone = (isset($_REQUEST['verify'])) ? $_REQUEST['verify'] : ''; ?>">
                                     <img src="./assets/images/envelope.svg" alt="Email" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
-                                        title="<?php echo getTranslation('Create Account', 1, 'help'); ?>">
+                                        title="<?php echo getTranslation('Create Account', 2, 'help'); ?>">
                                 </div>
                             </div>
                             <div class="form-group mb-4">
                                 <label
-                                    for="password"><?php echo getTranslation('Create Account', 2, 'label'); ?></label>
+                                    for="password"><?php echo getTranslation('Create Account', 3, 'label'); ?></label>
                                 <div class="input-div">
-                                    <input type="password" id="password" name="password" placeholder="Password"
+                                    <input type="password" id="password" name="password" placeholder="<?php echo getTranslation('Create Account', 3, 'placeholder'); ?>"
                                         class="form-control poppins">
                                     <img src="./assets/images/lock.svg" alt="Lock" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
-                                        title="<?php echo getTranslation('Create Account', 2, 'help'); ?>">
+                                        title="<?php echo getTranslation('Create Account', 3, 'help'); ?>">
                                     <img src="./assets/images/eye.svg" onclick="toggleViewPassword(event)" alt="Icon"
                                         width="14" class="show-password">
                                 </div>
@@ -95,7 +106,7 @@ include './defines/functions.php';
                                     for="confirm_password"><?php echo getTranslation('Log In', 7, 'label'); ?></label>
                                 <div class="input-div">
                                     <input type="password" id="confirm_password" name="confirm_password"
-                                        placeholder="Password" class="form-control poppins">
+                                        placeholder="<?php echo getTranslation('Create Account', 3, 'placeholder'); ?>" class="form-control poppins">
                                     <img src="./assets/images/lock.svg" alt="Lock" class="inp-icon-left">
                                     <img src="./assets/images/question-icon.svg" alt="Icon" width="16"
                                         class="inp-icon-right help-icon" data-bs-toggle="tooltip"
@@ -103,17 +114,26 @@ include './defines/functions.php';
                                     <img src="./assets/images/eye.svg" onclick="toggleViewPassword(event)" alt="Icon"
                                         width="14" class="show-password">
                                 </div>
-                                <p class="text-end"><a href="#" class="text-white forgot-link"
-                                        onclick="openResendVerificationModal()">Verify account</a>
+                                <!-- <p class="mt-3 text-start text-white mb-1">
+                                    <span class="en"> If you've already registered and trying to verify the account
+                                        click on "Verify Account", fill your email and click "Resend Code". </span>
+                                    <span class="es">Si ya se ha registrado y está intentando verificar la cuenta, haga
+                                        clic en "Verificar cuenta", complete su correo electrónico y haga clic en
+                                        "Reenviar código".</span>
                                 </p>
+                                <p class="text-end"><a href="#" class="text-white forgot-link"
+                                        onclick="openResendVerificationModal()"><span class="en">Verify
+                                            account</span><span class="es">Verificar cuenta</span></a>
+                                </p> -->
                             </div>
                             <div class="btns px-4 text-center pt-4">
-                                <div id="responseMessage"></div>
-                                <button class="btn btn-primary w-100 px-5 fw-bold inter text-white" type="submit">Sign
-                                    Up</button>
+                                <div id="responseMessage" class="mb-3"></div>
+                                <button class="btn btn-primary w-100 px-5 fw-bold inter text-white" type="submit"><span
+                                        class="en">Sign Up</span> <span class="es">Inscribirse</span></button>
                                 <div class="text-center mt-4">
-                                    <a href="#" class="create-account-link text-white d-inline-block mb-3">Already have
-                                        an account?</a>
+                                    <a href="#" class="create-account-link text-white d-inline-block mb-3"><span
+                                            class="en">Already have an account?</span><span class="es">¿Ya tienes una
+                                            cuenta?</span></a>
                                     <a href="./login.php"
                                         class="btn btn-primary w-100 px-5 fw-bold text-white"><?php echo getTranslation('Log In', 4, 'label'); ?></a>
                                 </div>
@@ -134,13 +154,17 @@ include './defines/functions.php';
                                     data-bs-dismiss="modal">
                             </div>
                             <h4 class="fm-subtitle mb-0 inter">Check your text/email for a six-digit code</h4>
-                            <h2 class="py-4 fm-title inter">Verify</h2>
+                            <h2 class="pt-4 pb-3 fm-title inter">Verify</h2>
+                            <p class="text-center text-secondary"><span class="en">Please enter the code we send you. If your cell blocks unwanted text, email us at <?php echo $supportEmail; ?> or create an account with an email or a phone that can receive our text.</span><span class="es">Por favor introduce el código que te enviamos. Si su celular bloquea texto no deseado, envíenos un correo electrónico a <?php echo $supportEmailSpanish; ?> o crear una cuenta con un correo electrónico o un teléfono que pueda recibir nuestro texto.</span></p>
                             <div class="mb-4" id="emailInput" style="display: none;">
-                                <label for="verify_email_or_phone">Enter your email: </label>
+                                <label for="verify_email_or_phone">Enter your email/phone number: </label>
                                 <input type="text" class="form-control mt-3" name="verify_email_or_phone"
-                                    id="verify_email_or_phone" value="">
+                                    id="verify_email_or_phone"
+                                    value="<?php echo $VerifyemailOrPhone = (isset($_REQUEST['verify'])) ? $_REQUEST['verify'] : ''; ?>">
                             </div>
-                            <p class="mb-4 fm-desc">Please enter the code we sent you to email</p>
+                            <p class="mb-4 fm-desc"><span class="en">Please enter the code we sent you to
+                                    email</span><span class="es">Por favor ingresa el código que te enviamos al correo
+                                    electrónico</span></p>
                             <div class="code-input mb-5">
                                 <input type="text" maxlength="1" class="code-box" id="codeBox1">
                                 <input type="text" maxlength="1" class="code-box" id="codeBox2">
@@ -151,7 +175,8 @@ include './defines/functions.php';
                             </div>
                             <div class="mb-4">
                                 <p class="fm-desc">Didn't Receive the Code ?</p>
-                                <span class="fm-link" style="cursor:pointer;" onclick="resendCode()">Resend Code</span>
+                                <span class="fm-link" style="cursor:pointer;" onclick="resendCode()"><span
+                                        class="en">Resend Code</span> <span class="es">Reenviar código</span></span>
                             </div>
                             <div class="py-5 px-5">
                                 <button class="btn btn-primary w-100 px-5 mb-4 inter fw-bold text-white"
@@ -171,11 +196,11 @@ include './defines/functions.php';
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
             integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./assets/js/script.js?v=4"></script>
+        <script src="./assets/js/script.js?v=5"></script>
         <script>
 
             function resendCode() {
-                let email = $('#verify_email_or_phone').val();
+                let email = $('#email_or_phone').val();
                 $.ajax({
                     url: "resend-code-process.php",
                     type: "POST",
@@ -194,9 +219,8 @@ include './defines/functions.php';
                             message = response.message + '<br><a href="login.php">Login</a>';
                             $("#verifyResponse").addClass('text-danger').removeClass('text-success');
                         } else if (response.status === 'error') {
-                            $('#emailInput').show();
-                            message = '<span class="en">Please enter a valid email or phone number.</span>' +
-                                '<span class="es">Por favor, ingrese un correo electrónico o número de teléfono válido.</span>';
+                            // $('#emailInput').show();
+                            message = response.message;
                             $("#verifyResponse").addClass('text-danger').removeClass('text-success');
                         } else {
                             message = '<span class="en">An error occurred. Please try again.</span>' +
@@ -243,7 +267,8 @@ include './defines/functions.php';
                             $("#verifyResponse").text(response.message);
 
                             if (response.status === 'success') {
-                                $("#verifyResponse").html('<span class="en">' + response.message + ' <br><a href="login.php">Login</a></span></span><span class="es">' + response.message + ' <br><a href="login.php">Login</a></span></span>').addClass('text-success');
+                                $("#verifyResponse").html('<span class="en">' + response.message + ' <br><a href="login.php">Login</a></span></span><span class="es">' + response.message + ' <br><a href="login.php">Login</a></span></span>').addClass('text-success').removeClass('text-danger');
+                                $('#verifyCodeForm').trigger('reset');
                             } else if (response.status === 'locked') {
                                 $("#verifyResponse").html('<span class="en">The validation code has been incorrectly entered 5 times. Your account will be locked for 24 hours. If you need help, email us at support@immigrationAI.Lawyer.</span><span class="es">El código de validación se ha ingresado incorrectamente 5 veces. Su cuenta se bloqueará durante 24 horas. Si necesita ayuda, envíenos un correo electrónico a support@immigrationAI.Lawyer.</span>').addClass('text-danger');
                             } else if (response.status === 'already_verified') {
@@ -262,12 +287,17 @@ include './defines/functions.php';
 
             function openVerificationModal(emailOrPhone) {
                 $('#verify_email_or_phone').val(emailOrPhone);
+                $('#email_or_phone').val(emailOrPhone);
                 $('#verifyCodeModal').modal('show');
             }
 
             function openResendVerificationModal() {
-                $('#emailInput').show();
-                $('#verifyCodeModal').modal('show');
+                if($('#email_or_phone').val() == '' || isEmailOrPhone($('#email_or_phone').val()) == 'invalid'){
+                    $('#responseMessage').html('<span class="en">Enter your email or phone first!</span><span class="es">¡Primero introduce tu correo electrónico o teléfono!</span>').addClass('text-danger').removeClass('text-success');
+                }else{
+                    $('#verifyCodeModal').modal('show');
+                    $('#responseMessage').html('').addClass('text-danger').removeClass('text-success');
+                }
             }
 
             function toggleViewPassword(event) {
@@ -291,7 +321,7 @@ include './defines/functions.php';
                         $.validator.addMethod("emailOrPhone", function (value, element) {
                             // Regular expressions for email and phone validation
                             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                            var phonePattern = /^\(\d{3}\)\s?\d{3}-\d{4}$/; // More flexible phone number pattern
+                            var phonePattern = /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/; // More flexible phone number pattern
 
                             // Check if the value matches either email or phone pattern
                             return this.optional(element) || emailPattern.test(value) || phonePattern.test(value);
@@ -301,7 +331,10 @@ include './defines/functions.php';
                             errorClass: "msg-error",
                             errorElement: "span",
                             rules: {
-                                full_name: {
+                                first_name: {
+                                    required: true
+                                },
+                                last_name: {
                                     required: true
                                 },
                                 email_or_phone: {
@@ -318,8 +351,11 @@ include './defines/functions.php';
                                 }
                             },
                             messages: {
-                                full_name: {
-                                    required: '<span class="en">Please enter your full name</span><span class="es">Por favor, ingrese su nombre completo</span>'
+                                first_name: {
+                                    required: '<span class="en">Please enter your first name</span><span class="es">Por favor, introduzca su nombre de pila</span>'
+                                },
+                                last_name: {
+                                    required: '<span class="en">Please enter your last name</span><span class="es">Por favor ingrese su apellido</span>'
                                 },
                                 email_or_phone: {
                                     required: '<span class="en">Please enter a valid email or phone</span><span class="es">Por favor, ingrese un correo electrónico o teléfono válido</span>',
@@ -355,15 +391,16 @@ include './defines/functions.php';
                                         response = JSON.parse(response);
                                         if (response.status === 'success') {
                                             let email = response.email_or_phone;
-                                            openVerificationModal(email);
-                                            $('#responseMessage').html('<p style="color: green;">' + response.message + '</p>');
+                                            
+                                            $('#verifyResponse').html('').addClass('text-success').removeClass('text-danger');
                                             $(form)[0].reset(); // Reset form fields
+                                            openVerificationModal(email);
                                         } else {
-                                            $('#responseMessage').html('<p style="color: red;">' + response.message + '</p>');
+                                            $('#responseMessage').html('<p>' + response.message + '</p>').addClass('text-danger').removeClass('text-success');
                                         }
                                     },
                                     error: function (xhr, status, error) {
-                                        $('#responseMessage').html('<p style="color: red;">An error occurred: ' + error + '</p>');
+                                        $('#responseMessage').html('<p>An error occurred: ' + error + '</p>').addClass('text-danger').removeClass('text-success');
                                     }
                                 });
 
@@ -373,6 +410,16 @@ include './defines/functions.php';
                     } else {
                         console.error('jQuery Validation plugin is not loaded');
                     }
+
+
+                    <?php
+                    if (isset($_REQUEST['verify'])) {
+                        ?>
+                        resendCode();
+                        openVerificationModal('<?php echo $VerifyemailOrPhone = (isset($_REQUEST['verify'])) ? $_REQUEST['verify'] : ''; ?>');
+                        <?php
+                    }
+                    ?>
                 });
             });
 

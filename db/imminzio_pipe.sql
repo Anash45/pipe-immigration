@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 01, 2024 at 12:46 AM
--- Server version: 8.0.35
--- PHP Version: 8.2.0
+-- Host: localhost:3306
+-- Generation Time: Aug 02, 2024 at 04:10 PM
+-- Server version: 10.6.18-MariaDB-cll-lve-log
+-- PHP Version: 8.1.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pipe-immigration`
+-- Database: `imminzio_pipe`
 --
 
 -- --------------------------------------------------------
@@ -28,19 +28,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `additional_considerations` (
-  `id` int NOT NULL,
-  `UserID` int NOT NULL,
-  `anyCommunicableDisease` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `anyMissingVaccines` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `anyMentalDisorder` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `accusedDrugAddiction` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `accusedChildAbduction` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `deportedFromUS` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `citizenshipAfter96` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `electionsVoted` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `capacityToSupport` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `otherQuestions` varchar(1500) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '''''',
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `anyCommunicableDisease` varchar(255) DEFAULT NULL,
+  `anyMissingVaccines` varchar(255) DEFAULT NULL,
+  `anyMentalDisorder` varchar(255) DEFAULT NULL,
+  `accusedDrugAddiction` varchar(255) DEFAULT NULL,
+  `accusedChildAbduction` varchar(255) DEFAULT NULL,
+  `deportedFromUS` varchar(255) DEFAULT NULL,
+  `citizenshipAfter96` varchar(255) DEFAULT NULL,
+  `electionsVoted` varchar(255) DEFAULT NULL,
+  `capacityToSupport` varchar(255) DEFAULT NULL,
+  `otherQuestions` varchar(1500) NOT NULL DEFAULT '''''',
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -58,25 +58,25 @@ INSERT INTO `additional_considerations` (`id`, `UserID`, `anyCommunicableDisease
 --
 
 CREATE TABLE `address` (
-  `AddressID` int NOT NULL,
-  `UserID` int DEFAULT NULL,
-  `inCareOfName` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `street1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `street2` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Apartment` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Suite` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Floor` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `zipCode` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `state` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `cellPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `homePhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `workPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `currentEmail` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergencyContact` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergencyPhone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `AddressID` int(11) NOT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `inCareOfName` varchar(100) DEFAULT NULL,
+  `street1` varchar(255) NOT NULL,
+  `street2` varchar(255) DEFAULT NULL,
+  `Apartment` varchar(20) DEFAULT NULL,
+  `Suite` varchar(20) DEFAULT NULL,
+  `Floor` varchar(20) DEFAULT NULL,
+  `zipCode` varchar(20) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `cellPhone` varchar(20) DEFAULT NULL,
+  `homePhone` varchar(20) DEFAULT NULL,
+  `workPhone` varchar(20) DEFAULT NULL,
+  `currentEmail` varchar(255) DEFAULT NULL,
+  `emergencyContact` varchar(255) DEFAULT NULL,
+  `emergencyPhone` varchar(20) DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -116,13 +116,13 @@ INSERT INTO `address` (`AddressID`, `UserID`, `inCareOfName`, `street1`, `street
 --
 
 CREATE TABLE `appointment` (
-  `UserID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
   `DateTime` datetime NOT NULL,
   `Type` varchar(50) NOT NULL,
   `Goal` varchar(3000) NOT NULL,
   `Notes` varchar(5000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE `appointment` (
 --
 
 CREATE TABLE `attorney` (
-  `attorneyID` int NOT NULL,
+  `attorneyID` int(11) NOT NULL,
   `LastName` varchar(50) DEFAULT NULL,
   `FirstName` varchar(50) DEFAULT NULL,
   `MiddleName` varchar(50) DEFAULT NULL,
@@ -152,8 +152,8 @@ CREATE TABLE `attorney` (
   `NameofLawFirm` varchar(100) DEFAULT NULL,
   `OfficeHours` varchar(100) DEFAULT NULL,
   `Notes` varchar(1500) DEFAULT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `attorney`
@@ -169,13 +169,13 @@ INSERT INTO `attorney` (`attorneyID`, `LastName`, `FirstName`, `MiddleName`, `St
 --
 
 CREATE TABLE `certification` (
-  `id` int NOT NULL,
-  `UserID` int NOT NULL,
-  `certificationDegree` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `degreeUniversity` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `certificationDegree` varchar(255) NOT NULL,
+  `degreeUniversity` varchar(255) NOT NULL,
   `degreeDate` date NOT NULL,
-  `degreeStateAndCountry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `degreeStateAndCountry` varchar(255) NOT NULL,
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -210,38 +210,41 @@ INSERT INTO `certification` (`id`, `UserID`, `certificationDegree`, `degreeUnive
 --
 
 CREATE TABLE `clients` (
-  `ClientID` int NOT NULL,
-  `full_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_or_phone` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `verified` tinyint(1) DEFAULT '0',
+  `ClientID` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `email_or_phone` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `verified` tinyint(1) DEFAULT 0,
+  `status` varchar(20) NOT NULL,
   `locked_until` datetime DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`ClientID`, `full_name`, `email_or_phone`, `password`, `verified`, `locked_until`, `createdAt`, `updatedAt`) VALUES
-(10, 'Syed Muhammad Anas Bukhari', 'anas14529@gmail.com', '$2y$10$kMkNiV4JOwUw4ALryU1AUOpTG.GqTE7gy3tdvi2Rfri8iTu2HFYZq', 1, NULL, '2024-07-26 23:56:00', '2024-07-27 22:28:43'),
-(11, 'Syed Muhammad Anas Bukhari', 'f4futuretech@gmail.com', '$2y$10$DVUj0Z7jdfwcyuQruPLMqONpvP470FokeytE5toiTX9wkqfmhxxta', 1, NULL, '2024-07-27 00:32:58', '2024-07-27 00:32:58'),
-(12, 'Dilia Suriel', 'dilia@appliedinsightinc.com', '$2y$10$brGt.JDR8Oexou9jJOxyheAOK/9Dt5uh8TSEkm1n155heoz8/yj/y', 1, NULL, '2024-07-27 01:45:18', '2024-07-27 01:45:18'),
-(13, 'Diana Rockweel', 'dsuriel1218@gmail.com', '$2y$10$SAkJUcnTPU6GMrLswsFYDe2dbLN3QZh3zNK34HTJuv7D0t7a/9eRq', 1, NULL, '2024-07-27 17:58:40', '2024-07-27 17:58:40'),
-(14, 'Matthew Suria', 'matthew@itstaskable.com', '$2y$10$dUVfsPk7DCe8YbQDcHobqOuIz3LLD6BeeoomdJVNO8gfbTwYuubpW', 1, NULL, '2024-07-27 19:11:56', '2024-07-27 19:11:56'),
-(16, 'Dllia Suriel', 'dilia@usainmigracion.mx', '$2y$10$rQMj8hivWD.FlUSAWa4fGeTAAfD8KHzaobhSKku9ouytvG.SwIJlq', 1, NULL, '2024-07-28 13:10:57', '2024-07-28 13:10:57'),
-(17, 'Dilia Suriel', 'pepe@gmail.com', '$2y$10$7tiF87V3ZXYZAOyFRZI6YebMBicR4VicD89irzqUDKV/8R2OQ9X0y', 1, NULL, '2024-07-28 14:32:39', '2024-07-28 14:32:39'),
-(20, 'Anas', 'futuretest45@gmail.com', '$2y$10$xpgvx56IX2e5FNvi0MSigezLbYhzMiXxM.ToTaJynRvWSfjiCUXuu', 1, NULL, '2024-07-28 16:33:11', '2024-07-28 16:33:38'),
-(22, 'AB', '+1 (555) 555-5555', '$2y$10$ZIpmEphdo9T.LKmFQjiEgOgSpH1zAiUYGln/QfvJPXqNx21QWlLUu', 1, NULL, '2024-07-28 16:41:22', '2024-07-28 16:41:22'),
-(23, 'Dilia Suriel', 'ayuga@usainmigracion.mx', '$2y$10$hMpEQ.3xh2TU0LYiC4F9IuH99Oz4xpzLomUXiDtlueMCPYzOp0Uiu', 0, NULL, '2024-07-28 16:45:43', '2024-07-28 16:45:43'),
-(24, 'Testing phone number', '+524151441187', '$2y$10$hW9EWJ8tT7OBnet/zt1YGujueakiXLK1UA61P9AU3sG/OPvIX/nFe', 1, NULL, '2024-07-28 16:48:47', '2024-07-28 16:48:47'),
-(25, 'Testing phone number', 'dilia@thinwomanbrain.com', '$2y$10$zlCh5NI9DGN8zX6.OofEU.FEeFHMM7owASLOOOf8Q72vE7oDpgNO.', 1, NULL, '2024-07-28 16:51:18', '2024-07-28 16:52:32'),
-(26, 'Matt Suria', 'mandre4521@gmail.com', '$2y$10$9cRCXKIAtpSK9RWvFjs5Bu2Drj5Du8fhz92KhuyJ/OC1/fZSLY7b.', 1, NULL, '2024-07-29 18:41:58', '2024-07-29 18:42:20'),
-(27, 'Matt Suria', 'mgsuria3@gmail.com', '$2y$10$grJMH4IaVuSDRcONtA1WZ.ruxaPK/pHPKlpAJ7xHQGphVE5dm8.aq', 0, NULL, '2024-07-29 18:51:39', '2024-07-29 18:51:39'),
-(28, 'Matthew Suria', 'msuria889@outlook.com', '$2y$10$7EMKcQP.wqxkuUeR/r2Rjuh7gXRHUfF18/WSZWEWUOoMqN9UPo32y', 0, NULL, '2024-07-29 21:05:47', '2024-07-29 21:05:47'),
-(29, 'Gina Testing', 'rgalderton@yahoo.com', '$2y$10$jBPYnJNAZK//8cgnPagEx.pvcmf2OCKfQcoXbNP5JbVvGB5h16vIa', 0, NULL, '2024-07-29 21:19:41', '2024-07-29 21:19:41'),
-(30, 'Gina Testing2', 'myspanishteacher111@gmail.com', '$2y$10$GH6rdgUUPfOPbRNrHpLbJeQZc20f1HIk9qk5rLe1aEgcMfl3OT5Q.', 1, NULL, '2024-07-29 21:26:39', '2024-07-29 21:27:13');
+INSERT INTO `clients` (`ClientID`, `full_name`, `email_or_phone`, `password`, `verified`, `status`, `locked_until`, `createdAt`, `updatedAt`) VALUES
+(10, 'Syed Muhammad Anas Bukhari', 'anas14529@gmail.com', '$2y$10$kMkNiV4JOwUw4ALryU1AUOpTG.GqTE7gy3tdvi2Rfri8iTu2HFYZq', 1, '', NULL, '2024-07-26 23:56:00', '2024-07-27 22:28:43'),
+(11, 'Syed Muhammad Anas Bukhari', 'f4futuretech@gmail.com', '$2y$10$DVUj0Z7jdfwcyuQruPLMqONpvP470FokeytE5toiTX9wkqfmhxxta', 1, '', NULL, '2024-07-27 00:32:58', '2024-07-27 00:32:58'),
+(12, 'Dilia Suriel', 'dilia@appliedinsightinc.com', '$2y$10$brGt.JDR8Oexou9jJOxyheAOK/9Dt5uh8TSEkm1n155heoz8/yj/y', 1, '', NULL, '2024-07-27 01:45:18', '2024-07-27 01:45:18'),
+(13, 'Diana Rockweel', 'dsuriel1218@gmail.com', '$2y$10$SAkJUcnTPU6GMrLswsFYDe2dbLN3QZh3zNK34HTJuv7D0t7a/9eRq', 1, '', NULL, '2024-07-27 17:58:40', '2024-07-27 17:58:40'),
+(14, 'Matthew Suria', 'matthew@itstaskable.com', '$2y$10$dUVfsPk7DCe8YbQDcHobqOuIz3LLD6BeeoomdJVNO8gfbTwYuubpW', 1, '', NULL, '2024-07-27 19:11:56', '2024-07-27 19:11:56'),
+(16, 'Dllia Suriel', 'dilia@usainmigracion.mx', '$2y$10$rQMj8hivWD.FlUSAWa4fGeTAAfD8KHzaobhSKku9ouytvG.SwIJlq', 1, '', NULL, '2024-07-28 13:10:57', '2024-07-28 13:10:57'),
+(17, 'Dilia Suriel', 'pepe@gmail.com', '$2y$10$7tiF87V3ZXYZAOyFRZI6YebMBicR4VicD89irzqUDKV/8R2OQ9X0y', 1, '', NULL, '2024-07-28 14:32:39', '2024-07-28 14:32:39'),
+(20, 'Anas', 'futuretest45@gmail.com', '$2y$10$xpgvx56IX2e5FNvi0MSigezLbYhzMiXxM.ToTaJynRvWSfjiCUXuu', 1, '', NULL, '2024-07-28 16:33:11', '2024-07-28 16:33:38'),
+(22, 'AB', '+1 (555) 555-5555', '$2y$10$ZIpmEphdo9T.LKmFQjiEgOgSpH1zAiUYGln/QfvJPXqNx21QWlLUu', 1, '', NULL, '2024-07-28 16:41:22', '2024-07-28 16:41:22'),
+(23, 'Dilia Suriel', 'ayuga@usainmigracion.mx', '$2y$10$hMpEQ.3xh2TU0LYiC4F9IuH99Oz4xpzLomUXiDtlueMCPYzOp0Uiu', 0, '', NULL, '2024-07-28 16:45:43', '2024-07-28 16:45:43'),
+(24, 'Testing phone number', '+524151441187', '$2y$10$hW9EWJ8tT7OBnet/zt1YGujueakiXLK1UA61P9AU3sG/OPvIX/nFe', 1, '', NULL, '2024-07-28 16:48:47', '2024-07-28 16:48:47'),
+(25, 'Testing phone number', 'dilia@thinwomanbrain.com', '$2y$10$zlCh5NI9DGN8zX6.OofEU.FEeFHMM7owASLOOOf8Q72vE7oDpgNO.', 1, '', NULL, '2024-07-28 16:51:18', '2024-07-28 16:52:32'),
+(26, 'Matt Suria', 'mandre4521@gmail.com', '$2y$10$9cRCXKIAtpSK9RWvFjs5Bu2Drj5Du8fhz92KhuyJ/OC1/fZSLY7b.', 1, '', NULL, '2024-07-29 18:41:58', '2024-07-29 18:42:20'),
+(27, 'Matt Suria', 'mgsuria3@gmail.com', '$2y$10$grJMH4IaVuSDRcONtA1WZ.ruxaPK/pHPKlpAJ7xHQGphVE5dm8.aq', 0, '', NULL, '2024-07-29 18:51:39', '2024-07-29 18:51:39'),
+(28, 'Matthew Suria', 'msuria889@outlook.com', '$2y$10$7EMKcQP.wqxkuUeR/r2Rjuh7gXRHUfF18/WSZWEWUOoMqN9UPo32y', 0, '', NULL, '2024-07-29 21:05:47', '2024-07-29 21:05:47'),
+(29, 'Gina Testing', 'rgalderton@yahoo.com', '$2y$10$jBPYnJNAZK//8cgnPagEx.pvcmf2OCKfQcoXbNP5JbVvGB5h16vIa', 0, '', NULL, '2024-07-29 21:19:41', '2024-07-29 21:19:41'),
+(30, 'Gina Testing2', 'myspanishteacher111@gmail.com', '$2y$10$GH6rdgUUPfOPbRNrHpLbJeQZc20f1HIk9qk5rLe1aEgcMfl3OT5Q.', 1, '', NULL, '2024-07-29 21:26:39', '2024-07-29 21:27:13'),
+(31, 'Anas', '+52 415 144 1187', '$2y$10$.AycUaxruB8bS.4SBrJUX.IcKP5niQzE8UJ.14e1iGzI7y4azLNpy', 0, '', NULL, '2024-08-02 02:20:52', '2024-08-02 02:20:52'),
+(32, 'Anas', '602-399-7645', '$2y$10$dxLCDYGnPPGDO/SjyGIFgexeWGdtZ0a377riNdBvAzNbQvy6KfseC', 0, '', NULL, '2024-08-02 02:21:11', '2024-08-02 02:21:11');
 
 -- --------------------------------------------------------
 
@@ -250,14 +253,14 @@ INSERT INTO `clients` (`ClientID`, `full_name`, `email_or_phone`, `password`, `v
 --
 
 CREATE TABLE `document` (
-  `userID` int NOT NULL,
+  `userID` int(11) NOT NULL,
   `DocType` varchar(100) NOT NULL COMMENT 'Passport, birth certificate, spouse’s citizenship {US Birth Certificate, US Passport, US Naturalization Certificate}, State and Country of marriage certificate, IRS 1040, non-US children’s school records, W-2, rental agreement, utility bills, ICE issues {Detailed at the border, false paper given to ICE, deported, criminal record {Felony, drug usage, drug trafficking, crimes against minors',
   `DocDate` date NOT NULL,
   `FromDate` date NOT NULL,
   `ToDate` date NOT NULL,
   `URL` varchar(255) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -266,16 +269,16 @@ CREATE TABLE `document` (
 --
 
 CREATE TABLE `employer` (
-  `id` int NOT NULL,
-  `UserID` int NOT NULL,
-  `employerName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `employerAddress` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `employerName` varchar(255) NOT NULL,
+  `employerAddress` varchar(255) NOT NULL,
   `startDate` date NOT NULL,
-  `jobTitle` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `jobTitle` varchar(255) NOT NULL,
   `jobLastDate` date DEFAULT NULL,
-  `jobDescription` text COLLATE utf8mb4_general_ci,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `jobDescription` text DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -308,13 +311,13 @@ INSERT INTO `employer` (`id`, `UserID`, `employerName`, `employerAddress`, `star
 --
 
 CREATE TABLE `encounter` (
-  `EncounterID` int NOT NULL,
-  `UserID` int NOT NULL,
+  `EncounterID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
   `DateOfEncounter` date NOT NULL,
-  `StateCountryOfLegalEncounter` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `NatureOfLegalIssue` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Description` text COLLATE utf8mb4_general_ci,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `StateCountryOfLegalEncounter` varchar(255) NOT NULL,
+  `NatureOfLegalIssue` varchar(255) NOT NULL,
+  `Description` text DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -349,14 +352,14 @@ INSERT INTO `encounter` (`EncounterID`, `UserID`, `DateOfEncounter`, `StateCount
 --
 
 CREATE TABLE `identifierdocument` (
-  `UserID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
   `Type` varchar(50) NOT NULL COMMENT 'Passport, BirthCertificate, etc.',
   `DateIssued` date NOT NULL,
-  `IssuingLegalEntity` int NOT NULL,
+  `IssuingLegalEntity` int(11) NOT NULL,
   `ExpirationDate` date NOT NULL,
-  `Notes` int NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Notes` int(11) NOT NULL,
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -365,21 +368,21 @@ CREATE TABLE `identifierdocument` (
 --
 
 CREATE TABLE `immigration_inquiry` (
-  `InquiryID` int NOT NULL,
-  `ClientID` int DEFAULT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `currentStateAndCountry` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phoneNumber` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `InquiryID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `currentStateAndCountry` varchar(255) DEFAULT NULL,
+  `phoneNumber` varchar(20) DEFAULT NULL,
   `whatsappConnected` tinyint(1) DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `usaPresenceBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `marriedToUSCitizenBeforeJun2024` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `NoMajorIssues` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `continuousPresenceEvidence` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `suitableQualificationOption` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `otherQuestions` varchar(1500) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `email` varchar(255) DEFAULT NULL,
+  `usaPresenceBeforeJun2024` varchar(10) DEFAULT NULL,
+  `marriedToUSCitizenBeforeJun2024` varchar(10) DEFAULT NULL,
+  `NoMajorIssues` varchar(10) DEFAULT NULL,
+  `continuousPresenceEvidence` varchar(10) DEFAULT NULL,
+  `suitableQualificationOption` varchar(40) DEFAULT NULL,
+  `otherQuestions` varchar(1500) DEFAULT NULL,
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -412,17 +415,17 @@ INSERT INTO `immigration_inquiry` (`InquiryID`, `ClientID`, `first_name`, `last_
 --
 
 CREATE TABLE `marriage` (
-  `MarriageID` int NOT NULL,
-  `UserID` int NOT NULL,
-  `spouseName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `MarriageID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `spouseName` varchar(255) NOT NULL,
   `dateOfMarriage` date DEFAULT NULL,
-  `stateCountryOfMarriage` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `stateCountryOfMarriage` varchar(255) DEFAULT NULL,
   `spouseBirthday` date DEFAULT NULL,
-  `proofOfSpouseCitizenship` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `placeOfDivorce` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `proofOfSpouseCitizenship` varchar(255) DEFAULT NULL,
+  `placeOfDivorce` varchar(255) DEFAULT NULL,
   `dateOfDivorce` date DEFAULT NULL,
-  `obtainDecreeOfDivorce` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `obtainDecreeOfDivorce` varchar(3) DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -480,12 +483,12 @@ INSERT INTO `marriage` (`MarriageID`, `UserID`, `spouseName`, `dateOfMarriage`, 
 --
 
 CREATE TABLE `office` (
-  `OfficeID` int NOT NULL,
+  `OfficeID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Hours` varchar(300) NOT NULL,
   `GooglePin` varchar(150) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -494,18 +497,18 @@ CREATE TABLE `office` (
 --
 
 CREATE TABLE `offspring` (
-  `OffspringID` int NOT NULL,
-  `UserID` int NOT NULL,
-  `fullLegalName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `OffspringID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `fullLegalName` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
-  `stateCountryOfBirth` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `mothersName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fathersName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` enum('Male','Female','Other') COLLATE utf8mb4_general_ci NOT NULL,
-  `schoolDetails` text COLLATE utf8mb4_general_ci NOT NULL,
-  `accessToSchoolRecords` enum('Yes','No') COLLATE utf8mb4_general_ci NOT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `stateCountryOfBirth` varchar(255) NOT NULL,
+  `mothersName` varchar(255) NOT NULL,
+  `fathersName` varchar(255) NOT NULL,
+  `gender` enum('Male','Female','Other') NOT NULL,
+  `schoolDetails` text NOT NULL,
+  `accessToSchoolRecords` enum('Yes','No') NOT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -577,40 +580,71 @@ INSERT INTO `offspring` (`OffspringID`, `UserID`, `fullLegalName`, `birthday`, `
 --
 
 CREATE TABLE `payment` (
-  `payment_id` int NOT NULL,
-  `ClientID` int NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `ClientID` int(11) NOT NULL,
   `TrxDate` date NOT NULL,
   `PaymentGateway` varchar(50) NOT NULL COMMENT 'Stripe, Zelle, Bank Transfer, Check, InPerson',
-  `PaymentCleared` tinyint(1) NOT NULL DEFAULT '0',
+  `PaymentCleared` tinyint(1) NOT NULL DEFAULT 0,
   `TrxID` varchar(50) NOT NULL COMMENT 'Trx from Stripe or Paypal, Zelle''s confirmation number, check routing and number, Cash to whom.',
   `TrxStatus` varchar(50) NOT NULL,
   `Amount` decimal(10,0) NOT NULL,
   `Currency` varchar(50) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `payment`
 --
 
 INSERT INTO `payment` (`payment_id`, `ClientID`, `TrxDate`, `PaymentGateway`, `PaymentCleared`, `TrxID`, `TrxStatus`, `Amount`, `Currency`, `Updated`) VALUES
-(1, 10, '2024-07-11', 'credit-card', 1, '21313213', '0', '75', 'USD', '2024-07-27 05:09:29'),
-(2, 11, '2024-07-12', 'paypal', 1, '213123213', '0', '75', 'USD', '2024-07-27 05:37:43'),
-(3, 12, '2024-07-27', 'credit-card', 1, 'TestingTesting', '0', '75', 'USD', '2024-07-27 12:47:49'),
-(4, 13, '2024-07-27', 'credit-card', 0, 'TestingId', '0', '50', 'USD', '2024-07-27 18:06:03'),
-(5, 11, '2022-04-03', 'credit-card', 0, '21313213', '0', '50', 'USD', '2024-07-28 02:07:32'),
-(6, 12, '2024-07-27', 'credit-card', 1, 'TestingID', '0', '75', 'USD', '2024-07-27 21:33:58'),
-(7, 12, '2024-07-28', 'credit-card', 1, 'Pending Transaction ID', '0', '75', 'USD', '2024-07-28 09:17:11'),
-(8, 22, '0000-00-00', 'check-via-mail', 1, '', '0', '50', 'USD', '2024-07-28 12:42:20'),
-(9, 25, '2024-07-28', 'credit-card', 1, 'Testing Trx Payment ID', '0', '75', 'USD', '2024-07-28 13:02:59'),
-(10, 20, '0000-00-00', 'check-via-mail', 1, '', '0', '100', 'USD', '2024-07-28 17:56:41'),
-(11, 25, '2024-07-28', 'credit-card', 1, 'Testing Id', '0', '100', 'USD', '2024-07-28 18:52:44'),
-(12, 20, '0000-00-00', 'check-via-mail', 1, '', '0', '100', 'USD', '2024-07-28 20:38:14'),
-(13, 25, '2024-07-29', 'credit-card', 1, 'TrxID12365479', '0', '100', 'USD', '2024-07-29 09:38:48'),
-(14, 20, '0000-00-00', 'check-via-mail', 1, '', '0', '100', 'USD', '2024-07-29 11:50:01'),
-(15, 25, '2024-07-29', 'credit-card', 1, 'ajfjjdjfj', '0', '100', 'USD', '2024-07-29 16:26:46'),
-(16, 12, '0000-00-00', 'credit-card', 1, '', '0', '75', 'USD', '2024-07-29 16:27:02'),
-(17, 26, '2024-07-26', 'credit-card', 1, '123456789', '0', '75', 'USD', '2024-07-30 15:16:53');
+(1, 10, '2024-07-11', 'credit-card', 1, '21313213', '0', 75, 'USD', '2024-07-27 05:09:29'),
+(2, 11, '2024-07-12', 'paypal', 1, '213123213', '0', 75, 'USD', '2024-07-27 05:37:43'),
+(3, 12, '2024-07-27', 'credit-card', 1, 'TestingTesting', '0', 75, 'USD', '2024-07-27 12:47:49'),
+(4, 13, '2024-07-27', 'credit-card', 0, 'TestingId', '0', 50, 'USD', '2024-07-27 18:06:03'),
+(5, 11, '2022-04-03', 'credit-card', 0, '21313213', '0', 50, 'USD', '2024-07-28 02:07:32'),
+(6, 12, '2024-07-27', 'credit-card', 1, 'TestingID', '0', 75, 'USD', '2024-07-27 21:33:58'),
+(7, 12, '2024-07-28', 'credit-card', 1, 'Pending Transaction ID', '0', 75, 'USD', '2024-07-28 09:17:11'),
+(8, 22, '0000-00-00', 'check-via-mail', 1, '', '0', 50, 'USD', '2024-07-28 12:42:20'),
+(9, 25, '2024-07-28', 'credit-card', 1, 'Testing Trx Payment ID', '0', 75, 'USD', '2024-07-28 13:02:59'),
+(10, 20, '0000-00-00', 'check-via-mail', 1, '', '0', 100, 'USD', '2024-07-28 17:56:41'),
+(11, 25, '2024-07-28', 'credit-card', 1, 'Testing Id', '0', 100, 'USD', '2024-07-28 18:52:44'),
+(12, 20, '0000-00-00', 'check-via-mail', 1, '', '0', 100, 'USD', '2024-07-28 20:38:14'),
+(13, 25, '2024-07-29', 'credit-card', 1, 'TrxID12365479', '0', 100, 'USD', '2024-07-29 09:38:48'),
+(14, 20, '0000-00-00', 'check-via-mail', 1, '', '0', 100, 'USD', '2024-07-29 11:50:01'),
+(15, 25, '2024-07-29', 'credit-card', 1, 'ajfjjdjfj', '0', 100, 'USD', '2024-07-29 16:26:46'),
+(16, 12, '0000-00-00', 'credit-card', 1, '', '0', 75, 'USD', '2024-07-29 16:27:02'),
+(17, 26, '2024-07-26', 'credit-card', 1, '123456789', '0', 75, 'USD', '2024-07-30 15:16:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `ProductID` int(11) NOT NULL,
+  `sequence` tinyint(4) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `descriptionSpanish` varchar(500) DEFAULT NULL,
+  `EnglishHelp` varchar(1000) NOT NULL,
+  `SpanishHelp` varchar(1000) NOT NULL,
+  `price` decimal(10,2) DEFAULT 100.00,
+  `LinktoStripe` varchar(300) NOT NULL,
+  `LinktoStripeSpanish` varchar(300) NOT NULL,
+  `status` varchar(20) DEFAULT 'Active',
+  `Updated` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`ProductID`, `sequence`, `description`, `descriptionSpanish`, `EnglishHelp`, `SpanishHelp`, `price`, `LinktoStripe`, `LinktoStripeSpanish`, `status`, `Updated`) VALUES
+(3, 1, 'You can complete our PIPE Qualification online form and within 36 hours we will let you know what additional documentation we will need to qualify you for the PIPE program. ', 'Puede completar nuestro formulario de Calificación PIPE en línea y dentro de 36 horas le informaremos el documento adicional que necesitaremos para calificarlo para el programa PIPE.', 'Within 36 hours we can inform you of what specific documents will be required to qualify you for the PIPE immigration program. ', 'Nuestra Calificación PIPE en línea pasa en menos de 36 horas. Y despues le informaremos qué documentación adicional necesitaremos para calificarlo para el programa PIPE.', 50.00, 'https://buy.stripe.com/fZe29D6RO3Z8bCMaEG', 'https://buy.stripe.com/7sI7tX2By0MW8qA6os', 'Active', '2024-08-02 16:34:12'),
+(4, 2, 'Do you need help completing the PIPE Qualification form?', '¿Necesita ayuda para completar el formulario de Calificación PIPE?', 'If you\'re not comfortable filling computer forms, you can schedule help with one of our assistants for an additional fee of $25 USD.', 'Si no se siente cómodo completando formularios por computadora, puede programar ayuda con uno de nuestros asistentes por una tarifa adicional de $25 USD.', 75.00, 'https://buy.stripe.com/fZe29D6RO3Z8bCMaEG', 'https://buy.stripe.com/7sI7tX2By0MW8qA6os', 'Active', '2024-08-02 16:34:12'),
+(2, 3, 'If I qualify for PIPE, file the minimally required PIPE forms directly to USCIS without legal representation.  IMPORTANT!! Beyond the necessary USCIS filing, complex cases will require intricate documentation and that’s the critical value of a competent immigration attorney. ', 'Si califico para PIPE, presento los formularios PIPE mínimos requeridos directamente ante USCIS sin representación legal.  ¡¡IMPORTANTE!! Más allá de la necesaria presentación ante USCIS, los casos complejos requerirán documentación compleja y ese es el valor fundamental de un abogado de inmigración competente.', 'IMPORTANT!! Beyond the necessary USCIS filing, complex cases will require intricate documentation and that’s the critical value of a competent immigration attorney. ', '¡¡IMPORTANTE!! Más allá de la necesaria presentación ante USCIS, los casos complejos requerirán documentación compleja y ese es el valor fundamental de un abogado de inmigración competente.', 150.00, '', '', 'Active', '2024-08-02 16:29:53'),
+(5, 4, 'You can schedule up an online video conference with one of our staff members', 'Puede programar una videoconferencia en línea con un miembro de nuestro personal.', 'Call our main office at 602-297-2005 or visit us at 7220 N 20th Street, Suite F, Phoenix, AZ 85020, Monday through Friday between 9 AM and 5 PM.', 'Llame a nuestra oficina principal al 602-297-2005 o visitanos a 7220 N 20th Street, Suite F, Phoenix, AZ 85020, lunes a viernes entre 9 AM a 5 PM.', 150.00, '', '', 'Active', '2024-08-02 16:34:12'),
+(6, 5, 'You can book a legal consultation with one of our lawyers at “The Law Office of Nic Suriel” in Phoenix, AZ', 'Si desea reservar una consulta legal en “La Oficina de Nic Suriel\" en Phoenix, AZ', 'Call our main office at 602-297-2005 or visit us at 7220 N 20th Street, Suite F, Phoenix, AZ 85020, Monday through Friday between 9 AM and 5 PM.', 'Llame a nuestra oficina principal al 602-297-2005 o visitanos a 7220 N 20th Street, Suite F, Phoenix, AZ 85020, lunes a viernes entre 9 AM a 5 PM.', 350.00, '', '', 'Active', '2024-08-02 16:34:12');
 
 -- --------------------------------------------------------
 
@@ -619,18 +653,18 @@ INSERT INTO `payment` (`payment_id`, `ClientID`, `TrxDate`, `PaymentGateway`, `P
 --
 
 CREATE TABLE `proofofresidency` (
-  `UserID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
   `Type` varchar(100) NOT NULL COMMENT 'Tax Return, W2, BirthCertificate of US born child, Rental Contract, Cellphone, HousePhone, Electric, Water, Gas, Sewer, etc.',
   `URLofCopy` varchar(300) NOT NULL,
   `Company` varchar(100) NOT NULL,
   `AccountID` varchar(50) NOT NULL,
   `FromDate` date NOT NULL,
   `ToDate` date NOT NULL,
-  `AddresssID` int NOT NULL,
+  `AddresssID` int(11) NOT NULL,
   `ContactData` varchar(1000) NOT NULL,
   `Notes` varchar(3000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -639,11 +673,11 @@ CREATE TABLE `proofofresidency` (
 --
 
 CREATE TABLE `residency_documents` (
-  `DocumentID` int NOT NULL,
-  `UserID` int NOT NULL,
-  `DocumentType` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Tax Return, W2, BirthCertificate of US born child, Rental Contract, Cellphone, HousePhone, Electric, Water, Gas, Sewer, etc.',
-  `DocumentDescription` text COLLATE utf8mb4_general_ci,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `DocumentID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `DocumentType` varchar(255) NOT NULL COMMENT 'Tax Return, W2, BirthCertificate of US born child, Rental Contract, Cellphone, HousePhone, Electric, Water, Gas, Sewer, etc.',
+  `DocumentDescription` text DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -689,7 +723,7 @@ INSERT INTO `residency_documents` (`DocumentID`, `UserID`, `DocumentType`, `Docu
 --
 
 CREATE TABLE `screen` (
-  `screen_id` int NOT NULL,
+  `screen_id` int(11) NOT NULL,
   `ScreenName` varchar(14) DEFAULT NULL,
   `Sequence` varchar(2) DEFAULT NULL,
   `FieldName` varchar(49) DEFAULT NULL,
@@ -697,8 +731,8 @@ CREATE TABLE `screen` (
   `EnglishHelp` varchar(1000) DEFAULT NULL,
   `SpanishLabel` varchar(500) DEFAULT NULL,
   `SpanishHelp` varchar(1000) DEFAULT NULL,
-  `Updated` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+  `Updated` datetime DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `screen`
@@ -774,7 +808,7 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 (67, 'Qualification', '49', 'DateofDegree', 'Date of Certification', 'The date of that certification.', 'Fecha de Certificación', 'La fecha de dicha certificación.', '2024-07-15 11:07:52'),
 (68, 'Qualification', '50', 'State and Country', 'State and Country of Certification', 'The state and country that certification.', 'Estado y país de certificación', 'El estado y país que certifica.', '2024-07-15 11:07:52'),
 (69, 'Qualification', '51', 'CommunicableDisease', 'Communicable Disease', 'Are you currently being treated for any communicable diseases, e.g., the one listed below?', 'Enfermedad transmisible', 'Si actualmente está recibiendo tratamiento por alguna de las enfermedades transmisibles de esta lista, seleccione esta.', '2024-07-15 11:07:52'),
-(70, 'Qualification', '52', 'MentalDisorder', 'Mental health challenges ', 'Are you currently being treated for any mental health challenges, e.g., the one listed below?', 'Desafíos de salud mental ', 'Si actualmente está recibiendo tratamiento por alguno de los problemas de salud mental de esta lista, seleccione esto.', '2024-07-15 11:07:52'),
+(70, 'Qualification', '52', 'MentalDisorder', 'Mental health challenges ', 'Are you currently being treated for any mental health challenges, e.g., the one listed below?', 'Enfermedades mentales', 'Si posee alguna discapacidad mental, seleccione de la siguiente lista', '2024-07-15 11:07:52'),
 (71, 'Qualification', '53', 'AccusedofChildAbduction', 'Accused of Child Abduction', 'Have you ever been formally charged by the police of child abduction?', 'Acusado de sustracción de menores', '¿Alguna vez la policía le ha acusado formalmente de sustracción de menores?', '2024-07-15 11:07:52'),
 (72, 'Qualification', '54', 'ClaimedUSCitizenshipAfterSept1996', 'Last Date Claimed to be a US Citizen', 'What was the last date that you claimed to be a US Citizen? Describe in the field below what were the circumstances?', 'Última fecha en la que afirmó ser ciudadano estadounidense', '¿Cuál fue la última fecha en la que afirmó ser ciudadano estadounidense? Describe en el campo a continuación ¿cuáles fueron las circunstancias?', '2024-07-15 11:07:52'),
 (73, 'Qualification', '55', 'MissingAnyUSRequiredVaccines', 'Are You Missing An US Required Vaccines', 'Are you missing any of the vaccines listed below?', '¿Le faltan las vacunas requeridas en EE. UU.?', '¿Le falta alguna de las vacunas que se enumeran a continuación?', '2024-07-15 11:07:52'),
@@ -832,14 +866,14 @@ INSERT INTO `screen` (`screen_id`, `ScreenName`, `Sequence`, `FieldName`, `Engli
 
 CREATE TABLE `screencontent` (
   `ScreenName` varchar(50) NOT NULL,
-  `Sequence` smallint NOT NULL,
+  `Sequence` smallint(6) NOT NULL,
   `FieldName` varchar(50) NOT NULL,
   `EnglishLabel` varchar(100) NOT NULL,
   `EnglishHelp` varchar(3000) NOT NULL,
   `SpanishLabel` varchar(100) NOT NULL,
   `SpanishHelp` varchar(3000) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -848,11 +882,11 @@ CREATE TABLE `screencontent` (
 --
 
 CREATE TABLE `systemdynamicdata` (
-  `ID` int NOT NULL,
-  `KeyName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Value` text COLLATE utf8mb4_general_ci NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `ID` int(11) NOT NULL,
+  `KeyName` varchar(255) NOT NULL,
+  `Value` text NOT NULL,
+  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
+  `UpdatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -868,7 +902,7 @@ INSERT INTO `systemdynamicdata` (`ID`, `KeyName`, `Value`, `CreatedAt`, `Updated
 (6, 'StripeQualPlusHelpEspañol', 'https://buy.stripe.com/7sI7tX2By0MW8qA6os', '2024-07-26 09:38:16', '2024-07-28 20:10:54'),
 (7, 'PayPalLinkforQualification', 'https://www.paypal.com/ncp/payment/RBMAYHHMCHCKG', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
 (8, 'PayPalLinkforQualPlusHelp', 'https://www.paypal.com/ncp/payment/RBMAYHHMCHCKG', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
-(9, 'emailforSupportEspañol', 'ayuda@inmigrationUSA.mx', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
+(9, 'emailforSupportEspañol', 'ayuda@USAinmigracion.mx', '2024-07-26 09:38:16', '2024-08-02 00:57:38'),
 (10, 'emailforSupport', 'support@immigrationAI.lawyer', '2024-07-26 09:38:16', '2024-07-26 09:38:16'),
 (11, 'VideoConferencing', '$50', '2024-07-26 21:50:41', '2024-07-26 21:50:41'),
 (12, 'StripeQualVideoHelp', 'https://buy.stripe.com/14kcOhb84gLUbCMeUU', '2024-07-26 22:11:12', '2024-07-26 22:12:29'),
@@ -900,11 +934,25 @@ INSERT INTO `systemdynamicdata` (`ID`, `KeyName`, `Value`, `CreatedAt`, `Updated
 --
 
 CREATE TABLE `urlofdocumentation` (
-  `UserID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
   `DocURL` varchar(300) NOT NULL,
   `DocType` varchar(100) NOT NULL COMMENT 'MarriageCertificate, BirthCertificate, Passport, Employment, UtilityBill, RentalAgreement, etc.',
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `USCISdocs`
+--
+
+CREATE TABLE `USCISdocs` (
+  `docID` int(11) NOT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `docname` varchar(200) DEFAULT NULL,
+  `LinktoUSCISdoc` varchar(255) DEFAULT NULL,
+  `updated` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -913,17 +961,17 @@ CREATE TABLE `urlofdocumentation` (
 --
 
 CREATE TABLE `user` (
-  `UserID` int NOT NULL,
-  `ClientID` int DEFAULT NULL,
-  `firstName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `middleName` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `lastName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `middleName` varchar(255) DEFAULT NULL,
+  `lastName` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
-  `birthPlace` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `citizenshipCountry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_general_ci NOT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `birthPlace` varchar(255) NOT NULL,
+  `citizenshipCountry` varchar(255) NOT NULL,
+  `gender` enum('male','female','other') NOT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -963,11 +1011,11 @@ INSERT INTO `user` (`UserID`, `ClientID`, `firstName`, `middleName`, `lastName`,
 --
 
 CREATE TABLE `userrelation` (
-  `UserID` int NOT NULL,
-  `RelationID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `RelationID` int(11) NOT NULL,
   `Relation` varchar(50) NOT NULL,
-  `Updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -976,13 +1024,13 @@ CREATE TABLE `userrelation` (
 --
 
 CREATE TABLE `us_entry` (
-  `UserID` int NOT NULL,
+  `UserID` int(11) NOT NULL,
   `dateOfEntry` date NOT NULL,
-  `stateOfEntry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `methodOfEntry` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `anyIllegalDocumentOnEntry` text COLLATE utf8mb4_general_ci NOT NULL,
-  `detainedByUSPatrol` text COLLATE utf8mb4_general_ci NOT NULL,
-  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `stateOfEntry` varchar(255) NOT NULL,
+  `methodOfEntry` varchar(255) NOT NULL,
+  `anyIllegalDocumentOnEntry` text NOT NULL,
+  `detainedByUSPatrol` text NOT NULL,
+  `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1005,10 +1053,10 @@ INSERT INTO `us_entry` (`UserID`, `dateOfEntry`, `stateOfEntry`, `methodOfEntry`
 --
 
 CREATE TABLE `verification_attempts` (
-  `AttemptID` int NOT NULL,
-  `ClientID` int NOT NULL,
+  `AttemptID` int(11) NOT NULL,
+  `ClientID` int(11) NOT NULL,
   `is_successful` tinyint(1) NOT NULL,
-  `attempt_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `attempt_time` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1027,7 +1075,8 @@ INSERT INTO `verification_attempts` (`AttemptID`, `ClientID`, `is_successful`, `
 (26, 28, 0, '2024-07-29 21:06:04'),
 (27, 29, 0, '2024-07-29 21:23:18'),
 (28, 29, 0, '2024-07-29 21:23:54'),
-(29, 30, 1, '2024-07-29 21:27:13');
+(29, 30, 1, '2024-07-29 21:27:13'),
+(30, 32, 0, '2024-08-02 02:30:46');
 
 -- --------------------------------------------------------
 
@@ -1036,11 +1085,11 @@ INSERT INTO `verification_attempts` (`AttemptID`, `ClientID`, `is_successful`, `
 --
 
 CREATE TABLE `verification_codes` (
-  `CodeID` int NOT NULL,
-  `ClientID` int NOT NULL,
-  `verification_code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
-  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `CodeID` int(11) NOT NULL,
+  `ClientID` int(11) NOT NULL,
+  `verification_code` varchar(6) NOT NULL,
+  `expires_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1063,7 +1112,9 @@ INSERT INTO `verification_codes` (`CodeID`, `ClientID`, `verification_code`, `ex
 (44, 27, '873978', '2024-07-29 23:51:39', '2024-07-29 18:51:39'),
 (45, 28, '350278', '2024-07-30 02:05:47', '2024-07-29 21:05:47'),
 (46, 29, '486086', '2024-07-30 02:19:41', '2024-07-29 21:19:41'),
-(47, 30, '309786', '2024-07-30 02:26:39', '2024-07-29 21:26:39');
+(47, 30, '309786', '2024-07-30 02:26:39', '2024-07-29 21:26:39'),
+(48, 31, '666300', '2024-08-02 07:20:52', '2024-08-02 02:20:52'),
+(52, 32, '753713', '2024-08-02 07:31:05', '2024-08-02 02:31:05');
 
 --
 -- Indexes for dumped tables
@@ -1145,6 +1196,12 @@ ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_id`);
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`ProductID`);
+
+--
 -- Indexes for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
@@ -1163,6 +1220,13 @@ ALTER TABLE `screen`
 --
 ALTER TABLE `systemdynamicdata`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `USCISdocs`
+--
+ALTER TABLE `USCISdocs`
+  ADD PRIMARY KEY (`docID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indexes for table `user`
@@ -1198,103 +1262,115 @@ ALTER TABLE `verification_codes`
 -- AUTO_INCREMENT for table `additional_considerations`
 --
 ALTER TABLE `additional_considerations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `AddressID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `AddressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `attorney`
 --
 ALTER TABLE `attorney`
-  MODIFY `attorneyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `attorneyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `certification`
 --
 ALTER TABLE `certification`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ClientID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `encounter`
 --
 ALTER TABLE `encounter`
-  MODIFY `EncounterID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `EncounterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `immigration_inquiry`
 --
 ALTER TABLE `immigration_inquiry`
-  MODIFY `InquiryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `InquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `marriage`
 --
 ALTER TABLE `marriage`
-  MODIFY `MarriageID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `MarriageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `offspring`
 --
 ALTER TABLE `offspring`
-  MODIFY `OffspringID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `OffspringID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `residency_documents`
 --
 ALTER TABLE `residency_documents`
-  MODIFY `DocumentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `DocumentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `systemdynamicdata`
 --
 ALTER TABLE `systemdynamicdata`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `USCISdocs`
+--
+ALTER TABLE `USCISdocs`
+  MODIFY `docID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `verification_attempts`
 --
 ALTER TABLE `verification_attempts`
-  MODIFY `AttemptID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
-  MODIFY `CodeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `CodeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables

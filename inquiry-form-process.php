@@ -20,16 +20,17 @@ $currentStateAndCountry = $_POST['currentStateAndCountry'];
 $phoneNumber = $_POST['phoneNumber'];
 $whatsappConnected = isset($_POST['whatsappConnected']) ? 1 : 0;
 $email = $_POST['email'];
-$usaPresenceBeforeJun2024 = $_POST['usaPresenceBeforeJun2024'];
-$marriedToUSCitizenBeforeJun2024 = $_POST['marriedToUSCitizenBeforeJun2024'];
-$NoMajorIssues = $_POST['NoMajorIssues'];
-$continuousPresenceEvidence = $_POST['continuousPresenceEvidence'];
-$suitableQualificationOption = $_POST['suitableQualificationOption'];
+$usaPresenceBeforeJun2024 = $_POST['usaPresenceBeforeJun2024'] ?? 'no';
+$marriedToUSCitizenBeforeJun2024 = $_POST['marriedToUSCitizenBeforeJun2024'] ?? 'no';
+$NoMajorIssues = $_POST['NoMajorIssues'] ?? 'no';
+$continuousPresenceEvidence = $_POST['continuousPresenceEvidence'] ?? 'no';
+$product = $_POST['product'];
 $paymentMethods = $_POST['payment-methods'];
 $totalFee = $_POST['totalFee'];
 $payeeNameEmail = $_POST['payeeNameEmail'];
-$paymentDate = $_POST['paymentDate'];
+$paymentDate = ($_POST['paymentDate'] != '') ? $_POST['paymentDate'] : date('Y-m-d');
 $transactionId = $_POST['transactionId'];
+$otherQuestions = $_POST['otherQuestions'];
 $acceptTerms = isset($_POST['acceptTerms']) ? 1 : 0;
 
 try {
@@ -39,10 +40,10 @@ try {
     // Insert into immigration_inquiry table
     $sql = "INSERT INTO immigration_inquiry (
                 ClientID, first_name, last_name, currentStateAndCountry, phoneNumber, whatsappConnected, email, 
-                usaPresenceBeforeJun2024, NoMajorIssues, marriedToUSCitizenBeforeJun2024, continuousPresenceEvidence, suitableQualificationOption
+                usaPresenceBeforeJun2024, NoMajorIssues, marriedToUSCitizenBeforeJun2024, continuousPresenceEvidence, product, otherQuestions
             ) VALUES (
                 :clientId, :firstName, :lastName, :currentStateAndCountry, :phoneNumber, :whatsappConnected, :email, 
-                :usaPresenceBeforeJun2024, :NoMajorIssues, :marriedToUSCitizenBeforeJun2024, :continuousPresenceEvidence, :suitableQualificationOption
+                :usaPresenceBeforeJun2024, :NoMajorIssues, :marriedToUSCitizenBeforeJun2024, :continuousPresenceEvidence, :product, :otherQuestions
             )";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -57,7 +58,8 @@ try {
         ':marriedToUSCitizenBeforeJun2024' => $marriedToUSCitizenBeforeJun2024,
         ':NoMajorIssues' => $NoMajorIssues,
         ':continuousPresenceEvidence' => $continuousPresenceEvidence,
-        ':suitableQualificationOption' => $suitableQualificationOption
+        ':product' => $product,
+        ':otherQuestions' => $otherQuestions
     ]);
 
     // Insert into payment table
@@ -73,6 +75,14 @@ try {
         ':paymentMethods' => $paymentMethods,
         ':transactionId' => $transactionId,
         ':totalFee' => $totalFee
+    ]);
+
+    $sql2 = "UPDATE clients SET `first_name` = :first_name, `last_name` = :last_name WHERE `ClientID` = :client_id";
+    $stmt = $pdo->prepare($sql2);
+    $stmt->execute([
+        ':first_name' => $firstName,
+        ':last_name' => $lastName,
+        ':client_id' => $clientId
     ]);
 
     // Commit transaction

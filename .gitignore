@@ -2,3 +2,6 @@ extras/
 vendor/
 test_twilio.php
 test_twilio.php
+*.zip
+*/*.zip
+defines/keys.php
