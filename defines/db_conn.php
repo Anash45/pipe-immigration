@@ -1,6 +1,6 @@
 <?php
 // db_conn.php
-require './db_conn.php';
+require './keys.php';
 
 $host = "localhost"; // Change this if your database is hosted on a different server
 $user = "imminzio_f4ft"; // Change this to your MySQL username
