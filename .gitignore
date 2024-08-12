@@ -1,5 +1,5 @@
 extras/
-vendor/
+# vendor/
 test_twilio.php
 test_twilio.php
 *.zip
