@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $verified = 0;
         }
 
-        echo $columnName;
+        // echo $columnName;
 
         // Insert the new client
         $sql = "INSERT INTO `user` (firstName, lastName, `$columnName`, password, verified, createdAt, updatedAt) 
