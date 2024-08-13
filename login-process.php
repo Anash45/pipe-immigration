@@ -6,13 +6,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailOrPhone = $_POST['email_or_phone'];
     $password = $_POST['password'];
 
+
     $response = ['status' => 'error', 'message' => '']; // Initialize response array
 
     try {
         // Check if the user exists
-        $sql = "SELECT ClientID, first_name, last_name, password, verified, `status` FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT UserID, firstName, lastName, password, verified, `status` FROM `user` WHERE email = :email OR phone = :phone";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email_or_phone', $emailOrPhone);
+        $stmt->bindParam(':email', $emailOrPhone);
+        $stmt->bindParam(':phone', $emailOrPhone);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -38,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Set session variables
-        $_SESSION['ClientID'] = $user['ClientID'];
-        $_SESSION['full_name'] = $user['first_name'].' '.$user['last_name'];
+        $_SESSION['ClientID'] = $user['UserID'];
+        $_SESSION['full_name'] = $user['firstName'].' '.$user['lastName'];
         $_SESSION['status'] = ($user['status'] == 'admin') ? $user['status'] : 'user';
 
         $response['status'] = 'success';

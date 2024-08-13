@@ -72,10 +72,10 @@ if (isLoggedIn()) {
     $electionsVoted = '';
     $capacityToSupport = '';
     $otherQuestions = '';
-    $Certification['certificationDegree'] = '';
-    $Certification['degreeUniversity'] = '';
-    $Certification['degreeDate'] = '';
-    $Certification['degreeStateAndCountry'] = '';
+    $certificationDegree = '';
+    $degreeUniversity = '';
+    $degreeDate = '';
+    $degreeStateAndCountry = '';
 
     $checkType = '';
 
@@ -86,6 +86,11 @@ if (isLoggedIn()) {
         $firstName = $User['firstName'];
         $middleName = $User['middleName'];
         $lastName = $User['lastName'];
+        $email = $User['email'];
+        $phone = $User['phone'];
+        $zipCode = $User['zipCode'];
+        $city = $User['city'];
+        $state = $User['state'];
         $birthday = $User['birthday'];
         $birthPlace = $User['birthPlace'];
         $citizenshipCountry = $User['citizenshipCountry'];
@@ -110,13 +115,8 @@ if (isLoggedIn()) {
                 $residency = $Address['Floor'];
             }
 
-            $zipCode = $Address['zipCode'];
-            $city = $Address['city'];
-            $state = $Address['state'];
-            $cellPhone = $Address['cellPhone'];
             $homePhone = $Address['homePhone'];
             $workPhone = $Address['workPhone'];
-            $currentEmail = $Address['currentEmail'];
             $emergencyContact = $Address['emergencyContact'];
             $emergencyPhone = $Address['emergencyPhone'];
         }
@@ -211,23 +211,6 @@ if (isLoggedIn()) {
         $birthPlace = '';
         $citizenshipCountry = '';
         $gender = '';
-
-        $userData = getClientById($clientId);
-        if ($InquiryInfo != null) {
-            $firstName = $InquiryInfo['first_name'];
-            $lastName = $InquiryInfo['last_name'];
-            $currentEmail = $InquiryInfo['email'];
-            $cellPhone = $InquiryInfo['phoneNumber'];
-        } elseif ($userData != null) {
-            $firstName = $userData['first_name'];
-            $lastName = $userData['last_name'];
-            $checkType = isEmailOrPhone($userData['email_or_phone']);
-            if ($checkType == 'email') {
-                $currentEmail = $userData['email_or_phone'];
-            } else {
-                $cellPhone = $userData['email_or_phone'];
-            }
-        }
 
         // echo $checkType;
         // print_r($userData);
@@ -336,7 +319,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="birthday"
-                                                    name="birthday" value="<?php echo $birthday; ?>">
+                                                    name="birthday" value="<?php echo $date = ($birthday != '' && $birthday != '1970-01-01') ? $birthday : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -503,7 +486,7 @@ if (isLoggedIn()) {
                                         </div>
                                         <div class="col-sm-6 mb-3 pt-3">
                                             <label for="state"
-                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 9, 'label'); ?></span><img
+                                                class="form-label gap-1 d-flex align-items-center mb-1"><span><?php echo getTranslation('Qualification', 9, 'label'); ?></span><img
                                                     src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
                                                     title="<?php echo getTranslation('Qualification', 9, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
@@ -581,7 +564,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 phone-number" id="cellPhone"
-                                                    name="cellPhone" value="<?php echo $cellPhone; ?>"
+                                                    name="cellPhone" value="<?php echo $phone; ?>"
                                                     placeholder="<?php echo getTranslation('Qualification', 10, 'placeholder'); ?>">
                                             </div>
                                         </div>
@@ -629,7 +612,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="email" class="form-control mt-1" id="currentEmail"
-                                                    name="currentEmail" value="<?php echo $currentEmail; ?>" placeholder="Email@lato.com">
+                                                    name="currentEmail" value="<?php echo $email; ?>"
+                                                    placeholder="Email@lato.com">
                                             </div>
                                         </div>
                                     </div>
@@ -677,8 +661,8 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"Current Marriage
-                                        to US Citizen"</strong></p>
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"Current
+                                        Marriage to US Citizen"</strong></p>
                                 <iframe src="https://drive.google.com/file/d/1jwz4ZWxtv6ONV3Y9fzC1ZCDhmojwUMhL/preview"
                                     class="info-video" style="width: 390px;" allow="autoplay"></iframe>
                             </div>
@@ -713,7 +697,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="dateOfMarriage"
-                                                    name="dateOfMarriage" value="<?php echo $dateOfMarriage; ?>">
+                                                    name="dateOfMarriage" value="<?php echo $date = ($dateOfMarriage != '' && $dateOfMarriage != '1970-01-01') ? $dateOfMarriage : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -746,7 +730,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="spouseBirthday"
-                                                    name="spouseBirthday" value="<?php echo $spouseBirthday; ?>">
+                                                    name="spouseBirthday" value="<?php echo $date = ($spouseBirthday != '' && $spouseBirthday != '1970-01-01') ? $spouseBirthday : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -819,7 +803,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="exDateOfMarriage"
-                                                    name="exDateOfMarriage" value="<?php echo $exDateOfMarriage; ?>">
+                                                    name="exDateOfMarriage" value="<?php echo $date = ($exDateOfMarriage != '' && $exDateOfMarriage != '1970-01-01') ? $exDateOfMarriage : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -868,7 +852,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="exDateOfDivorce"
-                                                    name="exDateOfDivorce" value="<?php echo $exDateOfDivorce; ?>">
+                                                    name="exDateOfDivorce" value="<?php echo $date = ($exDateOfDivorce != '' && $exDateOfDivorce != '1970-01-01') ? $exDateOfDivorce : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -900,7 +884,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <!-- <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"US
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"US
                                         Entries"</strong></p>
                                 <video controls preload="none" class="info-video" style="width: 390px;">
                                     <source src="./assets/video/sample-video.mp4" type="video/mp4">
@@ -917,7 +901,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="dateOfEntry"
-                                                    name="dateOfEntry[]" value="<?php echo $dateOfEntry; ?>">
+                                                    name="dateOfEntry[]" value="<?php echo $date = ($dateOfEntry != '' && $dateOfEntry != '1970-01-01') ? $dateOfEntry : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1062,7 +1046,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"Residency
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"Residency
                                         Documents"</strong></p>
                                 <iframe src="https://drive.google.com/file/d/1_p1c3u5ntvOjo26-LiVdeL03ZcDWZYes/preview"
                                     class="info-video" style="width: 390px;" allow="autoplay"></iframe>
@@ -1219,7 +1203,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <!-- <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"Encounters with
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"Encounters with
                                         Law Enforcement Agencies"</strong></p>
                                 <video controls preload="none" class="info-video" style="width: 390px;">
                                     <source src="./assets/video/sample-video.mp4" type="video/mp4">
@@ -1284,7 +1268,7 @@ if (isLoggedIn()) {
                                                     <td>
                                                         <input type="date" class="form-control table-input"
                                                             id="dateOfEncounter" name="dateOfEncounter[]"
-                                                            value="<?php echo $dateOfEncounter = (sizeof($UsEncounters) > $ib) ? $UsEncounters[$ib]['DateOfEncounter'] : ''; ?>">
+                                                            value="<?php echo $dateOfEncounter = (sizeof($UsEncounters) > $ib && ($UsEncounters[$ib]['DateOfEncounter'] != '' && $UsEncounters[$ib]['DateOfEncounter'] != '1970-01-01')) ? $UsEncounters[$ib]['DateOfEncounter'] : ''; ?>">
                                                     </td>
                                                     <td>
                                                         <textarea name="stateCountryOfLegalEncounter[]"
@@ -1315,7 +1299,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-3 px-3 py-4">
                             <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"Foreign Born
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"Foreign Born
                                         Children Seeking PIPE Benefits"</strong></p>
                                 <iframe src="https://drive.google.com/file/d/14yvdsI0-jAjALBf6fdCyysL1zMjrrIEX/preview"
                                     class="info-video" style="width: 390px;" allow="autoplay"></iframe>
@@ -1390,7 +1374,7 @@ if (isLoggedIn()) {
                                         </th>
                                     </tr>
                                     <?php
-                                    for ($ia = 0; $ia < 3; $ia++) {
+                                    for ($ia = 0; $ia < 5; $ia++) {
                                         ?>
                                         <tr>
                                             <td>
@@ -1400,7 +1384,7 @@ if (isLoggedIn()) {
                                             <td>
                                                 <input type="date" name="childBirthday[]"
                                                     class="form-control table-input date"
-                                                    value="<?php echo $childBirthday = (sizeof($Offsprings) > $ia) ? $Offsprings[$ia]['birthday'] : ''; ?>">
+                                                    value="<?php echo $childBirthday = (sizeof($Offsprings) > $ia && ($Offsprings[$ia]['birthday']  != '1970-01-01')) ? $Offsprings[$ia]['birthday'] : ''; ?>">
                                             </td>
                                             <td>
                                                 <textarea name="childStateCountryOfBirth[]"
@@ -1452,7 +1436,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <!-- <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of
+                                    immigration lawyer Lic. Suriel explaining the importance of
                                     <strong>"Occupation/Employment"</strong></p>
                                 <video controls preload="none" class="info-video" style="width: 390px;">
                                     <source src="./assets/video/sample-video.mp4" type="video/mp4">
@@ -1501,7 +1485,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="startDate"
-                                                    name="startDate[]" value="<?php echo $startDate; ?>">
+                                                    name="startDate[]" value="<?php echo $startDate = (!empty($startDate) && $startDate != '1970-01-01') ? $startDate : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1532,7 +1516,7 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="lastDate"
-                                                    name="jobLastDate[]" value="<?php echo $jobLastDate; ?>">
+                                                    name="jobLastDate[]" value="<?php echo $jobLastDate = ($jobLastDate != '' && $jobLastDate != '1970-01-01') ? $jobLastDate : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1578,7 +1562,7 @@ if (isLoggedIn()) {
                         <fieldset class="px-sm-5 px-4 py-4">
                             <!-- <div class="d-flex flex-column gap-5 mb-4 align-items-center">
                                 <p class="text-center mb-0 text-black"><span class="text-red">IMPORTANT</span> Watch
-                                    immigration lawyer Lic. Surielexplaining the importance of <strong>"Education
+                                    immigration lawyer Lic. Suriel explaining the importance of <strong>"Education
                                         Craft"</strong></p>
                                 <video controls preload="none" class="info-video" style="width: 390px;">
                                     <source src="./assets/video/sample-video.mp4" type="video/mp4">
@@ -1600,7 +1584,7 @@ if (isLoggedIn()) {
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="certificationDegree"
                                                     name="certificationDegree"
-                                                    value="<?php echo $Certification['certificationDegree']; ?>"
+                                                    value="<?php echo $certificationDegree; ?>"
                                                     placeholder="lorum ipsum">
                                             </div>
                                         </div>
@@ -1610,15 +1594,14 @@ if (isLoggedIn()) {
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="eduUniversity"
-                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 48, 'label'); ?>
-                                                    Issued Degree</span><img src="./assets/images/question-icon.svg"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 48, 'label'); ?></span><img src="./assets/images/question-icon.svg"
                                                     data-bs-toggle="tooltip"
                                                     title="<?php echo getTranslation('Qualification', 48, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="degreeUniversity"
                                                     name="degreeUniversity"
-                                                    value="<?php echo $Certification['degreeUniversity']; ?>"
+                                                    value="<?php echo $degreeUniversity; ?>"
                                                     placeholder="university of New york">
                                             </div>
                                         </div>
@@ -1635,7 +1618,7 @@ if (isLoggedIn()) {
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="degreeDate"
                                                     name="degreeDate"
-                                                    value="<?php echo $Certification['degreeDate']; ?>">
+                                                    value="<?php echo $date = ($degreeDate != '' && $degreeDate != '1970-01-01') ? $degreeDate : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1651,7 +1634,7 @@ if (isLoggedIn()) {
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="degreeStateAndCountry"
                                                     name="degreeStateAndCountry"
-                                                    value="<?php echo $Certification['degreeStateAndCountry']; ?>"
+                                                    value="<?php echo $degreeStateAndCountry; ?>"
                                                     placeholder="New York, United States">
                                             </div>
                                         </div>
@@ -2212,13 +2195,16 @@ if (isLoggedIn()) {
                     }
                 }
             });
+
+
             function initAutocomplete() {
                 var zipInput = document.getElementById('zipCode');
                 var cityInput = document.getElementById('city');
                 var stateSelect = $('#state');
 
+                // Initialize the Google Places Autocomplete
                 var autocomplete = new google.maps.places.Autocomplete(zipInput, {
-                    types: ['geocode'],
+                    types: ['(regions)'],  // Search for regions, including postal codes
                     componentRestrictions: { country: 'us' }
                 });
 
@@ -2235,6 +2221,7 @@ if (isLoggedIn()) {
                     var city = '';
                     var state = '';
 
+                    // Extract postal code, city, and state from address components
                     for (var i = 0; i < addressComponents.length; i++) {
                         var component = addressComponents[i];
                         if (component.types.includes('postal_code')) {
@@ -2247,10 +2234,11 @@ if (isLoggedIn()) {
                     }
 
                     // Update fields
-                    zipInput.value = zip;
-                    cityInput.value = city;
-                    stateSelect.val(state).trigger('change');
+                    zipInput.value = zip; // Ensure zip code is always updated
+                    cityInput.value = city; // Update city input
+                    stateSelect.val(state).trigger('change'); // Update state select dropdown
 
+                    console.log('Zip Code:', zip, city, state);
                 });
             }
 

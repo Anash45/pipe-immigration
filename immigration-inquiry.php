@@ -4,11 +4,23 @@ include './defines/functions.php';
 // print_r($_SESSION);
 if (isLoggedIn()) {
     $clientId = $_SESSION['ClientID'];
-    $userData = getClientById($clientId);
+    $userData = getUserById($clientId);
     // print_r($userData);
+    $firstName = '';
+    $lastName = '';
+    $email = '';
+    $zipCode = '';
+    $phone = '';
+    $city = '';
+    $state = '';
     if ($userData !== null) {
-        $emailOrPhone = $userData['email_or_phone'];
-        $checkType = isEmailOrPhone($emailOrPhone);
+        $firstName = $userData['firstName'];
+        $zipCode = $userData['zipCode'];
+        $lastName = $userData['lastName'];
+        $email = $userData['email'];
+        $phone = $userData['phone'];
+        $city = $userData['city'];
+        $state = $userData['state'];
     }
 
     $checkPaymentStatus = isPaymentCleared($clientId);
@@ -80,7 +92,7 @@ if (isLoggedIn()) {
                                                 <input type="text" class="form-control mt-1" id="first_name"
                                                     name="first_name"
                                                     placeholder="<?php echo getTranslation('Inquiry Form', 1, 'placeholder'); ?>"
-                                                    value="<?php echo $userData['first_name']; ?>">
+                                                    value="<?php echo $firstName; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +108,7 @@ if (isLoggedIn()) {
                                                     alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="last_name"
-                                                    name="last_name" value="<?php echo $userData['last_name']; ?>"
+                                                    name="last_name" value="<?php echo $lastName; ?>"
                                                     placeholder="<?php echo getTranslation('Inquiry Form', 2, 'placeholder'); ?>">
                                             </div>
                                         </div>
@@ -104,8 +116,8 @@ if (isLoggedIn()) {
                                 </div>
                                 <div class="col-xl-5 col-lg-6">
                                     <div class="row">
-                                        <div class="col-12 mb-3 pt-3">
-                                            <label for="currentStateAndCountry"
+                                        <div class="col-lg-4 mb-3 pt-3">
+                                            <label for="zipCode"
                                                 class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Inquiry Form', 3, 'label'); ?></span><img
                                                     src="./assets/images/question-icon.svg" class="help-icon"
                                                     data-toggle="tooltip"
@@ -113,10 +125,89 @@ if (isLoggedIn()) {
                                                     alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1 inp-wih-icon-left"
-                                                    id="currentStateAndCountry" name="currentStateAndCountry"
+                                                    id="zipCode" name="zipCode" value="<?php echo $zipCode ?>"
                                                     placeholder="<?php echo getTranslation('Inquiry Form', 3, 'placeholder'); ?>">
                                                 <img src="./assets/images/location.svg" alt="Lock"
                                                     class="inp-icon-left">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 mb-3 pt-3">
+                                            <label for="city"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 8, 'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    title="<?php echo getTranslation('Qualification', 8, 'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
+                                            <div class="input-div">
+                                                <input type="text" class="form-control mt-1" id="city" name="city"
+                                                    value="<?php echo $city; ?>" placeholder="Queens">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 mb-3 pt-3">
+                                            <label for="state"
+                                                class="form-label gap-1 d-flex align-items-center mb-1"><span><?php echo getTranslation('Qualification', 9, 'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
+                                                    title="<?php echo getTranslation('Qualification', 9, 'help'); ?>"
+                                                    class="help-icon" alt="Icon" width="16"></label>
+                                            <div class="input-div">
+                                                <select class="form-control mt-1" id="state" name="state"
+                                                    value="<?php echo $state; ?>">
+                                                    <option value="Alabama">Alabama</option>
+                                                    <option value="Alaska">Alaska</option>
+                                                    <option value="Arizona">Arizona</option>
+                                                    <option value="Arkansas">Arkansas</option>
+                                                    <option value="California">California</option>
+                                                    <option value="Colorado">Colorado</option>
+                                                    <option value="Connecticut">Connecticut</option>
+                                                    <option value="Delaware">Delaware</option>
+                                                    <option value="Florida">Florida</option>
+                                                    <option value="Georgia">Georgia</option>
+                                                    <option value="Hawaii">Hawaii</option>
+                                                    <option value="Idaho">Idaho</option>
+                                                    <option value="Illinois">Illinois</option>
+                                                    <option value="Indiana">Indiana</option>
+                                                    <option value="Iowa">Iowa</option>
+                                                    <option value="Kansas">Kansas</option>
+                                                    <option value="Kentucky">Kentucky</option>
+                                                    <option value="Louisiana">Louisiana</option>
+                                                    <option value="Maine">Maine</option>
+                                                    <option value="Maryland">Maryland</option>
+                                                    <option value="Massachusetts">Massachusetts</option>
+                                                    <option value="Michigan">Michigan</option>
+                                                    <option value="Minnesota">Minnesota</option>
+                                                    <option value="Mississippi">Mississippi</option>
+                                                    <option value="Missouri">Missouri</option>
+                                                    <option value="Montana">Montana</option>
+                                                    <option value="Nebraska">Nebraska</option>
+                                                    <option value="Nevada">Nevada</option>
+                                                    <option value="New Hampshire">New Hampshire</option>
+                                                    <option value="New Jersey">New Jersey</option>
+                                                    <option value="New Mexico">New Mexico</option>
+                                                    <option value="New York">New York</option>
+                                                    <option value="North Carolina">North Carolina</option>
+                                                    <option value="North Dakota">North Dakota</option>
+                                                    <option value="Ohio">Ohio</option>
+                                                    <option value="Oklahoma">Oklahoma</option>
+                                                    <option value="Oregon">Oregon</option>
+                                                    <option value="Pennsylvania">Pennsylvania</option>
+                                                    <option value="Rhode Island">Rhode Island</option>
+                                                    <option value="South Carolina">South Carolina</option>
+                                                    <option value="South Dakota">South Dakota</option>
+                                                    <option value="Tennessee">Tennessee</option>
+                                                    <option value="Texas">Texas</option>
+                                                    <option value="Utah">Utah</option>
+                                                    <option value="Vermont">Vermont</option>
+                                                    <option value="Virginia">Virginia</option>
+                                                    <option value="Washington">Washington</option>
+                                                    <option value="West Virginia">West Virginia</option>
+                                                    <option value="Wisconsin">Wisconsin</option>
+                                                    <option value="Wyoming">Wyoming</option>
+                                                    <option value="American Samoa">American Samoa</option>
+                                                    <option value="Guam">Guam</option>
+                                                    <option value="Northern Mariana Islands">Northern Mariana Islands
+                                                    </option>
+                                                    <option value="Puerto Rico">Puerto Rico</option>
+                                                    <option value="U.S. Virgin Islands">U.S. Virgin Islands</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +225,7 @@ if (isLoggedIn()) {
                                                 <input type="text" class="form-control mt-1 phone-number"
                                                     id="phoneNumber" name="phoneNumber"
                                                     placeholder="<?php echo getTranslation('Inquiry Form', 4, 'placeholder'); ?>"
-                                                    <?php echo $phone = ($checkType == 'phone') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
+                                                    <?php echo $phone = ($userData['phone'] !== null) ? 'value="' . $phone . '" readonly' : ''; ?>>
                                             </div>
                                             <div class="form-check mt-3">
                                                 <input class="form-check-input" type="checkbox" id="whatsappConnected"
@@ -157,7 +248,7 @@ if (isLoggedIn()) {
                                             <div class="input-div">
                                                 <input type="email" class="form-control mt-1" name="email" id="email"
                                                     placeholder="<?php echo getTranslation('Inquiry Form', 5, 'placeholder'); ?>"
-                                                    <?php echo $phone = ($checkType == 'email') ? 'value="' . $emailOrPhone . '" readonly' : ''; ?>>
+                                                    <?php echo $email = ($userData['email'] !== null) ? 'value="' . $email . '" readonly' : ''; ?>>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +265,8 @@ if (isLoggedIn()) {
                                                     <label class="form-check-label"
                                                         for="usaPresenceYes"><?php echo getTranslation('Inquiry Form', 7, 'label'); ?></label>
                                                     <img src="./assets/images/question-icon.svg" class="help-icon"
-                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 7, 'help'); ?>"
+                                                        data-toggle="tooltip"
+                                                        title="<?php echo getTranslation('Inquiry Form', 7, 'help'); ?>"
                                                         alt="Icon" width="16">
                                                 </div>
                                             </div>
@@ -191,7 +283,8 @@ if (isLoggedIn()) {
                                                     <label class="form-check-label"
                                                         for="marriedToUSCitizenYes"><?php echo getTranslation('Inquiry Form', 8, 'label'); ?></label>
                                                     <img src="./assets/images/question-icon.svg" class="help-icon"
-                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 8, 'help'); ?>"
+                                                        data-toggle="tooltip"
+                                                        title="<?php echo getTranslation('Inquiry Form', 8, 'help'); ?>"
                                                         alt="Icon" width="16">
                                                 </div>
                                             </div>
@@ -208,7 +301,8 @@ if (isLoggedIn()) {
                                                     <label class="form-check-label"
                                                         for="continuousPresenceYes"><?php echo getTranslation('Inquiry Form', 9, 'label'); ?></label>
                                                     <img src="./assets/images/question-icon.svg" class="help-icon"
-                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 9, 'help'); ?>"
+                                                        data-toggle="tooltip"
+                                                        title="<?php echo getTranslation('Inquiry Form', 9, 'help'); ?>"
                                                         alt="Icon" width="16">
                                                 </div>
                                             </div>
@@ -223,7 +317,8 @@ if (isLoggedIn()) {
                                                     <label class="form-check-label"
                                                         for="NoMajorIssuesYes"><?php echo getTranslation('Inquiry Form', 10, 'label'); ?></label>
                                                     <img src="./assets/images/question-icon.svg" class="help-icon"
-                                                        data-toggle="tooltip" title="<?php echo getTranslation('Inquiry Form', 10, 'help'); ?>"
+                                                        data-toggle="tooltip"
+                                                        title="<?php echo getTranslation('Inquiry Form', 10, 'help'); ?>"
                                                         alt="Icon" width="16">
                                                 </div>
                                             </div>
@@ -824,12 +919,22 @@ if (isLoggedIn()) {
                         });
                     }
                 });
-            });
-            function initAutocomplete() {
-                var currentStateAndCountry = document.getElementById('currentStateAndCountry');
+                var stateValue = '<?php echo htmlspecialchars($state); ?>';
+                if (stateValue !== '') {
+                    $('#state').val(stateValue).trigger('change');
 
-                var autocomplete = new google.maps.places.Autocomplete(currentStateAndCountry, {
-                    types: ['geocode'],
+                }
+            });
+
+
+            function initAutocomplete() {
+                var zipInput = document.getElementById('zipCode');
+                var cityInput = document.getElementById('city');
+                var stateSelect = $('#state');
+
+                // Initialize the Google Places Autocomplete
+                var autocomplete = new google.maps.places.Autocomplete(zipInput, {
+                    types: ['(regions)'],  // Search for regions, including postal codes
                     componentRestrictions: { country: 'us' }
                 });
 
@@ -846,6 +951,7 @@ if (isLoggedIn()) {
                     var city = '';
                     var state = '';
 
+                    // Extract postal code, city, and state from address components
                     for (var i = 0; i < addressComponents.length; i++) {
                         var component = addressComponents[i];
                         if (component.types.includes('postal_code')) {
@@ -858,10 +964,15 @@ if (isLoggedIn()) {
                     }
 
                     // Update fields
-                    currentStateAndCountry.value = city + ', ' + state + ' ' + zip;
+                    zipInput.value = zip; // Ensure zip code is always updated
+                    cityInput.value = city; // Update city input
+                    stateSelect.val(state).trigger('change'); // Update state select dropdown
 
+                    console.log('Zip Code:', zip, city, state);
                 });
             }
+
+
 
             window.onload = function () {
                 initAutocomplete();

@@ -24,7 +24,9 @@ main {
 .inter {
     font-family: "Inter", sans-serif;
 }
-
+.pac-container{
+    width: max-content !important;
+}
 
 .form-title {
     font-size: 40px;

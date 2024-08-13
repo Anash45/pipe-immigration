@@ -10,9 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Check if the user exists
-        $sql = "SELECT ClientID, verified, locked_until FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT UserID, verified FROM `user` WHERE email = :email OR phone = :phone";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email_or_phone', $verifyEmailOrPhone);
+        $stmt->bindParam(':email', $verifyEmailOrPhone);
+        $stmt->bindParam(':phone', $verifyEmailOrPhone);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -23,17 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $userId = $user['ClientID'];
+        $userId = $user['UserID'];
 
         // Get current time
         $currentTime = (new DateTime())->format('Y-m-d H:i:s');
 
         // Verify the code
-        $sql = "SELECT * FROM verification_codes WHERE ClientID = :client_id AND verification_code = :verification_code AND expires_at > :current_time";
+        $sql = "SELECT * FROM verification_codes WHERE ClientID = :client_id AND verification_code = :verification_code";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':client_id', $userId);
         $stmt->bindParam(':verification_code', $verification_code);
-        $stmt->bindParam(':current_time', $currentTime);
         $stmt->execute();
         $verificationResult = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -46,8 +46,8 @@ WHERE sdd.KeyName = 'MasterCode'
 AND sdd.Value = :verification_code
 AND EXISTS (
     SELECT 1
-    FROM clients c
-    WHERE c.ClientID = :client_id
+    FROM `user` u
+    WHERE u.UserID = :client_id
 )
 ";
         $stmt2 = $pdo->prepare($sql2);
@@ -56,12 +56,12 @@ AND EXISTS (
         $stmt2->execute();
         $masterCode = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-        if ($verificationResult) {
+        if ($verificationResult || $masterCode) {
             // Hash the new password
             $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
 
             // Update the password
-            $sql = "UPDATE clients SET password = :password WHERE ClientID = :client_id";
+            $sql = "UPDATE `user` SET password = :password WHERE UserID = :client_id";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':client_id', $userId);

@@ -11,9 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Check if the user exists
-        $sql = "SELECT ClientID, verified FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT UserID, verified FROM `user` WHERE email = :email OR phone = :phone";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email_or_phone', $emailOrPhone);
+        $stmt->bindParam(':email', $emailOrPhone);
+        $stmt->bindParam(':phone', $emailOrPhone);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -26,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $userId = $user['ClientID'];
+        $userId = $user['UserID'];
 
         // Check if the user is already verified
         if ($user['verified']) {

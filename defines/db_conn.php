@@ -13,7 +13,7 @@ $db = "imminzio_test";// Change this to your MySQL database name
 // $pass = 'V37O$fF7';
 
 // $host = 'localhost';
-// $db   = 'pipe-immigration';
+// $db   = 'test-pipe-immigration';
 // $user = 'root';
 // $pass = 'root';
 

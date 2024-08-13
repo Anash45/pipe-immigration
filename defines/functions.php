@@ -83,18 +83,136 @@ function insertUser($clientID, $firstName, $middleName, $lastName, $birthday, $b
     }
 }
 
+function updateUser($clientID, $firstName, $middleName, $zipCode, $city, $state, $email, $phone, $lastName, $birthday, $birthPlace, $citizenshipCountry, $gender)
+{
+    global $pdo;
+
+    // Prepare the SQL update statement
+    $sql = "
+        UPDATE user
+        SET firstName = :firstName,
+            middleName = :middleName,
+            zipCode = :zipCode,
+            city = :city,
+            state = :state,
+            email = :email,
+            phone = :phone,
+            lastName = :lastName,
+            birthday = :birthday,
+            birthPlace = :birthPlace,
+            citizenshipCountry = :citizenshipCountry,
+            gender = :gender
+        WHERE UserID = :clientID
+    ";
+
+    // try {
+    // Prepare the statement
+    $stmt = $pdo->prepare($sql);
+
+    // Bind parameters
+    $stmt->bindParam(':firstName', $firstName);
+    $stmt->bindParam(':middleName', $middleName);
+    $stmt->bindParam(':zipCode', $zipCode);
+    $stmt->bindParam(':city', $city);
+    $stmt->bindParam(':state', $state);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':lastName', $lastName);
+    $stmt->bindParam(':birthday', $birthday);
+    $stmt->bindParam(':birthPlace', $birthPlace);
+    $stmt->bindParam(':citizenshipCountry', $citizenshipCountry);
+    $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':clientID', $clientID, PDO::PARAM_INT);
+
+    // Execute the statement
+    return $stmt->execute();
+
+    // } catch (PDOException $e) {
+    //     throw new Exception('Failed to insert user.');
+    // }
+}
+
+function getUserByEmail($email, $currentUserID)
+{
+    global $pdo;
+
+    // Prepare the SQL query to check if the email exists for a different user
+    $sql = "
+        SELECT *
+        FROM user
+        WHERE email = :email AND UserID != :currentUserID
+    ";
+
+    try {
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
+
+        // Bind parameters
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':currentUserID', $currentUserID, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the user details if found
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            return $user; // Return user details
+        } else {
+            return false; // Email is available or does not exist
+        }
+    } catch (PDOException $e) {
+        // Handle error
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+function getUserByPhone($phone, $currentUserID)
+{
+    global $pdo;
+
+    // Prepare the SQL query to check if the email exists for a different user
+    $sql = "
+        SELECT *
+        FROM user
+        WHERE phone = :phone AND UserID != :currentUserID
+    ";
+
+    try {
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
+
+        // Bind parameters
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':currentUserID', $currentUserID, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the user details if found
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            return $user; // Return user details
+        } else {
+            return false; // Email is available or does not exist
+        }
+    } catch (PDOException $e) {
+        // Handle error
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+
 function insertUSAddress(
     $userID,
     $careOfName,
     $street1,
     $street2,
-    $zipCode,
-    $city,
-    $state,
-    $cellPhone,
     $homePhone,
     $workPhone,
-    $currentEmail,
     $emergencyContact,
     $emergencyPhone,
     $residencyType = null,
@@ -103,18 +221,18 @@ function insertUSAddress(
     global $pdo; // Use the PDO connection from db_conn.php
 
     // Prepare the SQL statement dynamically based on the residency type
-    $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, createdAt, updatedAt";
-    $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, NOW(), NOW()";
+    $columns = "UserID, inCareOfName, street1, street2, homePhone, workPhone, emergencyContact, emergencyPhone, createdAt, updatedAt";
+    $values = ":userID, :careOfName, :street1, :street2, :homePhone, :workPhone, :emergencyContact, :emergencyPhone, NOW(), NOW()";
 
     if ($residencyType === 'Floor') {
-        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Floor, createdAt, updatedAt";
-        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
+        $columns = "UserID, inCareOfName, street1, street2, homePhone, workPhone, emergencyContact, emergencyPhone, Floor, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :homePhone, :workPhone, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     } elseif ($residencyType === 'Apartment') {
-        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Apartment, createdAt, updatedAt";
-        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
+        $columns = "UserID, inCareOfName, street1, street2, homePhone, workPhone, emergencyContact, emergencyPhone, Apartment, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :homePhone, :workPhone, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     } elseif ($residencyType === 'Suite') {
-        $columns = "UserID, inCareOfName, street1, street2, zipCode, city, state, cellPhone, homePhone, workPhone, currentEmail, emergencyContact, emergencyPhone, Suite, createdAt, updatedAt";
-        $values = ":userID, :careOfName, :street1, :street2, :zipCode, :city, :state, :cellPhone, :homePhone, :workPhone, :currentEmail, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
+        $columns = "UserID, inCareOfName, street1, street2, homePhone, workPhone, emergencyContact, emergencyPhone, Suite, createdAt, updatedAt";
+        $values = ":userID, :careOfName, :street1, :street2, :homePhone, :workPhone, :emergencyContact, :emergencyPhone, :residency, NOW(), NOW()";
     }
 
     $sql = "INSERT INTO `address` ($columns) VALUES ($values)";
@@ -125,13 +243,8 @@ function insertUSAddress(
         $stmt->bindParam(':careOfName', $careOfName);
         $stmt->bindParam(':street1', $street1);
         $stmt->bindParam(':street2', $street2);
-        $stmt->bindParam(':zipCode', $zipCode);
-        $stmt->bindParam(':city', $city);
-        $stmt->bindParam(':state', $state);
-        $stmt->bindParam(':cellPhone', $cellPhone);
         $stmt->bindParam(':homePhone', $homePhone);
         $stmt->bindParam(':workPhone', $workPhone);
-        $stmt->bindParam(':currentEmail', $currentEmail);
         $stmt->bindParam(':emergencyContact', $emergencyContact);
         $stmt->bindParam(':emergencyPhone', $emergencyPhone);
 
@@ -229,27 +342,44 @@ function insertUSEntries($userID, $dateOfEntry, $stateOfEntry, $methodOfEntry, $
 {
     global $pdo;
     try {
-        $stmt = $pdo->prepare("
+        // Prepare the INSERT statement without specifying EntryID
+        $sql = "
             INSERT INTO us_entry (UserID, dateOfEntry, stateOfEntry, methodOfEntry, anyIllegalDocumentOnEntry, detainedByUSPatrol, updatedAt)
             VALUES (:userID, :dateOfEntry, :stateOfEntry, :methodOfEntry, :anyIllegalDocumentOnEntry, :detainedByUSPatrol, NOW())
-        ");
+        ";
 
-        $stmt->execute([
-            ':userID' => $userID,
-            ':dateOfEntry' => $dateOfEntry,
-            ':stateOfEntry' => $stateOfEntry,
-            ':methodOfEntry' => $methodOfEntry,
-            ':anyIllegalDocumentOnEntry' => $anyIllegalDocumentOnEntry,
-            ':detainedByUSPatrol' => $detainedByUSPatrol
-        ]);
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
 
-        // echo json_encode(222);
-        return true; // Return true on successful insertion
+        // Bind values
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+        $stmt->bindParam(':dateOfEntry', $dateOfEntry);
+        $stmt->bindParam(':stateOfEntry', $stateOfEntry);
+        $stmt->bindParam(':methodOfEntry', $methodOfEntry);
+        $stmt->bindParam(':anyIllegalDocumentOnEntry', $anyIllegalDocumentOnEntry, PDO::PARAM_BOOL);
+        $stmt->bindParam(':detainedByUSPatrol', $detainedByUSPatrol, PDO::PARAM_BOOL);
+
+        // Print the SQL query with the values
+        // $query = str_replace(
+        //     [':userID', ':dateOfEntry', ':stateOfEntry', ':methodOfEntry', ':anyIllegalDocumentOnEntry', ':detainedByUSPatrol'],
+        //     [$userID, "$dateOfEntry", "$stateOfEntry", "$methodOfEntry", "$anyIllegalDocumentOnEntry", "$detainedByUSPatrol"],
+        //     $sql
+        // );
+        // echo "Executing SQL query: " . $query;
+
+        // Execute the prepared statement
+        $stmt->execute();
+
+        // Return true on successful insertion
+        return true;
     } catch (Exception $e) {
-        // echo json_encode(21);
-        throw new Exception("Error inserting entry: " . $e->getMessage()); // Return false on failure
+        // Print the error message and query for debugging
+        echo "Error inserting entry: " . $e->getMessage() . "\n";
+        // echo "SQL Query: " . $query;
+        return false;
     }
 }
+
 function insertEncounters($userID, $dateOfEncounter, $stateCountryOfLegalEncounter, $natureOfLegalIssue, $description)
 {
     global $pdo; // Use the PDO connection from db_conn.php
@@ -573,7 +703,7 @@ function getUserById($clientId)
 
     try {
         // Prepare SQL query to fetch user record based on ClientID
-        $sql = "SELECT * FROM user WHERE ClientID = :client_id ORDER BY UserID DESC Limit 1";
+        $sql = "SELECT * FROM user WHERE UserID = :client_id ORDER BY UserID DESC Limit 1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':client_id', $clientId);
         $stmt->execute();
@@ -779,7 +909,8 @@ function getAdditionalConsiderationsByUserId($UserID)
     }
 }
 
-function getDocumentsByClientId($clientID) {
+function getDocumentsByClientId($clientID)
+{
     global $pdo;
 
     $sql = "

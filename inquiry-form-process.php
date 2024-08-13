@@ -16,7 +16,9 @@ $clientId = $_SESSION['ClientID'];
 // Retrieve POST data
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
-$currentStateAndCountry = $_POST['currentStateAndCountry'];
+$city = $_POST['city'];
+$state = $_POST['state'];
+$zipCode = $_POST['zipCode'];
 $phoneNumber = $_POST['phoneNumber'];
 $whatsappConnected = isset($_POST['whatsappConnected']) ? 1 : 0;
 $email = $_POST['email'];
@@ -37,23 +39,48 @@ try {
     // Begin transaction
     $pdo->beginTransaction();
 
+    $checkUserByEmail = getUserByEmail($email, $clientId);
+    $checkUserByPhone = getUserByPhone($phoneNumber, $clientId);
+
+    if ($checkUserByEmail) {
+        $response['status'] = 'error';
+        $response['message'] = '<span class="en">E-mail address already exist!</span><span class="es">¡La dirección de correo electrónico ya existe!</span>';
+        echo json_encode($response);
+        exit;
+    }
+
+    if ($checkUserByPhone) {
+        $response['status'] = 'error';
+        $response['message'] = '<span class="en">Phone number address already exist!</span><span class="es">¡La dirección del número de teléfono ya existe!</span>';
+        echo json_encode($response);
+        exit;
+    }
+
+    $sql = "UPDATE `user` SET `firstName` = :firstName, `lastName` = :lastName, `city` = :city, `state` = :state, `zipCode` = :zipCode, `email` = :email, `phone` = :phone WHERE `UserID` = :UserID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':firstName' => $firstName,
+        ':lastName' => $lastName,
+        ':city' => $city,
+        ':state' => $state,
+        ':zipCode' => $zipCode,
+        ':email' => $email,
+        ':phone' => $phoneNumber,
+        ':UserID' => $clientId,
+    ]);
+
     // Insert into immigration_inquiry table
     $sql = "INSERT INTO immigration_inquiry (
-                ClientID, first_name, last_name, currentStateAndCountry, phoneNumber, whatsappConnected, email, 
+                ClientID, whatsappConnected, 
                 usaPresenceBeforeJun2024, NoMajorIssues, marriedToUSCitizenBeforeJun2024, continuousPresenceEvidence, product, otherQuestions
             ) VALUES (
-                :clientId, :firstName, :lastName, :currentStateAndCountry, :phoneNumber, :whatsappConnected, :email, 
+                :clientId, :whatsappConnected, 
                 :usaPresenceBeforeJun2024, :NoMajorIssues, :marriedToUSCitizenBeforeJun2024, :continuousPresenceEvidence, :product, :otherQuestions
             )";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':clientId' => $clientId,
-        ':firstName' => $firstName,
-        ':lastName' => $lastName,
-        ':currentStateAndCountry' => $currentStateAndCountry,
-        ':phoneNumber' => $phoneNumber,
         ':whatsappConnected' => $whatsappConnected,
-        ':email' => $email,
         ':usaPresenceBeforeJun2024' => $usaPresenceBeforeJun2024,
         ':marriedToUSCitizenBeforeJun2024' => $marriedToUSCitizenBeforeJun2024,
         ':NoMajorIssues' => $NoMajorIssues,
@@ -75,14 +102,6 @@ try {
         ':paymentMethods' => $paymentMethods,
         ':transactionId' => $transactionId,
         ':totalFee' => $totalFee
-    ]);
-
-    $sql2 = "UPDATE clients SET `first_name` = :first_name, `last_name` = :last_name WHERE `ClientID` = :client_id";
-    $stmt = $pdo->prepare($sql2);
-    $stmt->execute([
-        ':first_name' => $firstName,
-        ':last_name' => $lastName,
-        ':client_id' => $clientId
     ]);
 
     // Commit transaction

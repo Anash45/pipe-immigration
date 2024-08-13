@@ -34,11 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    try {
+    // try {
         // Check if user already exists
-        $sql = "SELECT * FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT * FROM `user` WHERE email = :email OR phone = :phone";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email_or_phone', $emailOrPhone);
+        $stmt->bindParam(':email', $emailOrPhone);
+        $stmt->bindParam(':phone', $emailOrPhone);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $response['message'] = 'User already exists!';
@@ -48,13 +49,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $verified = 0;
         if (isEmailOrPhone($emailOrPhone) == 'phone') {
+            $columnName = 'phone';
             $verified = 0;
         } elseif (isEmailOrPhone($emailOrPhone) == 'email') {
+            $columnName = 'email';
             $verified = 0;
         }
 
+        echo $columnName;
+
         // Insert the new client
-        $sql = "INSERT INTO clients (first_name, last_name, email_or_phone, password, verified, createdAt, updatedAt) 
+        $sql = "INSERT INTO `user` (firstName, lastName, `$columnName`, password, verified, createdAt, updatedAt) 
                 VALUES (:first_name, :last_name, :email_or_phone, :password, :verified, NOW(), NOW())";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':first_name', $firstName);
@@ -139,9 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         echo json_encode($response);
-    } catch (PDOException $e) {
-        $response['message'] = "Error: " . $e->getMessage();
-        echo json_encode($response);
-    }
+    // } catch (PDOException $e) {
+    //     $response['message'] = "Error: " . $e->getMessage();
+    //     echo json_encode($response);
+    // }
 }
 ?>

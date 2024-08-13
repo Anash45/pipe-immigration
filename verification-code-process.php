@@ -9,9 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Check if the user exists
-        $sql = "SELECT ClientID, verified, locked_until FROM clients WHERE email_or_phone = :email_or_phone";
+        $sql = "SELECT UserID, verified FROM `user` WHERE email = :email OR phone = :phone";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email_or_phone', $verifyEmailOrPhone);
+        $stmt->bindParam(':email', $verifyEmailOrPhone);
+        $stmt->bindParam(':phone', $verifyEmailOrPhone);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -23,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $userId = $user['ClientID'];
+        $userId = $user['UserID'];
 
         // Check if the user is already verified
         if ($user['verified']) {
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql1 = "SELECT * FROM verification_codes 
 WHERE ClientID = :client_id 
 AND verification_code = :verification_code 
-AND expires_at > :current_time";
+AND expires_at > :current_time ORDER BY CodeID DESC LIMIT 1";
         $stmt1 = $pdo->prepare($sql1);
         $stmt1->bindParam(':client_id', $userId);
         $stmt1->bindParam(':verification_code', $enteredCode);
@@ -63,13 +64,7 @@ AND Value = :verification_code";
 
         if ($verificationCode || $masterCode) {
             // Mark the user as verified
-            $sql = "UPDATE clients SET verified = 1 WHERE ClientID = :client_id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':client_id', $userId);
-            $stmt->execute();
-
-            // Log successful attempt
-            $sql = "INSERT INTO verification_attempts (ClientID, is_successful, attempt_time) VALUES (:client_id, 1, NOW())";
+            $sql = "UPDATE `user` SET verified = 1 WHERE UserID = :client_id";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':client_id', $userId);
             $stmt->execute();
