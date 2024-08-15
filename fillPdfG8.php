@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(0);
 
-if (!isAdmin()) {
+if (!isAdmin() && !isManager()) {
     header("Location:./index.php");
     // exit;
 }
@@ -21,20 +21,19 @@ function generate_I_131()
 {
 
     global $conn;
-    $EnteredID = $_POST['email_or_phone'];
+    $EnteredID = $_POST['UserID'];
 
 
-    $sql1 = "Select u.lastName as ClientLastName, u.ClientID, u.firstName as ClientFirstName, u.middleName as ClientMiddleName, a.street1 as ClientStreetNumberandName, a.inCareOfName as ClientCareOfName, a.Apartment as ClientApt, a.Suite as ClientSte, a.Floor as ClientFlr, COALESCE(a.Apartment, a.Suite, a.Floor) as ClientSpecificAptSteorFlr, a.city as ClientCity, a.state as ClientState, a.zipCode as ClientPostalCode, 'United States of America' as ClientCountry,
+    $sql1 = "Select u.lastName as ClientLastName, u.UserID, u.firstName as ClientFirstName, u.middleName as ClientMiddleName, a.street1 as ClientStreetNumberandName, a.inCareOfName as ClientCareOfName, a.Apartment as ClientApt, a.Suite as ClientSte, a.Floor as ClientFlr, COALESCE(a.Apartment, a.Suite, a.Floor) as ClientSpecificAptSteorFlr, u.city as ClientCity, u.state as ClientState, u.zipCode as ClientPostalCode, 'United States of America' as ClientCountry,
 u.birthPlace as countryofBirth, u.citizenshipCountry as ClientCountryofCitizenship, u.gender as Clientgender, u.birthday as ClientdateofBirth
 from user u
-inner join address a on u.userID = a.userID
-INNER JOIN clients c on c.ClientID = u.ClientID WHERE c.email_or_phone = '$EnteredID'";
+inner join address a on u.userID = a.userID WHERE u.UserID = $EnteredID";
 
     $result1 = mysqli_query($conn, $sql1);
     $row1 = mysqli_fetch_assoc($result1);
     // print_r($row1);
 
-    $clientId = $row1['ClientID'];
+    $clientId = $row1['UserID'];
 
     $ClientApt = ($row1['ClientApt'] == null || empty($row1['ClientApt'])) ? false : true;
     $ClientSte = ($row1['ClientSte'] == null || empty($row1['ClientSte'])) ? false : true;
@@ -175,18 +174,47 @@ INNER JOIN clients c on c.ClientID = u.ClientID WHERE c.email_or_phone = '$Enter
 function generate_g_28()
 {
     global $conn;
-    $EnteredID = $_POST['email_or_phone'];
-    // Fetch attorney data from the database
-    $attorneySql = "SELECT USCISOnlineNo, LastName, FirstName, MiddleName, StreetNumberName, Suite, City, State, ZipCode, Country, DaytimePhone, EmailAddress, FaxNumber, Eligibility, BarNumber, NotLegallyRestricted, NameofLawFirm FROM attorney";
-    $attorneyResult = $conn->query($attorneySql);
-    $fetchAttorneyData = $attorneyResult->fetch_assoc();
+    $EnteredID = $_POST['UserID'];
 
     // Fetch client data from the database based on the enteredClientemail_or_cell
-    $clientSql = "SELECT c.ClientID, u.lastName AS ClientLastName, u.firstName AS ClientFirstName, u.middleName AS ClientMiddleName, a.cellPhone AS ClientDaytimePhone, a.cellPhone AS ClientMobile, a.currentEmail AS ClientEmail, a.street1 AS ClientStreetNumberandName, a.Apartment AS ClientApt, a.Suite AS ClientSte, a.Floor AS ClientFlr, COALESCE(a.Apartment, a.Suite, a.Floor) AS ClientSpecificAptSteorFlr, a.city AS ClientCity, a.state AS ClientState, a.zipCode AS ClientPostalCode, 'United States of America' AS ClientCountry FROM user u INNER JOIN address a ON u.userID = a.userID INNER JOIN clients c on c.ClientID = u.ClientID WHERE c.email_or_phone = '$EnteredID'";
+    $clientSql = "SELECT u.UserID, u.lastName AS ClientLastName, u.attorneyID, u.firstName AS ClientFirstName, u.middleName AS ClientMiddleName, u.phone AS ClientDaytimePhone, u.phone AS ClientMobile, u.email AS ClientEmail, a.street1 AS ClientStreetNumberandName, a.Apartment AS ClientApt, a.Suite AS ClientSte, a.Floor AS ClientFlr, COALESCE(a.Apartment, a.Suite, a.Floor) AS ClientSpecificAptSteorFlr, u.city AS ClientCity, u.state AS ClientState, u.zipCode AS ClientPostalCode, 'United States of America' AS ClientCountry FROM user u INNER JOIN address a ON u.userID = a.userID WHERE u.UserID = '$EnteredID'";
     $clientResult = $conn->query($clientSql);
     $fetchClientData = $clientResult->fetch_assoc();
 
-    $clientId = $fetchClientData['ClientID'];
+    $attorneyID = $fetchClientData['attorneyID'];
+
+    // Prepare the SQL statement to fetch the attorney by attorneyID
+    if ($attorneyID) {
+        $attorneySql = "SELECT USCISOnlineNo, LastName, FirstName, MiddleName, StreetNumberName, Suite, City, State, ZipCode, Country, DaytimePhone, EmailAddress, FaxNumber, Eligibility, BarNumber, NotLegallyRestricted, NameofLawFirm
+                    FROM attorney
+                    WHERE attorneyID = ?
+                    LIMIT 1";
+        $stmt = $conn->prepare($attorneySql);
+        $stmt->bind_param("i", $attorneyID);
+        $stmt->execute();
+        $attorneyResult = $stmt->get_result();
+
+        // Check if the attorney with the given attorneyID exists
+        if ($attorneyResult->num_rows > 0) {
+            $fetchAttorneyData = $attorneyResult->fetch_assoc();
+        } else {
+            // If no attorney with the given attorneyID is found, fetch the first attorney
+            $attorneySql = "SELECT USCISOnlineNo, LastName, FirstName, MiddleName, StreetNumberName, Suite, City, State, ZipCode, Country, DaytimePhone, EmailAddress, FaxNumber, Eligibility, BarNumber, NotLegallyRestricted, NameofLawFirm
+                        FROM attorney
+                        LIMIT 1";
+            $attorneyResult = $conn->query($attorneySql);
+            $fetchAttorneyData = $attorneyResult->fetch_assoc();
+        }
+    } else {
+        // If attorneyID is not provided, fetch the first attorney
+        $attorneySql = "SELECT USCISOnlineNo, LastName, FirstName, MiddleName, StreetNumberName, Suite, City, State, ZipCode, Country, DaytimePhone, EmailAddress, FaxNumber, Eligibility, BarNumber, NotLegallyRestricted, NameofLawFirm
+                    FROM attorney
+                    LIMIT 1";
+        $attorneyResult = $conn->query($attorneySql);
+        $fetchAttorneyData = $attorneyResult->fetch_assoc();
+    }
+
+    $clientId = $fetchClientData['UserID'];
     $ClientFirstName = $fetchClientData['ClientFirstName'];
     $ClientLastName = $fetchClientData['ClientLastName'];
     // print_r($fetchAttorneyData);
@@ -419,18 +447,12 @@ if (isset($_POST['generate_pdf']) && $_POST['form_type'] == 'G-28') {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=5">
+        <link rel="stylesheet" href="./assets/css/style.css?v=6">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
         <main class="py-5">
             <div class="container">
-                <div class="d-flex justify-content-center gap-3 mb-4">
-                    <a href="index.php" class="btn btn-rectangle mx-0 btn-primary"><span class="en">HOME</span> <span
-                            class="es">INICIO</span></a>
-                    <a href="logout.php" class="btn btn-rectangle mx-0 btn-danger"><span class="en">LOGOUT</span> <span
-                            class="es">CERRAR SESIÓN</span></a>
-                </div>
                 <div class="d-flex justify-content-center">
                     <?php
                     if (getLanguage() == 'english') {
@@ -447,6 +469,16 @@ if (isset($_POST['generate_pdf']) && $_POST['form_type'] == 'G-28') {
                         <?php
                     }
                     ?>
+                </div>
+                <div class="btn-group mx-auto w-100 my-4" role="group" aria-label="Basic example">
+                    <a href="index.php" class="btn py-2 btn-primary"><span class="en">HOME</span> <span
+                            class="es">INICIO</span></a>
+                    <a href="fillPdfG8.php" class="btn py-2 btn-primary active"><span class="en">Dashboard</span> <span
+                            class="es">Panel</span></a>
+                    <a href="ad_users.php" class="btn py-2 btn-primary"><span class="en">Users</span> <span
+                            class="es">Usuarios</span></a>
+                    <a href="logout.php" class="btn py-2 btn-outline-danger"><span class="en">LOGOUT</span> <span
+                            class="es">CERRAR SESIÓN</span></a>
                 </div>
                 <h2 class="text-center form-title fw-bold inter mb-4">
                     <span class="en">Generate G8 PDF</span>
@@ -465,21 +497,40 @@ if (isset($_POST['generate_pdf']) && $_POST['form_type'] == 'G-28') {
                                                     class="en">Select a user:</span><span class="es">Seleccione un
                                                     usuario:</span></label>
                                             <div class="input-div">
-                                                <select class="form-control form-select mt-1" name="email_or_phone">
+                                                <select class="form-control form-select mt-1" name="UserID">
                                                     <?php
-                                                    $sql1 = "SELECT 
-                        u.ClientID,
-                        c.email_or_phone
-                    FROM 
-                        `user` u
-                    INNER JOIN 
-                        `clients` c ON u.ClientID = c.ClientID
-                    GROUP BY 
-                        u.ClientID;";
+                                                    if (isAdmin()) {
+                                                        $sql1 = "SELECT 
+                                                        u.UserID,
+                                                        u.email,
+                                                        u.phone
+                                                     FROM 
+                                                        `user` u
+                                                     INNER JOIN 
+                                                        `address` a ON u.UserID = a.UserID
+                                                     GROUP BY 
+                                                        u.UserID";
+                                                    } else if (isManager()) {
+                                                        $CurrentUser = getUserById($_SESSION['ClientID']);
+                                                        $MyAttorneyID = $CurrentUser['attorneyID'];
+                                                        $sql1 = "SELECT 
+                                                            u.UserID,
+                                                            u.email,
+                                                            u.phone
+                                                        FROM 
+                                                            `user` u
+                                                        INNER JOIN 
+                                                            `address` a ON u.UserID = a.UserID
+                                                        WHERE 
+                                                            u.attorneyID = '$MyAttorneyID' AND u.status IS NULL
+                                                        GROUP BY 
+                                                            u.UserID";
+                                                    }
+
                                                     $result1 = $conn->query($sql1);
                                                     if ($result1->num_rows > 0) {
                                                         while ($row1 = $result1->fetch_assoc()) {
-                                                            echo "<option value='" . $row1['email_or_phone'] . "'>" . $row1['email_or_phone'] . "</option>";
+                                                            echo "<option value='" . $row1['UserID'] . "'>" . $row1['email'] . " - " . $row1['phone'] . "</option>";
                                                         }
                                                     }
                                                     ?>
@@ -525,7 +576,7 @@ if (isset($_POST['generate_pdf']) && $_POST['form_type'] == 'G-28') {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=5"></script>
+        <script src="./assets/js/script.js?v=6"></script>
     </body>
 
 </html>

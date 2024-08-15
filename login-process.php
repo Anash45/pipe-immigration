@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set session variables
         $_SESSION['ClientID'] = $user['UserID'];
         $_SESSION['full_name'] = $user['firstName'].' '.$user['lastName'];
-        $_SESSION['status'] = ($user['status'] == 'admin') ? $user['status'] : 'user';
+        $_SESSION['status'] = ($user['status'] == 'admin' || $user['status'] == 'manager') ? $user['status'] : 'user';
 
         $response['status'] = 'success';
         $response['user'] = $_SESSION['status'];

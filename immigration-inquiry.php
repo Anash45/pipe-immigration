@@ -44,7 +44,7 @@ if (isLoggedIn()) {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=5">
+        <link rel="stylesheet" href="./assets/css/style.css?v=6">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -343,7 +343,7 @@ if (isLoggedIn()) {
                                                         <div class="d-flex gap-2 align-items-start justify-content-between">
                                                             <label class="form-check-label" for="product<?php echo $ip; ?>">
                                                                 <?php echo $productDescription; ?></label>
-                                                            <img src="./assets/images/question-icon.svg" class="help-icon"
+                                                            <img src="./assets/images/question-icon.svg" id="productHelp<?php echo $product['ProductID'] ?>" class="help-icon"
                                                                 data-toggle="tooltip" title="<?php echo $productHelp; ?>"
                                                                 alt="Icon" width="16">
                                                         </div>
@@ -358,6 +358,7 @@ if (isLoggedIn()) {
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-check my-4">
+                                                <input type="hidden" name="attorneyID" id="attorneyID" value="">
                                                 <input class="form-check-input" type="checkbox" id="acceptTerms"
                                                     name="acceptTerms">
                                                 <label class="form-check-label" for="acceptTerms">
@@ -392,8 +393,6 @@ if (isLoggedIn()) {
                                                             <option value="credit-card"
                                                                 data-image="./assets/images/Mastercard.svg">Credit Card
                                                             </option>
-                                                            <!-- <option value="paypal"
-                                                                data-image="./assets/images/PayPal.svg"> PayPal</option> -->
                                                             <option value="zelle"
                                                                 data-image="./assets/images/Etherium.svg"> Zelle
                                                             </option>
@@ -594,7 +593,7 @@ if (isLoggedIn()) {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=5"></script>
+        <script src="./assets/js/script.js?v=6"></script>
         <?php
         $productArray = [];
         $products1 = getAllProducts();
@@ -967,12 +966,58 @@ if (isLoggedIn()) {
                     zipInput.value = zip; // Ensure zip code is always updated
                     cityInput.value = city; // Update city input
                     stateSelect.val(state).trigger('change'); // Update state select dropdown
-
+                    getAttorneyDetails();
                     console.log('Zip Code:', zip, city, state);
                 });
             }
 
+            $('#zipCode').on('change', function () {
+                getAttorneyDetails();
+            });
 
+
+            function getAttorneyDetails() {
+                var zipCode = $('#zipCode').val();
+
+                $.ajax({
+                    url: 'getAttorney.php',
+                    type: 'GET',
+                    data: { zipCode: zipCode },
+                    success: function (response) {
+                        console.log('Attorney Details:', response);
+
+                        response = JSON.parse(response);
+                        if (response) {
+                            let helpText;
+
+                            if(currentLanguage == 'english'){
+                                helpText = `Call our main office at ${response.DayTimePhone} or visit us at ${response.StreetNumberName}, Suite ${response.Suite}, ${response.City}, ${response.State} ${response.ZipCode}, ${response.OfficeHours}.`;
+                            }else{
+                                helpText = `Llame a nuestra oficina principal al ${response.DayTimePhone} o visitanos a ${response.StreetNumberName}, Suite ${response.Suite}, ${response.City}, ${response.State} ${response.ZipCode}, ${response.OfficeHours}.`;
+                            }
+
+                            $('#attrOffice').html(response.NameofLawFirm);
+                            $('#attrCity').html(`${response.City}, ${response.State}`);
+
+                            console.log(helpText);
+
+                            $('#productHelp5').attr('data-bs-original-title', helpText);
+                            var tooltip = bootstrap.Tooltip.getInstance($('#productHelp5')[0]);
+                            $('#productHelp6').attr('data-bs-original-title', helpText);
+                            var tooltip2 = bootstrap.Tooltip.getInstance($('#productHelp6')[0]);
+                            tooltip.update();
+                            tooltip2.update();
+
+                            $('#attorneyID').val(response.attorneyID);
+                        } else {
+                            console.log('No attorney found.');
+                        }
+                    },
+                    error: function () {
+                        console.log('An error occurred.');
+                    }
+                });
+            }
 
             window.onload = function () {
                 initAutocomplete();

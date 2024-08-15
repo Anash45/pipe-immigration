@@ -230,7 +230,7 @@ if (isLoggedIn()) {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=5">
+        <link rel="stylesheet" href="./assets/css/style.css?v=6">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -1865,7 +1865,7 @@ if (isLoggedIn()) {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=5"></script>
+        <script src="./assets/js/script.js?v=6"></script>
         <script>
             let currentLang = '<?php echo getLanguage(); ?>';
             function updateFormControls() {

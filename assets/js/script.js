@@ -202,3 +202,32 @@ function isEmailOrPhone(input) {
     // If neither pattern matches
     return 'invalid';
 }
+
+$(document).ready(function () {
+    // Set the maximum date to today
+    var today = new Date();
+    var maxDate = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+    // Apply the datepicker to all <input type="date"> fields
+    $('input[type="date"]').each(function () {
+        $(this).closest('.input-div').addClass('cover-calendar');
+        $(this).datepicker({
+            dateFormat: 'yy-mm-dd', // Format as YYYY-MM-DD
+            changeMonth: true, // Show month dropdown
+            changeYear: true,  // Show year dropdown
+            maxDate: maxDate,  // Set max date to today
+            yearRange: 'c-100:c+10' // Set range for the year dropdown (e.g., 100 years ago to 10 years in the future)
+        });
+
+        $(this).change(function () {
+            $(this).valid();
+        });
+    });
+    // document.querySelectorAll('input[type="date"]').forEach(function (input) {
+    //     input.addEventListener('mousedown', function (event) {
+    //         if (event.target.type === 'date') {
+    //             event.preventDefault();  // Prevent the default calendar popup
+    //         }
+    //     });
+    // });
+});

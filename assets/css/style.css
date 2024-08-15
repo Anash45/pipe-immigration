@@ -24,7 +24,8 @@ main {
 .inter {
     font-family: "Inter", sans-serif;
 }
-.pac-container{
+
+.pac-container {
     width: max-content !important;
 }
 
@@ -90,7 +91,8 @@ main {
 .input-div {
     position: relative;
 }
-.msg-error{
+
+.msg-error {
     color: red !important;
     font-size: 14px;
     position: absolute;
@@ -451,7 +453,8 @@ input:focus {
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 100%;
 }
-.btn-rectangle{
+
+.btn-rectangle {
     border-radius: 5px;
     padding: 12px 24px;
     gap: 8px;
@@ -460,36 +463,57 @@ input:focus {
     justify-content: center;
     margin: 0 auto;
 }
-.input-error{
+
+.input-error {
     border-color: red !important;
 }
-.help-icon{
+
+.help-icon {
     cursor: pointer;
 }
 
-.en{
+.en {
     display: none;
 }
 
-.es{
+.es {
     display: none;
 }
 
-.lang-english .en{
+.lang-english .en {
     display: inline;
 }
 
-.lang-spanish .es{
+.lang-spanish .es {
     display: inline;
 }
+
 .form-control[readonly] {
     background-color: #ffffff;
 }
 
 .inquiry-bottom .form-check-label,
-.inquiry-bottom .form-label{
+.inquiry-bottom .form-label {
     font-size: 16px;
 }
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.cover-calendar::after {
+    content: "";
+    position: absolute;
+    background: transparent;
+    height: 25px;
+    width: 38px;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
 @media (max-width: 768px) {
 
     .page-main {

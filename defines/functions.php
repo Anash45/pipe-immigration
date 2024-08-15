@@ -611,7 +611,7 @@ function sendVerificationCodePhone($phone, $code)
                 'body' => "Your verification code is: $code. The Law Offices of Lic. Suriel."
             ]
         );
-        return true;
+        return TWILIO_SID;
     } catch (Twilio\Exceptions\RestException $e) {
         return false;
     }
@@ -959,6 +959,65 @@ function insertDocument($userID, $docname, $linkToUSCISdoc)
     }
 }
 
+function getAttorneyByZipCode($zipCode)
+{
+    global $pdo;
+
+    // Prepare a statement to check if the zip code exists in the ZipCodeCity table
+    $stmt = $pdo->prepare("SELECT city_name FROM zipcodecity WHERE zip_code = ?");
+    $stmt->execute([$zipCode]);
+    $city = $stmt->fetchColumn();
+
+    if ($city) {
+        // If city is found, get the attorney record for that city
+        $stmt = $pdo->prepare("SELECT * FROM attorney WHERE City = ? LIMIT 1");
+        $stmt->execute([$city]);
+        $attorney = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        // If no city is found, get the first attorney record in the attorney table
+        $stmt = $pdo->prepare("SELECT * FROM attorney LIMIT 1");
+        $stmt->execute();
+        $attorney = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return $attorney;
+}
+
+function getUserPayments($userID)
+{
+    global $pdo;
+    // SQL query to fetch payments for a specific user
+    $sql = "SELECT 
+                * 
+            FROM 
+                payment p 
+            WHERE 
+                p.ClientID = :userID
+            ORDER BY `payment_id` DESC";
+
+    try {
+        // Prepare the SQL statement
+        $stmt = $pdo->prepare($sql);
+
+        // Bind the UserID parameter
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch all results
+        $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Return the results
+        return $payments;
+    } catch (PDOException $e) {
+        // Handle errors (log them or show a user-friendly message)
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
 $supportEmail = getSystemDataValue('emailforSupport');
 $supportEmailSpanish = getSystemDataValue('emailforSupportEspañol');
 
@@ -971,6 +1030,12 @@ function isAdmin()
 {
     return $_SESSION['status'] == 'admin';
 }
+
+function isManager()
+{
+    return $_SESSION['status'] == 'manager';
+}
+
 if (isset($_GET['lang'])) {
     if ($_GET['lang'] == 'english' || $_GET['lang'] == 'spanish') {
         setLanguage($_GET['lang']);

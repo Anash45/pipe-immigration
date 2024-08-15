@@ -18,12 +18,22 @@ if (isLoggedIn()) {
         <title>Inquiry/Qualification - US PIPE Immigration Program</title>
         <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css?v=5">
+        <link rel="stylesheet" href="./assets/css/style.css?v=6">
     </head>
 
     <body class="iq-page red-hat-display lang-<?php echo getLanguage(); ?>">
         <main class="page-main py-5">
             <div class="container pb-5 px-4">
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <?php
+                    if (isAdmin() || isManager()) {
+                        echo '<a href="./fillPdfG8.php" class="btn btn-rectangle mx-0 btn-primary"><span class="en">Dashboard</span> <span
+                            class="es">Panel</span></a>';
+                    }
+                    ?>
+                    <a href="logout.php" class="btn btn-rectangle mx-0 btn-danger"><span class="en">LOGOUT</span> <span
+                            class="es">CERRAR SESIÓN</span></a>
+                </div>
                 <div class="text-center mb-5 d-flex">
                     <?php
                     if (getLanguage() == 'english') {
@@ -95,7 +105,9 @@ if (isLoggedIn()) {
                                 <a class="card" target="_blank" href="<?php echo htmlspecialchars($doc['LinktoUSCISdoc']); ?>">
                                     <img src="./assets/images/USCISFormIcon.webp" class="card-img-top" alt="Document Image">
                                     <div class="card-body">
-                                        <h5 class="card-title text-info text-center"><?php echo htmlspecialchars($doc['docname']); ?></h5>
+                                        <h5 class="card-title text-info text-center">
+                                            <?php echo htmlspecialchars($doc['docname']); ?>
+                                        </h5>
                                     </div>
                                 </a>
                             </div>
@@ -111,7 +123,7 @@ if (isLoggedIn()) {
     <body>
         <script src="./assets/js/jquery-3.6.1.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/js/script.js?v=5"></script>
+        <script src="./assets/js/script.js?v=6"></script>
     </body>
 
 </html>

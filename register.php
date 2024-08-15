@@ -11,7 +11,7 @@ include './defines/functions.php';
         <title>Create Account - US PIPE Immigration Program</title>
         <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css?v=5">
+        <link rel="stylesheet" href="./assets/css/style.css?v=6">
     </head>
 
     <body class="login-page red-hat-display lang-<?php echo getLanguage(); ?>">
@@ -196,7 +196,7 @@ include './defines/functions.php';
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
             integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./assets/js/script.js?v=5"></script>
+        <script src="./assets/js/script.js?v=6"></script>
         <script>
 
             function resendCode() {

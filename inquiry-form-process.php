@@ -34,6 +34,7 @@ $paymentDate = ($_POST['paymentDate'] != '') ? $_POST['paymentDate'] : date('Y-m
 $transactionId = $_POST['transactionId'];
 $otherQuestions = $_POST['otherQuestions'];
 $acceptTerms = isset($_POST['acceptTerms']) ? 1 : 0;
+$attorneyID = isset($_POST['attorneyID']) ? $_POST['attorneyID'] : null;
 
 try {
     // Begin transaction
@@ -56,7 +57,7 @@ try {
         exit;
     }
 
-    $sql = "UPDATE `user` SET `firstName` = :firstName, `lastName` = :lastName, `city` = :city, `state` = :state, `zipCode` = :zipCode, `email` = :email, `phone` = :phone WHERE `UserID` = :UserID";
+    $sql = "UPDATE `user` SET `firstName` = :firstName, `lastName` = :lastName, `city` = :city, `state` = :state, `zipCode` = :zipCode, `email` = :email, `phone` = :phone, `attorneyID` = :attorneyID WHERE `UserID` = :UserID";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':firstName' => $firstName,
@@ -67,6 +68,7 @@ try {
         ':email' => $email,
         ':phone' => $phoneNumber,
         ':UserID' => $clientId,
+        ':attorneyID' => $attorneyID,
     ]);
 
     // Insert into immigration_inquiry table
