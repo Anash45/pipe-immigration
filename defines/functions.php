@@ -916,8 +916,9 @@ function getDocumentsByClientId($clientID)
     $sql = "
         SELECT d.docname, d.LinktoUSCISdoc
         FROM uscisdocs d
-        JOIN clients c ON d.UserID = c.ClientID
-        WHERE c.ClientID = :clientID
+        JOIN user u ON d.UserID = u.UserID
+        WHERE u.UserID = :clientID
+        ORDER BY d.docID DESC
     ";
 
     try {
