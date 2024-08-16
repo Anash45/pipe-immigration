@@ -152,11 +152,13 @@ if (isLoggedIn()) {
 
             if ($usAddressInserted) {
                 $response['type'] = 'success';
-                $response['message_address'] = '<span class="en">User and address successfully created.</span><span class="es">Usuario y dirección creados con éxito.</span>';
+                $response['message'] = '<span class="en">User and address successfully created.</span><span class="es">Usuario y dirección creados con éxito.</span>';
                 $response['userID'] = $userID;
             } else {
                 $response['type'] = 'error';
-                $response['message_address'] = '<span class="en">Failed to create address.</span><span class="es">No se pudo crear la dirección.</span>';
+                $response['message'] = '<span class="en">Failed to create address.</span><span class="es">No se pudo crear la dirección.</span>';
+                echo json_encode($response);
+                exit;
             }
 
 
@@ -168,11 +170,13 @@ if (isLoggedIn()) {
             // Insert current marriage
             if ($marriageID = insertCurrentMarriage($userID, $spouseName, $dateOfMarriage, $stateCountryOfMarriage, $spouseBirthday, $proofOfSpouseCitizenship)) {
                 $response['type'] = 'success';
-                $response['message_marriage'] = '<span class="en">Current marriage information successfully saved.</span><span class="es">Información de matrimonio actual guardada con éxito.</span>';
+                $response['message'] = '<span class="en">Current marriage information successfully saved.</span><span class="es">Información de matrimonio actual guardada con éxito.</span>';
                 $response['marriageID'] = $marriageID;
             } else {
                 $response['type'] = 'error';
-                $response['message_marriage'] = '<span class="en">Failed to save current marriage information.</span><span class="es">No se pudo guardar la información del matrimonio actual.</span>';
+                $response['message'] = '<span class="en">Failed to save current marriage information.</span><span class="es">No se pudo guardar la información del matrimonio actual.</span>';
+                echo json_encode($response);
+                exit;
             }
 
             $documentType[] = "Marriage Certificate";
@@ -196,6 +200,8 @@ if (isLoggedIn()) {
                 } else {
                     $response['type'] = 'error';
                     $response['message'] = '<span class="en">Failed to save previous marriage information.</span><span class="es">No se pudo guardar la información del matrimonio anterior.</span>';
+                    echo json_encode($response);
+                    exit;
                 }
             }
 
@@ -225,6 +231,8 @@ if (isLoggedIn()) {
                     } else {
                         $response['type'] = 'error';
                         $response['message'] = '<span class="en">Failed to save US entry.</span><span class="es">No se pudo guardar la entrada al EE.UU.</span>';
+                        echo json_encode($response);
+                        exit;
                     }
                 }
             }
@@ -262,6 +270,8 @@ if (isLoggedIn()) {
                 $response['message'] = '<span class="en">Legal encounters successfully inserted!</span><span class="es">¡Encuentros legales insertados con éxito!</span>';
             } else {
                 $response['message'] = '<span class="en">No valid legal encounter data to insert.</span><span class="es">No hay datos de encuentros legales válidos para insertar.</span>';
+                echo json_encode($response);
+                exit;
             }
 
             // Initialize success flag
@@ -298,10 +308,6 @@ if (isLoggedIn()) {
                         $documentDesc[] = "Birth certificate of child # " . $childNum . ".";
                         $childNum++;
                     }
-                } else {
-                    $response['message'] = '<span class="en">All required fields must be filled for each entry.</span><span class="es">Todos los campos requeridos deben ser completados para cada entrada.</span>';
-                    $allInserted = false;
-                    break; // Stop processing if any required fields are missing
                 }
             }
 
@@ -311,6 +317,8 @@ if (isLoggedIn()) {
             } else {
                 $response['type'] = 'error';
                 $response['message'] = '<span class="en">Failed to insert some offspring data.</span><span class="es">No se pudieron insertar algunos datos del hijo.</span>';
+                echo json_encode($response);
+                exit;
             }
 
             $presentDocuments = getUserDocumentByUserId($userID);
@@ -363,7 +371,7 @@ if (isLoggedIn()) {
                     'documentType' => $documentType
                 ]);
             }
-            
+
             // Update documents no longer present
             foreach ($toUpdate as $documentType => $_) {
                 $sql = "Update user_document SET DocumentDescription = :documentDescription, updatedAt = NOW() WHERE UserID = :userID AND DocumentType = :documentType";
@@ -375,7 +383,7 @@ if (isLoggedIn()) {
                 ]);
             }
 
-            
+
             // echo json_encode($toUpdate);
             // echo json_encode($toDelete);
             // echo json_encode($toInsert);
@@ -431,6 +439,8 @@ if (isLoggedIn()) {
             } else {
                 $response['type'] = 'error';
                 $response['message'] = '<span class="en">Failed to save employer details.</span><span class="es">No se pudieron guardar los detalles del empleador.</span>';
+                echo json_encode($response);
+                exit;
             }
 
             if ($certificationDegree !== '' && $degreeUniversity !== '' && $degreeDate !== '' && $degreeStateAndCountry !== '') {
@@ -450,7 +460,9 @@ if (isLoggedIn()) {
                     $response['type'] = 'success';
                     $response['message'] = '<span class="en">Certification successfully inserted.</span><span class="es">Certificación insertada con éxito.</span>';
                 } else {
-                    throw new Exception('Failed to insert certification data.');
+                    $response['message'] = '<span class="en">Failed to insert certification data.</span><span class="es">Failed to insert certification data.</span>';
+                    echo json_encode($response);
+                    exit;
                 }
             }
             // Check if essential fields are not empty
@@ -490,15 +502,21 @@ if (isLoggedIn()) {
 
                     if ($success) {
                         $response['type'] = 'success';
-                        $response['message_other'] = '<span class="en">Additional recommendation details successfully saved.</span><span class="es">Detalles adicionales de recomendación guardados con éxito.</span>';
+                        $response['message'] = '<span class="en">Additional recommendation details successfully saved.</span><span class="es">Detalles adicionales de recomendación guardados con éxito.</span>';
                     } else {
-                        $response['message_other'] = '<span class="en">Failed to save additional recommendation details.</span><span class="es">No se pudieron guardar los detalles adicionales de recomendación.</span>';
+                        $response['message'] = '<span class="en">Failed to save additional recommendation details.</span><span class="es">No se pudieron guardar los detalles adicionales de recomendación.</span>';
+                        echo json_encode($response);
+                        exit;
                     }
                 } catch (Exception $e) {
-                    $response['message_other'] = '<span class="en">An error occurred: ' . $e->getMessage() . '</span><span class="es">Ocurrió un error: ' . $e->getMessage() . '</span>';
+                    $response['message'] = '<span class="en">An error occurred: ' . $e->getMessage() . '</span><span class="es">Ocurrió un error: ' . $e->getMessage() . '</span>';
+                    echo json_encode($response);
+                    exit;
                 }
             } else {
                 $response['message'] = '<span class="en">UserID is required.</span><span class="es">UserID es obligatorio.</span>';
+                echo json_encode($response);
+                exit;
             }
 
             $response['type'] = 'success';
@@ -506,6 +524,8 @@ if (isLoggedIn()) {
         } else {
             $response['type'] = 'error';
             $response['message'] = '<span class="en">Failed to create user.</span><span class="es">No se pudo crear el usuario.</span>';
+            echo json_encode($response);
+            exit;
         }
         // } catch (Exception $e) {
         //     $response['type'] = 'error';
@@ -514,10 +534,16 @@ if (isLoggedIn()) {
     } else {
         $response['type'] = 'error';
         $response['message'] = '<span class="en">Invalid request method.</span><span class="es">Método de solicitud no válido.</span>';
+        echo json_encode($response);
+        exit;
     }
 } else {
     $response['type'] = 'error';
     $response['message'] = '<span class="en">User not logged in.</span><span class="es">Usuario no iniciado sesión.</span>';
+    echo json_encode($response);
+    exit;
 }
 
+
 echo json_encode($response);
+exit;

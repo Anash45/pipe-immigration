@@ -167,10 +167,10 @@ $(document).ready(function () {
                             $(form).trigger('reset');
                             location.reload();
                         } else {
-                            $('#response').html(`<div class='alert alert-danger'><span class='en'>Error inserting user data!</span><span class='es'>¡Error al insertar los datos del usuario!</span></div>`);
+                            $('#response').html(`<div class='alert alert-danger'>${response.message}</div>`);
                         }
 
-                        console.log('Form submitted successfully');
+                        // console.log('Form submitted successfully');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         // Handle any errors
