@@ -230,4 +230,14 @@ $(document).ready(function () {
     //         }
     //     });
     // });
+
+});
+
+$(document).ready(function () {
+    $('.radio-type-check').on('change', function () {
+        console.log('checked');
+        if ($(this).is(':checked')) {
+            $('.radio-type-check').not(this).prop('checked', false);
+        }
+    });
 });

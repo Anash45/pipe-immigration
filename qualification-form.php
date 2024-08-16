@@ -158,7 +158,7 @@ if (isLoggedIn()) {
         }
 
 
-        $UsResidencyProof = getUsResidencyProofByUserId($UserID);
+        $UsResidencyProof = getUserDocumentByUserId($UserID);
         if ($UsResidencyProof !== null) {
             foreach ($UsResidencyProof as $UsResidency) {
                 $DocumentTypes[] = $UsResidency['DocumentType'];
@@ -230,7 +230,7 @@ if (isLoggedIn()) {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=6">
+        <link rel="stylesheet" href="./assets/css/style.css?v=7">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -434,17 +434,17 @@ if (isLoggedIn()) {
                                             <div class="d-flex gap-3 align-items-center justify-content-center">
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceApt"> Apt. </label>
-                                                    <input class="form-check-input" type="radio" value="Apartment"
+                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Apartment"
                                                         id="residenceApt" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Apartment') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceSte"> Ste. </label>
-                                                    <input class="form-check-input" type="radio" value="Suite"
+                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Suite"
                                                         id="residenceSte" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Suite') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceFlr"> Floor. </label>
-                                                    <input class="form-check-input" type="radio" value="Floor"
+                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Floor"
                                                         id="residenceFlr" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Floor') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="input-div flex-grow-1">
@@ -1865,7 +1865,7 @@ if (isLoggedIn()) {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=6"></script>
+        <script src="./assets/js/script.js?v=7"></script>
         <script>
             let currentLang = '<?php echo getLanguage(); ?>';
             function updateFormControls() {

@@ -30,7 +30,7 @@ if (isset($_REQUEST['UserID'])) {
         $type = $_POST['Type'];
 
         // Debugging output
-        echo "TrxDate: $trxDate, PaymentGateway: $paymentGateway, PaymentCleared: $paymentCleared, Amount: $amount, Currency: $currency, Type: $type, ClientID: $UserID";
+        // echo "TrxDate: $trxDate, PaymentGateway: $paymentGateway, PaymentCleared: $paymentCleared, Amount: $amount, Currency: $currency, Type: $type, ClientID: $UserID";
 
         // Prepare the SQL insert statement
         $sql = "INSERT INTO payment (
@@ -158,7 +158,7 @@ $MyAttorneyID = $CurrentUser['attorneyID'];
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=6">
+        <link rel="stylesheet" href="./assets/css/style.css?v=7">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -232,18 +232,20 @@ $MyAttorneyID = $CurrentUser['attorneyID'];
                                                 <td><?php echo $payment['Currency']; ?></td>
                                                 <td><?php echo $payment['type']; ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary edit-payment-btn"
-                                                        data-payment-id="<?php echo $payment['payment_id']; ?>"
-                                                        data-trx-date="<?php echo $payment['TrxDate']; ?>"
-                                                        data-payment-gateway="<?php echo $payment['PaymentGateway']; ?>"
-                                                        data-payment-cleared="<?php echo $payment['PaymentCleared']; ?>"
-                                                        data-amount="<?php echo $payment['Amount']; ?>"
-                                                        data-currency="<?php echo $payment['Currency']; ?>"
-                                                        data-type="<?php echo $payment['type']; ?>" data-bs-toggle="modal"
-                                                        data-bs-target="#editPaymentModal">Edit</button>
-                                                    <a href="?UserID=<?php echo $UserID; ?>&delete=<?php echo $payment['payment_id']; ?>"
-                                                        class="btn btn-danger"
-                                                        onclick="return confirm('You really want to delete this payment?');">Delete</a>
+                                                    <div class="d-flex align-items-center gap-1">
+                                                        <button type="button" class="btn btn-primary edit-payment-btn"
+                                                            data-payment-id="<?php echo $payment['payment_id']; ?>"
+                                                            data-trx-date="<?php echo $payment['TrxDate']; ?>"
+                                                            data-payment-gateway="<?php echo $payment['PaymentGateway']; ?>"
+                                                            data-payment-cleared="<?php echo $payment['PaymentCleared']; ?>"
+                                                            data-amount="<?php echo $payment['Amount']; ?>"
+                                                            data-currency="<?php echo $payment['Currency']; ?>"
+                                                            data-type="<?php echo $payment['type']; ?>" data-bs-toggle="modal"
+                                                            data-bs-target="#editPaymentModal">Edit</button>
+                                                        <a href="?UserID=<?php echo $UserID; ?>&delete=<?php echo $payment['payment_id']; ?>"
+                                                            class="btn btn-danger"
+                                                            onclick="return confirm('You really want to delete this payment?');">Delete</a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <?php
@@ -409,7 +411,7 @@ $MyAttorneyID = $CurrentUser['attorneyID'];
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=6"></script>
+        <script src="./assets/js/script.js?v=7"></script>
         <script>
             $(document).ready(function () {
                 // Handle Edit button click

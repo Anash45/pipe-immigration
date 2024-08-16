@@ -11,7 +11,7 @@ include './defines/functions.php';
         <title>Login - US PIPE Immigration Program</title>
         <link rel="shortcut icon" href="./assets/images/Favicon.webp" type="image/x-icon">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/style.css?v=6">
+        <link rel="stylesheet" href="./assets/css/style.css?v=7">
     </head>
 
     <body class="login-page red-hat-display lang-<?php echo getLanguage(); ?>">
@@ -217,7 +217,7 @@ include './defines/functions.php';
     <body>
         <script src="./assets/js/jquery-3.6.1.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
-        <script src="./assets/js/script.js?v=6"></script>
+        <script src="./assets/js/script.js?v=7"></script>
         <script>
             function openCodeModal() {
                 $('#forgotModal').modal('hide');

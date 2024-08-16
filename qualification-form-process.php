@@ -175,6 +175,12 @@ if (isLoggedIn()) {
                 $response['message_marriage'] = '<span class="en">Failed to save current marriage information.</span><span class="es">No se pudo guardar la información del matrimonio actual.</span>';
             }
 
+            $documentType[] = "Marriage Certificate";
+            $documentDesc[] = "Marriage certificate.";
+
+            $documentType[] = "Spouse's Proof of Citizenship";
+            $documentDesc[] = "Document to prove spouse's citizenship.";
+
             // Insert previous marriage if exSpouseName is not empty
             if (!empty($exSpouseName || !empty($exDateOfDivorce))) {
 
@@ -192,6 +198,11 @@ if (isLoggedIn()) {
                     $response['message'] = '<span class="en">Failed to save previous marriage information.</span><span class="es">No se pudo guardar la información del matrimonio anterior.</span>';
                 }
             }
+
+            $documentType[] = "Birth Certificate";
+            $documentDesc[] = "User's Birth Certificate";
+            $documentType[] = "Passport";
+            $documentDesc[] = "User's Passport";
 
 
 
@@ -218,27 +229,6 @@ if (isLoggedIn()) {
                 }
             }
             // echo json_encode($_REQUEST['documentType']);
-
-            $sql1 = "DELETE FROM `residency_documents` WHERE `UserID` = :UserID";
-            $stmt = $pdo->prepare($sql1);
-            $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
-            $stmt->execute();
-
-            // echo json_encode($_REQUEST['documentDesc']);
-            foreach ($documentType as $key => $value) {
-                $documentDescValue = $documentDesc[$key] ?? '';
-
-                if ($value !== '' && $documentDescValue !== '') {
-                    if (insertResidencyDocuments($userID, $value, $documentDescValue)) {
-                        $response['type'] = 'success';
-                        $response['message'] = '<span class="en">Residency documents successfully saved.</span><span class="es">Documentos de residencia guardados con éxito.</span>';
-                    } else {
-                        $response['type'] = 'error';
-                        $response['message'] = '<span class="en">Failed to save residency documents.</span><span class="es">No se pudieron guardar los documentos de residencia.</span>';
-                    }
-                }
-            }
-
 
             $sql1 = "DELETE FROM `encounter` WHERE `UserID` = :UserID";
             $stmt = $pdo->prepare($sql1);
@@ -284,6 +274,7 @@ if (isLoggedIn()) {
             $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
             $stmt->execute();
 
+            $childNum = 1;
             // Loop through each entry
             foreach ($child_fullLegalNames as $index => $fullLegalName) {
                 // Retrieve each field value for the current index
@@ -296,12 +287,16 @@ if (isLoggedIn()) {
                 $schoolRecordAccess = $child_accessToSchoolRecords[$index] ?? 'No';
 
                 // Check if required fields are filled
-                if ($fullLegalName !== '' || $birthday !== '' || $stateCountryOfBirth !== '' || $motherName !== '' || $fatherName !== '' || $gender !== '') {
+                if ($fullLegalName !== '') {
                     // Insert offspring
                     $inserted = insertOffspring($userID, $fullLegalName, $birthday, $stateCountryOfBirth, $motherName, $fatherName, $gender, $schoolDetail, $schoolRecordAccess);
 
                     if (!$inserted) {
                         $allInserted = false;
+                    } else {
+                        $documentType[] = "Child " . $childNum . " Birth certificate";
+                        $documentDesc[] = "Birth certificate of child # " . $childNum . ".";
+                        $childNum++;
                     }
                 } else {
                     $response['message'] = '<span class="en">All required fields must be filled for each entry.</span><span class="es">Todos los campos requeridos deben ser completados para cada entrada.</span>';
@@ -317,6 +312,93 @@ if (isLoggedIn()) {
                 $response['type'] = 'error';
                 $response['message'] = '<span class="en">Failed to insert some offspring data.</span><span class="es">No se pudieron insertar algunos datos del hijo.</span>';
             }
+
+            $presentDocuments = getUserDocumentByUserId($userID);
+
+
+            // echo json_encode($presentDocuments);
+            // echo json_encode($documentType);
+            // echo json_encode($documentDesc);
+
+            // Fetch existing records from the database
+            $sql = "SELECT DocumentType FROM user_document WHERE UserID = :userID";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['userID' => $userID]); // Replace $userID with the actual user ID
+            $existingRecords = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+            // Determine records to update, insert, and delete
+            $documentTypeSet = array_flip($documentType);
+            $existingRecordsSet = array_flip($existingRecords);
+
+            // Records to insert (in $documentType but not in $existingRecords)
+            $toInsert = array_diff_key($documentTypeSet, $existingRecordsSet);
+
+            // Records to delete (in $existingRecords but not in $documentType)
+            $toDelete = array_diff_key($existingRecordsSet, $documentTypeSet);
+
+            // Records to update (in both $documentType and $existingRecords)
+            $toUpdate = array_intersect_key($documentTypeSet, $existingRecordsSet);
+
+            // // Convert $toUpdate to a simple array of document types
+            // $toUpdate = array_keys($toUpdate);
+
+            // Insert new documents
+            // $docIndex = 0;
+            foreach ($toInsert as $docType => $_) {
+                $sql = "INSERT INTO user_document (UserID, DocumentType, DocumentDescription, updatedAt) VALUES (:userID, :documentType, :documentDescription, NOW())";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    'userID' => $userID,
+                    'documentType' => $docType,
+                    'documentDescription' => $documentDesc[$_]
+                ]);
+            }
+
+            // Delete documents no longer present
+            foreach ($toDelete as $documentType => $_) {
+                $sql = "DELETE FROM user_document WHERE UserID = :userID AND DocumentType = :documentType";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    'userID' => $userID,
+                    'documentType' => $documentType
+                ]);
+            }
+            
+            // Update documents no longer present
+            foreach ($toUpdate as $documentType => $_) {
+                $sql = "Update user_document SET DocumentDescription = :documentDescription, updatedAt = NOW() WHERE UserID = :userID AND DocumentType = :documentType";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    'documentDescription' => $documentDesc[$_],
+                    'userID' => $userID,
+                    'documentType' => $documentType
+                ]);
+            }
+
+            
+            // echo json_encode($toUpdate);
+            // echo json_encode($toDelete);
+            // echo json_encode($toInsert);
+
+            // $sql1 = "DELETE FROM `user_document` WHERE `UserID` = :UserID";
+            // $stmt = $pdo->prepare($sql1);
+            // $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
+            // $stmt->execute();
+
+            // // echo json_encode($_REQUEST['documentDesc']);
+            // foreach ($documentType as $key => $value) {
+            //     $documentDescValue = $documentDesc[$key] ?? '';
+
+            //     if ($value !== '' && $documentDescValue !== '') {
+            //         if (insertResidencyDocuments($userID, $value, $documentDescValue)) {
+            //             $response['type'] = 'success';
+            //             $response['message'] = '<span class="en">Residency documents successfully saved.</span><span class="es">Documentos de residencia guardados con éxito.</span>';
+            //         } else {
+            //             $response['type'] = 'error';
+            //             $response['message'] = '<span class="en">Failed to save residency documents.</span><span class="es">No se pudieron guardar los documentos de residencia.</span>';
+            //         }
+            //     }
+            // }
 
             $jobSuccess = false;
 

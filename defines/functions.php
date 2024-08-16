@@ -437,7 +437,7 @@ function insertResidencyDocuments($userID, $documentType, $documentDesc)
     try {
         // Prepare the SQL statement
         $stmt = $pdo->prepare("
-            INSERT INTO residency_documents (UserID, DocumentType, DocumentDescription, updatedAt)
+            INSERT INTO user_document (UserID, DocumentType, DocumentDescription, updatedAt)
             VALUES (:userID, :documentType, :documentDescription, NOW())
         ");
 
@@ -800,21 +800,54 @@ function getUsEntriesByUserId($UserID)
     }
 }
 
-function getUsResidencyProofByUserId($UserID)
+function getUserDocumentByUserId($UserID)
 {
     global $pdo; // Use the global $pdo instance
 
     try {
-        $sql = "SELECT * FROM residency_documents WHERE UserID = :UserID";
+        $sql = "SELECT * FROM user_document WHERE UserID = :UserID";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':UserID', $UserID);
         $stmt->execute();
 
-        $residency_documents = $stmt->fetchAll();
-        return $residency_documents !== false ? $residency_documents : null;
+        $user_document = $stmt->fetchAll();
+        return $user_document !== false ? $user_document : null;
     } catch (PDOException $e) {
         // Optionally log the exception or handle it
         return null;
+    }
+}
+
+function getFilesByDocumentId($DocumentID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "SELECT * FROM document_files WHERE documentID = :DocumentID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':DocumentID', $DocumentID);
+        $stmt->execute();
+
+        $document_files = $stmt->fetchAll();
+        return $document_files !== false ? $document_files : null;
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return null;
+    }
+}
+
+function deleteFilesByFileId($fileID)
+{
+    global $pdo; // Use the global $pdo instance
+
+    try {
+        $sql = "DELETE FROM document_files WHERE fileID = :fileID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':fileID', $fileID);
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        // Optionally log the exception or handle it
+        return false;
     }
 }
 
