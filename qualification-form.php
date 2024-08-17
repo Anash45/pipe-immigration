@@ -230,7 +230,7 @@ if (isLoggedIn()) {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=7">
+        <link rel="stylesheet" href="./assets/css/style.css?v=8">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -319,7 +319,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="birthday"
-                                                    name="birthday" value="<?php echo $date = ($birthday != '' && $birthday != '1970-01-01') ? $birthday : ''; ?>">
+                                                    name="birthday"
+                                                    value="<?php echo $date = ($birthday != '' && $birthday != '1970-01-01') ? $birthday : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -434,18 +435,18 @@ if (isLoggedIn()) {
                                             <div class="d-flex gap-3 align-items-center justify-content-center">
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceApt"> Apt. </label>
-                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Apartment"
-                                                        id="residenceApt" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Apartment') ? 'checked' : ''; ?>>
+                                                    <input class="form-check-input radio-type-check" type="checkbox"
+                                                        value="Apartment" id="residenceApt" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Apartment') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceSte"> Ste. </label>
-                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Suite"
-                                                        id="residenceSte" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Suite') ? 'checked' : ''; ?>>
+                                                    <input class="form-check-input radio-type-check" type="checkbox"
+                                                        value="Suite" id="residenceSte" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Suite') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="form-check mb-0">
                                                     <label class="form-check-label" for="residenceFlr"> Floor. </label>
-                                                    <input class="form-check-input radio-type-check" type="checkbox" value="Floor"
-                                                        id="residenceFlr" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Floor') ? 'checked' : ''; ?>>
+                                                    <input class="form-check-input radio-type-check" type="checkbox"
+                                                        value="Floor" id="residenceFlr" name="residencyType" <?php echo $residencyTypeChecked = ($residencyType == 'Floor') ? 'checked' : ''; ?>>
                                                 </div>
                                                 <div class="input-div flex-grow-1">
                                                     <input type="text" size="10" maxlength="10"
@@ -697,7 +698,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="dateOfMarriage"
-                                                    name="dateOfMarriage" value="<?php echo $date = ($dateOfMarriage != '' && $dateOfMarriage != '1970-01-01') ? $dateOfMarriage : ''; ?>">
+                                                    name="dateOfMarriage"
+                                                    value="<?php echo $date = ($dateOfMarriage != '' && $dateOfMarriage != '1970-01-01') ? $dateOfMarriage : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -730,7 +732,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="spouseBirthday"
-                                                    name="spouseBirthday" value="<?php echo $date = ($spouseBirthday != '' && $spouseBirthday != '1970-01-01') ? $spouseBirthday : ''; ?>">
+                                                    name="spouseBirthday"
+                                                    value="<?php echo $date = ($spouseBirthday != '' && $spouseBirthday != '1970-01-01') ? $spouseBirthday : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -803,7 +806,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="exDateOfMarriage"
-                                                    name="exDateOfMarriage" value="<?php echo $date = ($exDateOfMarriage != '' && $exDateOfMarriage != '1970-01-01') ? $exDateOfMarriage : ''; ?>">
+                                                    name="exDateOfMarriage"
+                                                    value="<?php echo $date = ($exDateOfMarriage != '' && $exDateOfMarriage != '1970-01-01') ? $exDateOfMarriage : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -852,7 +856,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="exDateOfDivorce"
-                                                    name="exDateOfDivorce" value="<?php echo $date = ($exDateOfDivorce != '' && $exDateOfDivorce != '1970-01-01') ? $exDateOfDivorce : ''; ?>">
+                                                    name="exDateOfDivorce"
+                                                    value="<?php echo $date = ($exDateOfDivorce != '' && $exDateOfDivorce != '1970-01-01') ? $exDateOfDivorce : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -901,7 +906,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="dateOfEntry"
-                                                    name="dateOfEntry[]" value="<?php echo $date = ($dateOfEntry != '' && $dateOfEntry != '1970-01-01') ? $dateOfEntry : ''; ?>">
+                                                    name="dateOfEntry[]"
+                                                    value="<?php echo $date = ($dateOfEntry != '' && $dateOfEntry != '1970-01-01') ? $dateOfEntry : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1384,7 +1390,7 @@ if (isLoggedIn()) {
                                             <td>
                                                 <input type="date" name="childBirthday[]"
                                                     class="form-control table-input date"
-                                                    value="<?php echo $childBirthday = (sizeof($Offsprings) > $ia && ($Offsprings[$ia]['birthday']  != '1970-01-01')) ? $Offsprings[$ia]['birthday'] : ''; ?>">
+                                                    value="<?php echo $childBirthday = (sizeof($Offsprings) > $ia && ($Offsprings[$ia]['birthday'] != '1970-01-01')) ? $Offsprings[$ia]['birthday'] : ''; ?>">
                                             </td>
                                             <td>
                                                 <textarea name="childStateCountryOfBirth[]"
@@ -1485,7 +1491,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="startDate"
-                                                    name="startDate[]" value="<?php echo $startDate = (!empty($startDate) && $startDate != '1970-01-01') ? $startDate : ''; ?>">
+                                                    name="startDate[]"
+                                                    value="<?php echo $startDate = (!empty($startDate) && $startDate != '1970-01-01') ? $startDate : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1516,7 +1523,8 @@ if (isLoggedIn()) {
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="date" class="form-control mt-1" id="lastDate"
-                                                    name="jobLastDate[]" value="<?php echo $jobLastDate = ($jobLastDate != '' && $jobLastDate != '1970-01-01') ? $jobLastDate : ''; ?>">
+                                                    name="jobLastDate[]"
+                                                    value="<?php echo $jobLastDate = ($jobLastDate != '' && $jobLastDate != '1970-01-01') ? $jobLastDate : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -1594,14 +1602,13 @@ if (isLoggedIn()) {
                                     <div class="row">
                                         <div class="col-12 mb-3 pt-3">
                                             <label for="eduUniversity"
-                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 48, 'label'); ?></span><img src="./assets/images/question-icon.svg"
-                                                    data-bs-toggle="tooltip"
+                                                class="form-label gap-1 d-flex align-items-center"><span><?php echo getTranslation('Qualification', 48, 'label'); ?></span><img
+                                                    src="./assets/images/question-icon.svg" data-bs-toggle="tooltip"
                                                     title="<?php echo getTranslation('Qualification', 48, 'help'); ?>"
                                                     class="help-icon" alt="Icon" width="16"></label>
                                             <div class="input-div">
                                                 <input type="text" class="form-control mt-1" id="degreeUniversity"
-                                                    name="degreeUniversity"
-                                                    value="<?php echo $degreeUniversity; ?>"
+                                                    name="degreeUniversity" value="<?php echo $degreeUniversity; ?>"
                                                     placeholder="university of New york">
                                             </div>
                                         </div>
@@ -1841,8 +1848,10 @@ if (isLoggedIn()) {
                         </p>
                     </div>
                     <div class="col-xl-9 col-lg-10 mx-auto mt-5">
-                        <textarea name="otherQuestions" id="other" class="form-control" rows="8"
-                            placeholder="<?php echo getTranslation('Qualification', 81, 'placeholder'); ?>"><?php echo $otherQuestions; ?></textarea>
+                        <div class="input-div">
+                            <textarea name="otherQuestions" id="other" class="form-control" rows="8"
+                                placeholder="<?php echo getTranslation('Qualification', 81, 'placeholder'); ?>"><?php echo $otherQuestions; ?></textarea>
+                        </div>
                     </div>
                     <div class="text-center my-4">
                         <div id="response"></div>
@@ -1865,7 +1874,7 @@ if (isLoggedIn()) {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=7"></script>
+        <script src="./assets/js/script.js?v=8"></script>
         <script>
             let currentLang = '<?php echo getLanguage(); ?>';
             function updateFormControls() {

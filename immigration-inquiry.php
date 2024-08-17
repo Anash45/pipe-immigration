@@ -44,7 +44,7 @@ if (isLoggedIn()) {
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="./assets/css/style.css?v=7">
+        <link rel="stylesheet" href="./assets/css/style.css?v=8">
     </head>
 
     <body class="main-form-page roboto lang-<?php echo getLanguage(); ?>">
@@ -593,7 +593,7 @@ if (isLoggedIn()) {
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffT74mo5XglwbbcSJ08wZl5F1WkyQhVw&libraries=places"></script>
-        <script src="./assets/js/script.js?v=7"></script>
+        <script src="./assets/js/script.js?v=8"></script>
         <?php
         $productArray = [];
         $products1 = getAllProducts();
@@ -811,20 +811,33 @@ if (isLoggedIn()) {
                     errorElement: "span",
                     rules: {
                         first_name: {
-                            required: true
+                            required: true,
+                            maxlength: 255
                         },
                         last_name: {
-                            required: true
+                            required: true,
+                            maxlength: 255
                         },
-                        currentStateAndCountry: {
-                            required: true
+                        zipCode: {
+                            required: true,
+                            maxlength: 10
+                        },
+                        city: {
+                            required: true,
+                            maxlength: 255
+                        },
+                        state: {
+                            required: true,
+                            maxlength: 255
                         },
                         phoneNumber: {
-                            required: true
+                            required: true,
+                            maxlength: 20
                         },
                         email: {
                             required: true,
-                            email: true
+                            email: true,
+                            maxlength: 255
                         },
                         product: {
                             required: true
@@ -842,20 +855,33 @@ if (isLoggedIn()) {
                     },
                     messages: {
                         first_name: {
-                            required: '<span class="en">First name is required</span><span class="es">El nombre es requerido</span>'
+                            required: '<span class="en">First name is required</span><span class="es">El nombre es requerido</span>',
+                            maxlength: '<span class="en">Max length 255 characters!</span><span class="es">¡Longitud máxima 255 caracteres!</span>'
                         },
                         last_name: {
-                            required: '<span class="en">Last name is required</span><span class="es">El apellido es requerido</span>'
+                            required: '<span class="en">Last name is required</span><span class="es">El apellido es requerido</span>',
+                            maxlength: '<span class="en">Max length 255 characters!</span><span class="es">¡Longitud máxima 255 caracteres!</span>'
                         },
-                        currentStateAndCountry: {
-                            required: '<span class="en">City and State are required</span><span class="es">Se requieren ciudad y estado</span>'
+                        zipCode: {
+                            required: '<span class="en">Please enter the zip code</span><span class="es">Por favor, ingrese el código postal</span>',
+                            maxlength: '<span class="en">Max length 10 characters!</span><span class="es">¡Longitud máxima 10 caracteres!</span>'
+                        },
+                        city: {
+                            required: '<span class="en">Please enter the city</span><span class="es">Por favor, ingrese la ciudad</span>',
+                            maxlength: '<span class="en">Max length 255 characters!</span><span class="es">¡Longitud máxima 255 caracteres!</span>'
+                        },
+                        state: {
+                            required: '<span class="en">Please enter the state</span><span class="es">Por favor, ingrese el estado</span>',
+                            maxlength: '<span class="en">Max length 255 characters!</span><span class="es">¡Longitud máxima 255 caracteres!</span>'
                         },
                         phoneNumber: {
-                            required: '<span class="en">Phone number is required</span><span class="es">El número de teléfono es requerido</span>'
+                            required: '<span class="en">Phone number is required</span><span class="es">El número de teléfono es requerido</span>',
+                            maxlength: '<span class="en">Max length 20 characters!</span><span class="es">¡Longitud máxima 20 caracteres!</span>'
                         },
                         email: {
                             required: '<span class="en">Email is required</span><span class="es">El correo electrónico es requerido</span>',
-                            email: '<span class="en">Please enter a valid email</span><span class="es">Por favor, ingrese un correo electrónico válido</span>'
+                            email: '<span class="en">Please enter a valid email</span><span class="es">Por favor, ingrese un correo electrónico válido</span>',
+                            maxlength: '<span class="en">Max length 255 characters!</span><span class="es">¡Longitud máxima 255 caracteres!</span>'
                         },
                         usaPresenceBeforeJun2024: {
                             required: ''
